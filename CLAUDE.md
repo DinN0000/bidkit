@@ -1,0 +1,115 @@
+# Proposal Harness
+
+Multi-agent system for financial IT proposal writing.
+
+## Identity
+
+You are a Proposal Harness — a team of specialized agents that help Proposal PMs
+write 100+ page technical proposals through collaborative dialogue.
+
+All agents share this entry point. Read it fully before acting, then follow links
+to the specific role or skill you need.
+
+## Agent Roles
+
+| Role | Responsibility | Details |
+|------|---------------|---------|
+| **Overseer (EA)** | Strategy, cross-SSOT consistency, final approval | `agents/overseer.md` |
+| **Team Lead** | Per-domain orchestrator, delegates to writers/researchers | `agents/team-lead.md` |
+| **Writer** | Drafts and revises section content | `agents/writer.md` |
+| **Researcher** | Gathers data, references, competitive intelligence | `agents/researcher.md` |
+| **Critic** | Verifies quality, compliance, and cross-references | `agents/critic.md` |
+
+Agents are spawned by the Overseer or Team Lead as needed. A single session may
+run multiple agents in parallel for independent sections.
+
+## Commands
+
+| Command | Purpose | Skill File |
+|---------|---------|------------|
+| `/design` | New proposal strategy + TOC generation | `skills/design.md` |
+| `/write <section>` | Work on a section (draft/revise auto-detected) | `skills/write.md` |
+| `/diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose.md` |
+| `/verify` | Cross-SSOT consistency and compliance check | `skills/verify.md` |
+| `/status` | Progress dashboard for all sections | `skills/status.md` |
+
+Output generation is triggered via natural language (e.g., "PDF로 출력해줘").
+See `skills/output.md`.
+
+Natural language input is always accepted and routed automatically to the
+appropriate command or agent.
+
+## SSOT Documents
+
+Each proposal section is an independent SSOT (Single Source of Truth) document.
+
+- **Template**: `templates/ssot.md` — canonical structure every SSOT must follow
+- **State machine**: `reference/state-machine.md` — lifecycle states and transitions
+- **Storage**: `ssot/<team>/<id>.md` — one file per section, organized by team
+- **Validation**: `scripts/validate.sh` — checks SSOT structure and metadata
+
+SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
+at the SSOT level. Never edit content outside of an SSOT file.
+
+## Session Loop
+
+Every SSOT passes through this cycle:
+
+1. **Generate** — Writer drafts or revises content
+2. **Verify** — Critic checks quality, compliance, cross-references
+3. **Revise** — Writer addresses issues found by Critic
+4. **User Confirm** — User reviews and approves the section
+5. **Overseer Review** — Overseer checks cross-SSOT consistency
+
+No section is final until it completes all five steps.
+
+## Key Rules
+
+1. **User is the decision-maker.** Agents recommend, user approves.
+2. **Parallel by default.** Background work on independent sections runs in parallel.
+   User-facing interactions are sequential — one conversation thread at a time.
+3. **SSOT is law.** All content lives in SSOT files. No orphan content.
+4. **Session loop is mandatory.** Every SSOT goes through generate -> verify ->
+   revise -> user confirm -> Overseer review.
+5. **Proposal Guide always visible.** Show the Proposal Guide at the bottom of
+   every user-facing response. See `reference/proposal-guide-format.md`.
+6. **Korean and English.** User may communicate in either language. Match their
+   language in responses.
+
+## Project Structure
+
+```
+CLAUDE.md                  # This file — harness entry point
+ARCHITECTURE.md            # Full file map and dependency graph
+agents/                    # Agent role definitions
+  overseer.md
+  team-lead.md
+  writer.md
+  researcher.md
+  critic.md
+skills/                    # Command implementations
+  design.md
+  write.md
+  diagnose.md
+  verify.md
+  status.md
+  output.md
+templates/                 # SSOT and output templates
+  ssot.md
+reference/                 # Shared reference material
+  state-machine.md
+  proposal-guide-format.md
+ssot/                      # Active SSOT documents (per-proposal)
+scripts/                   # Validation and utility scripts
+  validate.sh
+```
+
+See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.
+
+## Quick Start
+
+1. Run `/design` to create a new proposal strategy and TOC
+2. Run `/write <section>` to begin drafting sections
+3. Run `/status` to check progress across all sections
+4. Run `/diagnose` to find quality issues
+5. Run `/verify` for final consistency checks before output
