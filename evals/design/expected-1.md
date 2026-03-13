@@ -1,0 +1,5 @@
+- Starts with a user-facing situation label such as `전략 정리 중`
+- Explains why the first question matters
+- Asks only one focused kickoff question
+- Recommends `/design`
+- Ends with the Proposal Guide

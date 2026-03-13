@@ -86,6 +86,19 @@ check_file "templates/init/proposal-meta.yaml"
 check_file "templates/init/glossary.yaml"
 check_file "templates/init/outline.yaml"
 check_file "templates/init/rfp-trace-matrix.md"
+check_file "templates/init/runtime-state.json"
+echo ""
+
+# Check eval fixtures
+echo "Evals:"
+check_file "evals/README.md"
+check_file "evals/config.json"
+check_file "evals/design/prompt-1.md"
+check_file "evals/design/expected-1.md"
+check_file "evals/write/prompt-1.md"
+check_file "evals/write/expected-1.md"
+check_file "evals/verify/prompt-1.md"
+check_file "evals/verify/expected-1.md"
 echo ""
 
 # Check reference documentation
@@ -139,6 +152,24 @@ if [ -f "$SSOT_TEMPLATE" ]; then
   check_contains "$SSOT_TEMPLATE" "## Overseer Review Log" "$SSOT_TEMPLATE contains section: ## Overseer Review Log"
 else
   echo -e "${RED}✗${NC} $SSOT_TEMPLATE not found — skipping template checks"
+  ((FAIL++))
+fi
+echo ""
+
+# Contract validation
+echo "=========================================="
+echo "Contract Validation"
+echo "=========================================="
+if [ -f "scripts/validate-harness-contracts.js" ]; then
+  if node "scripts/validate-harness-contracts.js"; then
+    echo -e "${GREEN}✓${NC} Contract validation passed"
+    ((PASS++))
+  else
+    echo -e "${RED}✗${NC} Contract validation failed"
+    ((FAIL++))
+  fi
+else
+  echo -e "${RED}✗${NC} scripts/validate-harness-contracts.js not found"
   ((FAIL++))
 fi
 echo ""

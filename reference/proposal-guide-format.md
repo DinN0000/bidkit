@@ -1,6 +1,8 @@
 # Proposal Guide — Rendering Spec
 
-The Proposal Guide is a status footer appended to the bottom of every agent response. It gives the user an at-a-glance view of project progress and a single recommended next action.
+The Proposal Guide is a status footer appended to the bottom of every agent
+response. It should help a proposal PM understand the current situation without
+needing to know internal role names or raw state-machine terminology.
 
 ## Format
 
@@ -8,11 +10,26 @@ The Proposal Guide is a status footer appended to the bottom of every agent resp
 -------------------------------------------------
 Project: [project name]
 -------------------------------------------------
+Current: [user-facing situation label]
 Done: [v] section1 (team), [v] section2 (team)
-In Progress: [~] section3 (team) -- current activity details
+In Progress: [~] section3 (team) -- user-facing activity details
 Recommended: /command copy-pasteable example input
 -------------------------------------------------
 ```
+
+## User-Facing Status Labels
+
+| Technical State | User-Facing Label |
+|-----------------|-------------------|
+| `ideation` | 방향 탐색 중 |
+| `draft` | 초안 작성 중 |
+| `verifying` | 품질 검토 중 |
+| `verified` | 사용자 확인 대기 |
+| `tentative` | 최종 검토 대기 |
+| `reviewing` | 최종 검토 중 |
+| `revision` | 수정 필요 |
+| `confirmed` | 확정 |
+| absent / not started | 시작 전 |
 
 ## Status Icons
 
@@ -45,5 +62,5 @@ Show exactly ONE recommendation — the highest-priority match from top to botto
 - Must appear at the bottom of EVERY response from EVERY skill.
 - Only ONE recommended action (highest priority from the table above).
 - Use commas to separate listed items within a status line.
-- No forced line breaks inside status lines.
-- Project name is taken from the active design SSOT.
+- Prefer user-facing labels such as `초안 작성 중`, `최종 검토 중`, `수정 필요`.
+- Project name is taken from `meta/proposal-meta.yaml` when available.

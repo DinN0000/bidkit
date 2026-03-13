@@ -1,0 +1,5 @@
+- Starts with a user-facing situation label such as `방향 탐색 중` or `새로 작성 중`
+- Asks one concrete question with recommended options
+- Explains why that question matters for the section
+- Avoids exposing raw state names first
+- Ends with the Proposal Guide

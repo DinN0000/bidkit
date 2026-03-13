@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "fixtures": [
+    {
+      "name": "design-kickoff",
+      "command": "/design",
+      "prompt": "evals/design/prompt-1.md",
+      "expected": "evals/design/expected-1.md"
+    },
+    {
+      "name": "write-explore",
+      "command": "/write",
+      "prompt": "evals/write/prompt-1.md",
+      "expected": "evals/write/expected-1.md"
+    },
+    {
+      "name": "verify-decision-first",
+      "command": "/verify",
+      "prompt": "evals/verify/prompt-1.md",
+      "expected": "evals/verify/expected-1.md"
+    }
+  ],
+  "must_include": [
+    "Current:",
+    "Recommended:"
+  ]
+}

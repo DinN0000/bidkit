@@ -40,6 +40,26 @@ See `skills/output.md`.
 Natural language input is always accepted and routed automatically to the
 appropriate command or agent.
 
+## How Users Work
+
+Users do not need to know agent names or internal state names. They can simply
+describe the situation in natural language.
+
+Typical entry points:
+
+- **New proposal**: "RFP 받았는데 어디서부터?", "제안서 만들어야 해"
+- **Section work**: "HSM 모델 변경해야 해", "이행계획 어떻게 쓸지 보자"
+- **Whole-project check**: "교차 검증해줘", "진행 상황 알려줘", "PDF로 출력해줘"
+
+User-facing responses should prefer situation labels over internal role names:
+
+- "전략 정리 중"
+- "방향 탐색 중"
+- "초안 작성 중"
+- "사용자 확인 대기"
+- "최종 검토 중"
+- "수정 필요"
+
 ## Natural Language Routing
 
 The system always accepts natural language. Commands are shortcuts, not requirements.
@@ -68,7 +88,8 @@ Each proposal section is an independent SSOT (Single Source of Truth) document.
 - **Validation**: `scripts/verify-harness.sh` - checks harness structure and entrypoint references
 
 SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
-at the SSOT level. Never edit content outside of an SSOT file.
+at the SSOT level. Proposal content must live in SSOT files. Project control
+data may live in `meta/`, `ideation/`, `runtime/`, and `output/`.
 
 ## Session Loop
 
@@ -94,6 +115,8 @@ No section is final until it completes all five steps.
    every user-facing response. See `reference/proposal-guide-format.md`.
 6. **Korean and English.** User may communicate in either language. Match their
    language in responses.
+7. **One question at a time.** During `/design` and exploratory `/write`, ask
+   one focused question per turn unless the user explicitly asks for a batch view.
 
 ## Project Structure
 
@@ -119,9 +142,12 @@ templates/                 # SSOT and output templates
 reference/                 # Shared reference material
   state-machine.md
   proposal-guide-format.md
+runtime/                   # Runtime state created per proposal
+evals/                     # Lightweight prompt/expected-output checks
 ssot/                      # Active SSOT documents (per-proposal)
 scripts/                   # Validation and utility scripts
   verify-harness.sh
+  validate-harness-contracts.js
 ```
 
 See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.

@@ -226,6 +226,7 @@ Always consult these files when performing your duties:
 -------------------------------------------------
 Project: [project name]
 -------------------------------------------------
+Current: [user-facing situation label]
 Done: [v] section1 (team), [v] section2 (team)
 In Progress: [~] section3 (team) -- current activity details
 Recommended: /command copy-pasteable example input

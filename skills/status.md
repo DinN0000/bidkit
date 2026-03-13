@@ -21,7 +21,8 @@ Load the following files in parallel:
 
 1. **`meta/outline.yaml`** — section ordering, team assignments, dependencies.
 2. **`meta/proposal-meta.yaml`** — project name, RFP reference, team composition.
-3. **All SSOT files under `ssot/`** — read front-matter (`status`, `version`, `verification`, `dependencies`, `ideation`) for each file. Do not read full body content — only front-matter metadata is needed for the dashboard.
+3. **`runtime/session-state.json`** — current situation label, active section, last completed step, recommended next action (if present).
+4. **All SSOT files under `ssot/`** — read front-matter (`status`, `version`, `verification`, `dependencies`, `ideation`) for each file. Do not read full body content — only front-matter metadata is needed for the dashboard.
 
 ### Step (2) — Compute Per-Section Status
 
@@ -32,13 +33,17 @@ For each section in `meta/outline.yaml` order:
 - If SSOT exists but `status` is absent: `not_started`.
 - Classify into dashboard bucket:
 
-| SSOT status field | Dashboard bucket | Icon |
-|---|---|---|
-| `confirmed` | Confirmed | `[v]` |
-| `draft`, `verifying`, `verified`, `tentative`, `reviewing` | In Progress | `[~]` |
-| `ideation` | Ideation | `[>]` |
-| `revision` | Revision (Overseer directive) | `[!]` |
-| absent / `not_started` | Not Started | `[ ]` |
+| SSOT status field | Dashboard bucket | User Label | Icon |
+|---|---|---|---|
+| `confirmed` | Confirmed | 확정 | `[v]` |
+| `draft` | In Progress | 초안 작성 중 | `[~]` |
+| `verifying` | In Progress | 품질 검토 중 | `[~]` |
+| `verified` | In Progress | 사용자 확인 대기 | `[~]` |
+| `tentative` | In Progress | 최종 검토 대기 | `[~]` |
+| `reviewing` | In Progress | 최종 검토 중 | `[~]` |
+| `ideation` | Ideation | 방향 탐색 중 | `[>]` |
+| `revision` | Revision (Overseer directive) | 수정 필요 | `[!]` |
+| absent / `not_started` | Not Started | 시작 전 | `[ ]` |
 
 - For `[~]` items: note the current sub-status (e.g., "Critic reviewing", "verifying").
 - For `[!]` items: extract `verification.overseer_directive` summary and include it.
@@ -100,21 +105,22 @@ Use the same Recommendation Logic as the Proposal Guide:
 ## Proposal Status: [project name]
 
 Overall: N/M sections confirmed (X%)
+Current: [runtime situation label or highest-priority in-progress label]
 
 ### BA Team
-[v] Overview (confirmed v3)
-[~] Requirements (verifying -- Critic reviewing)
+[v] Overview (확정 v3)
+[~] Requirements (품질 검토 중 -- Critic reviewing)
 
 ### DA Team
 [ ] Data Model (not started)
 
 ### TA Team
-[>] Architecture (ideation -- 방향 미정)
-[!] Cost (revision -- Overseer directive: fix pricing model)
+[>] Architecture (방향 탐색 중 -- 방향 미정)
+[!] Cost (수정 필요 -- Overseer directive: fix pricing model)
 
 ### SA Team
-[v] HSM Solution (confirmed v2)
-[ ] Implementation Plan (not started)
+[v] HSM Solution (확정 v2)
+[ ] Implementation Plan (시작 전)
 
 ### Blocked
 - ta-architecture depends on sa-hsm (not confirmed yet)
@@ -139,6 +145,7 @@ Then the standard Proposal Guide footer per `reference/proposal-guide-format.md`
 - If no SSOTs are blocked, omit the **Blocked** section entirely.
 - If no SSOTs are active, omit the **Active Work** section entirely.
 - The **Summary** line always appears.
+- If `runtime/session-state.json` exists, prefer its `current_label` for the `Current` line.
 - Sections within each team are listed in `meta/outline.yaml` order.
 - For `[!]` revision items, always include the Overseer directive text (truncated to ~80 chars if long).
 - For `[~]` in-progress items, include the current sub-status when available (e.g., "verifying", "tentative -- user approved, awaiting Overseer").
@@ -201,6 +208,7 @@ Then Proposal Guide with `/write <first section>` recommendation.
 -------------------------------------------------
 Project: [project name]
 -------------------------------------------------
+Current: [user-facing situation label]
 Done: [v] section1 (team), [v] section2 (team)
 In Progress: [~] section3 (team) -- current activity details
 Recommended: /command copy-pasteable example input

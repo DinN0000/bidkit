@@ -55,6 +55,7 @@ are sequential.
 | `templates/init/glossary.yaml` | Unified glossary template |
 | `templates/init/outline.yaml` | TOC + SSOT ordering template |
 | `templates/init/rfp-trace-matrix.md` | RFP requirements traceability template |
+| `templates/init/runtime-state.json` | Runtime state template for current focus / next action |
 | **`reference/`** | |
 | `reference/state-machine.md` | SSOT lifecycle states and transition rules |
 | `reference/quality-criteria.md` | Verification checklist per domain |
@@ -65,6 +66,10 @@ are sequential.
 | `reference/error-handling.md` | Error scenarios + graceful degradation |
 | **`scripts/`** | |
 | `scripts/verify-harness.sh` | Harness integrity validation (file existence, cross-refs) |
+| `scripts/validate-harness-contracts.js` | Contract validation for schema, output rules, and field naming |
+| **`evals/`** | |
+| `evals/config.json` | Lightweight evaluation manifest for `/design`, `/write`, `/verify` |
+| `evals/**` | Prompt and expected-output fixtures for regression checking |
 
 ---
 
@@ -79,6 +84,8 @@ Created by `/design` at runtime. Lives alongside or inside the harness directory
 | `meta/glossary.yaml` | Unified glossary -- terms, definitions, standard names |
 | `meta/outline.yaml` | TOC -- section ordering, SSOT assignments, priority |
 | `meta/rfp-trace-matrix.md` | RFP requirement ID -> mapped SSOT -> coverage status |
+| **`runtime/`** | |
+| `runtime/session-state.json` | Current situation label, active section, last completed step, recommended next action |
 | **`ssot/<team>/`** | |
 | `ssot/ba/*.md` | Business analysis SSOTs (overview, requirements, process) |
 | `ssot/da/*.md` | Data architecture SSOTs (model, migration, security) |
@@ -110,21 +117,24 @@ User Input (RFP / conversation / existing proposal)
             -> Writer revises (loop until pass)
   |
   v
-(4) Team Lead presents to user -- user approves or requests changes
+(4) Runtime state updates current user-facing situation and next action
   |
   v
-(5) Overseer cross-reviews confirmed SSOTs
+(5) Team Lead presents to user -- user approves or requests changes
+  |
+  v
+(6) Overseer cross-reviews confirmed SSOTs
       Pass -> status: confirmed
       Directive -> back to (3) for revision
   |
   v
-(6) Output pipeline assembles confirmed SSOTs
+(7) Output pipeline assembles confirmed SSOTs
       outline.yaml -> ordering
       glossary.yaml -> unified terms
       cross-references resolved
   |
   v
-(7) Render to selected formats (MD always + PPT/PDF/HTML on request)
+(8) Render to selected formats (MD always + PPT/PDF/HTML on request)
 ```
 
 ---

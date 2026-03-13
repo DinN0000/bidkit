@@ -1,0 +1,4 @@
+- Presents a decision-first summary before the detailed issue list
+- Uses user-facing language such as `지금 결정할 것`
+- Includes actionable revision queue entries tied to SSOT IDs
+- Ends with the Proposal Guide

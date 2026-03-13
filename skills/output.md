@@ -27,7 +27,7 @@ Scan `ssot/<team>/` for all SSOT files. Classify each by status:
 | `ideation` / empty | Exclude from output; log as missing |
 | `revision` | Exclude from output; log as blocked |
 
-If any Critical sections (as marked in `meta/outline.yaml`) are missing or excluded, warn the user before proceeding:
+If any sections with `required_for_output: true` in `meta/outline.yaml` are missing or excluded, warn the user before proceeding:
 *"[section-id] 섹션이 아직 확인되지 않았습니다. 제외하고 출력하시겠습니까?"*
 
 ### Step (3) — Generate Table of Contents
@@ -95,7 +95,7 @@ Mapping rules:
 - Each Level-2 section (`### `) -> content slide.
 - Tables -> table slides (one table per slide; split if > 10 rows).
 - Mermaid diagrams -> convert to image, insert as diagram slide.
-- Summary front-matter field -> speaker notes on the corresponding slide.
+- `## Summary` section -> speaker notes on the corresponding slide.
 - TOC -> auto-generated TOC slide after cover.
 
 ### PDF Rendering
@@ -169,10 +169,10 @@ When the user asks to compare versions (e.g., "이전 버전이랑 비교해줘"
 
 When the user requests an executive summary (e.g., "요약본 만들어줘", "PM용 요약"):
 
-1. Read all `confirmed` SSOTs and their `summary` front-matter fields.
+1. Read all `confirmed` SSOTs and extract the body content under each `## Summary` section.
 2. Compose a 1-page summary structured as:
    - **프로젝트 개요** (2-3 sentences from `meta/proposal-meta.yaml`)
-   - **핵심 제안 내용** (1 bullet per confirmed section, drawn from `summary` field)
+   - **핵심 제안 내용** (1 bullet per confirmed section, drawn from each SSOT's `## Summary`)
    - **주요 수치** (key numbers: cost, timeline, headcount, performance targets)
    - **미결 사항** (sections not yet confirmed, with expected completion)
 3. Output: `output/executive-summary-vN.md`.
@@ -188,6 +188,7 @@ When the user requests an executive summary (e.g., "요약본 만들어줘", "PM
 -------------------------------------------------
 Project: [project name]
 -------------------------------------------------
+Current: [user-facing situation label]
 Done: [v] section1 (team), [v] section2 (team)
 In Progress: [~] section3 (team) -- current activity details
 Recommended: /command copy-pasteable example input

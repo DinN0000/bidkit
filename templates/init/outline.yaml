@@ -4,5 +4,6 @@ sections:
     ssot_id: ""
     team: ""
     priority: high | medium | low
+    required_for_output: true | false
     dependencies: []
     estimated_pages: 0

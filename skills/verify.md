@@ -119,7 +119,22 @@ For each flow issue found, record:
 
 ### Step (3) — Structured Report Output
 
-Present the verification results grouped by severity:
+Present the verification results in two layers:
+
+1. **Decision List first** — what the user should decide or approve next
+2. **Detailed report second** — grouped by severity for traceability
+
+Decision List format:
+
+```
+### 지금 결정할 것
+
+1. [필수] sa-hsm-001 서버 수량을 12대와 14대 중 어떤 값으로 확정할지 결정
+2. [필수] 제품 표준 명칭을 glossary 기준으로 통일 승인
+3. [권장] ta-infra-001의 중복 사양표를 참조 방식으로 바꿀지 승인
+```
+
+Then present the detailed report grouped by severity:
 
 ```
 ## Cross-SSOT Verification Report: [project name]
@@ -177,7 +192,7 @@ SSOTs analyzed: N (confirmed: N, tentative: N, other: N)
 After the report, present specific action items tied to SSOTs:
 
 ```
-### Action Items
+### Action Items / Revision Queue
 
 | Priority | SSOT | Directive | Issues |
 |----------|------|-----------|--------|
@@ -256,6 +271,7 @@ If all checks pass with no issues:
 -------------------------------------------------
 Project: [project name]
 -------------------------------------------------
+Current: [user-facing situation label]
 Done: [v] section1 (team), [v] section2 (team)
 In Progress: [~] section3 (team) -- current activity details
 Recommended: /command copy-pasteable example input

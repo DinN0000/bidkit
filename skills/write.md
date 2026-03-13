@@ -12,6 +12,20 @@ The `<section>` argument accepts any of the following forms:
 
 If ambiguous, list matching SSOTs and ask the user to pick one.
 
+## User-Facing Mode Labels
+
+Lead with the user-facing situation label instead of the raw state name:
+
+| Internal Mode | User-Facing Label |
+|---------------|-------------------|
+| Create | 새로 작성 중 |
+| Explore | 방향 탐색 중 |
+| Edit | 초안 보완 중 |
+| Revise | 수정 반영 중 |
+| Re-edit | 확정본 수정 검토 중 |
+| Enhance | 기존안 보강 중 |
+| Directive | 최종 검토 지시 반영 중 |
+
 ---
 
 ## Prerequisites
@@ -23,6 +37,7 @@ Before entering the session loop, verify:
 3. **Outline loaded** — read `meta/outline.yaml` for section ordering and dependencies.
 4. **Glossary loaded** — read `meta/glossary.yaml` for term consistency.
 5. **RFP trace matrix loaded** — read `meta/rfp-trace-matrix.md` for requirement mapping to this section.
+6. **Runtime state loaded if present** — read `runtime/session-state.json` for the last active section and current user-facing stage.
 
 ---
 
@@ -44,13 +59,13 @@ On invocation, read the target SSOT front-matter `status` field and auto-detect 
 
 At session start, announce the detected mode to the user:
 
-- **Create**: *"[section] — 새로 작성합니다."*
-- **Explore**: *"[section]은 아직 방향이 정해지지 않았습니다. 먼저 탐색부터 시작하겠습니다."*
-- **Edit**: *"[section] — 초안이 있습니다. 검증 피드백을 반영하여 수정합니다."*
-- **Revise**: *"[section] — 검증 완료된 내용을 수정합니다. 재검증이 필요합니다."*
-- **Re-edit**: *"⚠ [section]은 최종 확인된 상태입니다. 수정 시 연관 섹션에 영향이 있을 수 있습니다."*
-- **Enhance**: *"[section] — 기존 제안서 내용을 기반으로 보강합니다."*
-- **Directive**: *"[section] — Overseer 지시사항을 반영합니다."*
+- **Create**: *"현재: 새로 작성 중. 이번 단계에서 [section] 초안을 시작합니다."*
+- **Explore**: *"현재: 방향 탐색 중. [section]은 아직 방향이 정해지지 않았습니다."*
+- **Edit**: *"현재: 초안 보완 중. 검증 피드백을 반영해 [section]을 다듬습니다."*
+- **Revise**: *"현재: 수정 반영 중. [section]은 재검증이 필요한 상태입니다."*
+- **Re-edit**: *"현재: 확정본 수정 검토 중. [section] 수정 시 연관 섹션에 영향이 있을 수 있습니다."*
+- **Enhance**: *"현재: 기존안 보강 중. 기존 제안서 내용을 기준으로 [section]을 강화합니다."*
+- **Directive**: *"현재: 최종 검토 지시 반영 중. Overseer 지시사항을 [section]에 반영합니다."*
 
 ---
 
@@ -64,7 +79,7 @@ When `/write` targets a section with no established direction (empty SSOT or `id
 
 - Read related SSOTs and project context from `meta/proposal-meta.yaml`.
 - Identify what this section needs to cover based on `meta/outline.yaml` and `meta/rfp-trace-matrix.md`.
-- Ask the user 1-2 structured questions with concrete options:
+- Ask the user exactly one structured question per turn, and explain why it matters:
   *"HSM 방식은 크게 두 가지입니다: (A) 네트워크 HSM (추천) — 중앙 관리 용이, (B) PCIe HSM — 지연시간 최소화. 어떤 방향이 맞을까요?"*
 
 #### (E2) Researcher Gathers Background
@@ -131,9 +146,10 @@ Ask: *"방향이 정해졌습니다. 바로 작성을 시작할까요?"*
    - If dependency is `ideation` or empty -> note as `[PENDING]` placeholder.
 3. **Check RFP mapping**: Read `meta/rfp-trace-matrix.md` to identify which RFP requirements this section must address. List them explicitly.
 4. **Check glossary**: Read `meta/glossary.yaml` for terms relevant to this section's domain.
-5. **Ask user 1-2 questions** with recommended options:
+5. **Ask user questions** with recommended options:
+   - Ask one question first. Ask a second only if the first answer creates a new blocker.
    - Questions must be specific to this section, not generic.
-   - Always offer concrete choices: *"서버 이중화 방식: (A) Active-Standby (추천 — 비용 효율), (B) Active-Active (고가용성 우선). 어떤 방식으로 할까요?"*
+   - Always offer concrete choices and why they matter: *"서버 이중화 방식은 비용과 가용성을 결정합니다. (A) Active-Standby (추천 — 비용 효율), (B) Active-Active (고가용성 우선). 어떤 방식으로 할까요?"*
    - If the ideation notes contain enough direction, skip questions and summarize the plan instead: *"탐색 단계에서 [방향]으로 결정되었습니다. 이 방향으로 진행하겠습니다."*
 
 #### Step (2) — Direct Researcher
@@ -310,7 +326,7 @@ Present the completed work to the user with the following structure:
 - Note any Critic Info items that were not addressed.
 
 **e) User Options**
-Present clear action choices:
+Present clear action choices in user language:
 - **Approve** -> proceed to step (9)
 - **Request changes** -> describe what to change, return to step (6) with specific revision instructions
 - **Change direction** -> fundamental rethink, return to step (4) with new direction
@@ -472,7 +488,7 @@ When SSOT content meets either threshold, propose splitting to the user:
 3. Wait for user approval.
 4. On approval:
    - Create child SSOT files with `parent` metadata linking to the original.
-   - Inherit `depends_on` and `affects` relationships where applicable.
+   - Inherit `dependencies` and `affects` relationships where applicable.
    - Each child starts at `ideation` or `draft` depending on content maturity.
 5. Update the parent SSOT to reference its children.
 6. Update `meta/outline.yaml` with the new structure.
@@ -557,6 +573,7 @@ When the Writer cannot resolve an issue without external input:
 -------------------------------------------------
 Project: [project name]
 -------------------------------------------------
+Current: [user-facing situation label]
 Done: [v] section1 (team), [v] section2 (team)
 In Progress: [~] section3 (team) -- current activity details
 Recommended: /command copy-pasteable example input
