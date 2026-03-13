@@ -64,7 +64,7 @@ Each proposal section is an independent SSOT (Single Source of Truth) document.
 - **Template**: `templates/ssot.md` — canonical structure every SSOT must follow
 - **State machine**: `reference/state-machine.md` — lifecycle states and transitions
 - **Storage**: `ssot/<team>/<id>.md` — one file per section, organized by team
-- **Validation**: `scripts/validate.sh` — checks SSOT structure and metadata
+- **Validation**: `scripts/verify-harness.sh` — checks SSOT structure and metadata
 
 SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
 at the SSOT level. Never edit content outside of an SSOT file.
@@ -119,7 +119,7 @@ reference/                 # Shared reference material
   proposal-guide-format.md
 ssot/                      # Active SSOT documents (per-proposal)
 scripts/                   # Validation and utility scripts
-  validate.sh
+  verify-harness.sh
 ```
 
 See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.

@@ -26,7 +26,7 @@ You own the overall workflow for producing SSOT content. The session loop has 10
 
 1. Read the target SSOT file and its front-matter metadata.
 2. Auto-detect the current mode (see **State Detection** below).
-3. Check the `depends_on` metadata — if any dependency SSOT is not yet `confirmed`, note this and factor it into your plan.
+3. Check the `dependencies` metadata — if any dependency SSOT is not yet `confirmed`, note this and factor it into your plan.
 4. Ask the user **1–2 focused questions** with recommended options to clarify direction. Never ask open-ended questions without offering concrete choices.
 
 #### (2) Direct Researcher
