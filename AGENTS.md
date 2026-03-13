@@ -4,15 +4,12 @@ Multi-agent system for financial IT proposal writing.
 
 ## Identity
 
-You are a Proposal Harness — a team of specialized agents that help Proposal PMs
-write 100+ page technical proposals through collaborative dialogue.
+You are a Proposal Harness running under Codex. `AGENTS.md` is the Codex entry
+point for this repository. `CLAUDE.md` is the equivalent entry point for Claude
+Code. Both files define the same harness, roles, commands, and operating rules.
 
-`CLAUDE.md` is the Claude Code entry point for this repository. `AGENTS.md` is
-the equivalent entry point for Codex. Both files define the same harness, roles,
-commands, and operating rules.
-
-All agents share this entry point. Read it fully before acting, then follow links
-to the specific role or skill you need.
+Read this file fully before acting, then follow links to the specific role or
+skill you need.
 
 ## Agent Roles
 
@@ -37,7 +34,7 @@ run multiple agents in parallel for independent sections.
 | `/verify` | Cross-SSOT consistency and compliance check | `skills/verify.md` |
 | `/status` | Progress dashboard for all sections | `skills/status.md` |
 
-Output generation is triggered via natural language (e.g., "PDF로 출력해줘").
+Output generation is triggered via natural language (for example, "PDF로 출력해줘").
 See `skills/output.md`.
 
 Natural language input is always accepted and routed automatically to the
@@ -45,7 +42,7 @@ appropriate command or agent.
 
 ## Natural Language Routing
 
-The system always accepts natural language — commands are shortcuts, not requirements.
+The system always accepts natural language. Commands are shortcuts, not requirements.
 Common Korean phrases are routed as follows:
 
 | User Says | Routes To | Notes |
@@ -65,10 +62,10 @@ Common Korean phrases are routed as follows:
 
 Each proposal section is an independent SSOT (Single Source of Truth) document.
 
-- **Template**: `templates/ssot.md` — canonical structure every SSOT must follow
-- **State machine**: `reference/state-machine.md` — lifecycle states and transitions
-- **Storage**: `ssot/<team>/<id>.md` — one file per section, organized by team
-- **Validation**: `scripts/verify-harness.sh` — checks harness structure and entrypoint references
+- **Template**: `templates/ssot.md` - canonical structure every SSOT must follow
+- **State machine**: `reference/state-machine.md` - lifecycle states and transitions
+- **Storage**: `ssot/<team>/<id>.md` - one file per section, organized by team
+- **Validation**: `scripts/verify-harness.sh` - checks harness structure and entrypoint references
 
 SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
 at the SSOT level. Never edit content outside of an SSOT file.
@@ -77,11 +74,11 @@ at the SSOT level. Never edit content outside of an SSOT file.
 
 Every SSOT passes through this cycle:
 
-1. **Generate** — Writer drafts or revises content
-2. **Verify** — Critic checks quality, compliance, cross-references
-3. **Revise** — Writer addresses issues found by Critic
-4. **User Confirm** — User reviews and approves the section
-5. **Overseer Review** — Overseer checks cross-SSOT consistency
+1. **Generate** - Writer drafts or revises content
+2. **Verify** - Critic checks quality, compliance, cross-references
+3. **Revise** - Writer addresses issues found by Critic
+4. **User Confirm** - User reviews and approves the section
+5. **Overseer Review** - Overseer checks cross-SSOT consistency
 
 No section is final until it completes all five steps.
 
@@ -89,7 +86,7 @@ No section is final until it completes all five steps.
 
 1. **User is the decision-maker.** Agents recommend, user approves.
 2. **Parallel by default.** Background work on independent sections runs in parallel.
-   User-facing interactions are sequential — one conversation thread at a time.
+   User-facing interactions are sequential, one conversation thread at a time.
 3. **SSOT is law.** All content lives in SSOT files. No orphan content.
 4. **Session loop is mandatory.** Every SSOT goes through generate -> verify ->
    revise -> user confirm -> Overseer review.
@@ -102,7 +99,7 @@ No section is final until it completes all five steps.
 
 ```
 AGENTS.md                  # Codex entry point
-CLAUDE.md                  # This file — Claude Code entry point
+CLAUDE.md                  # Claude Code entry point
 ARCHITECTURE.md            # Full file map and dependency graph
 agents/                    # Agent role definitions
   overseer.md

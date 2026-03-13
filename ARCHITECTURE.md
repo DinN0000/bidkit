@@ -32,7 +32,8 @@ are sequential.
 
 | Path | Purpose |
 |------|---------|
-| `CLAUDE.md` | Harness entry point -- read first, links to everything else |
+| `AGENTS.md` | Codex harness entry point -- read first in Codex sessions |
+| `CLAUDE.md` | Claude Code harness entry point -- same harness as `AGENTS.md` |
 | `ARCHITECTURE.md` | This file -- system topology, file map, data flow |
 | **`agents/`** | |
 | `agents/overseer.md` | EA Overseer -- strategy, cross-review, conflict resolution |

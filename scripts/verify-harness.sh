@@ -26,6 +26,23 @@ check_file() {
   fi
 }
 
+# Helper function to check if a file contains a required string
+check_contains() {
+  local filepath="$1"
+  local pattern="$2"
+  local description="$3"
+
+  if grep -q "$pattern" "$filepath"; then
+    echo -e "${GREEN}✓${NC} $description"
+    ((PASS++))
+    return 0
+  else
+    echo -e "${RED}✗${NC} $description"
+    ((FAIL++))
+    return 1
+  fi
+}
+
 # Get the root directory (parent of scripts directory)
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
@@ -37,6 +54,7 @@ echo ""
 
 # Check core documentation files
 echo "Core Documentation:"
+check_file "AGENTS.md"
 check_file "CLAUDE.md"
 check_file "ARCHITECTURE.md"
 echo ""
@@ -81,38 +99,25 @@ check_file "reference/cross-team-communication.md"
 check_file "reference/error-handling.md"
 echo ""
 
-# Check CLAUDE.md for key path references
+# Check entrypoint files for key path references
 echo "=========================================="
-echo "CLAUDE.md Content Validation"
+echo "Entrypoint Content Validation"
 echo "=========================================="
-if [ -f "CLAUDE.md" ]; then
-  echo "Checking for key path references in CLAUDE.md..."
-
-  # Check for references to key directories
-  if grep -q "agents/" "CLAUDE.md"; then
-    echo -e "${GREEN}✓${NC} CLAUDE.md references agents/"
+for entry_file in AGENTS.md CLAUDE.md; do
+  if [ -f "$entry_file" ]; then
+    echo "Checking for key path references in $entry_file..."
+    check_contains "$entry_file" "agents/" "$entry_file references agents/"
+    check_contains "$entry_file" "skills/" "$entry_file references skills/"
+    check_contains "$entry_file" "reference/" "$entry_file references reference/"
   else
-    echo -e "${RED}✗${NC} CLAUDE.md missing reference to agents/"
+    echo -e "${RED}✗${NC} $entry_file not found"
+    ((FAIL++))
   fi
-
-  if grep -q "skills/" "CLAUDE.md"; then
-    echo -e "${GREEN}✓${NC} CLAUDE.md references skills/"
-  else
-    echo -e "${RED}✗${NC} CLAUDE.md missing reference to skills/"
-  fi
-
-  if grep -q "reference/" "CLAUDE.md"; then
-    echo -e "${GREEN}✓${NC} CLAUDE.md references reference/"
-  else
-    echo -e "${RED}✗${NC} CLAUDE.md missing reference to reference/"
-  fi
-else
-  echo -e "${RED}✗${NC} CLAUDE.md not found"
-fi
+done
 echo ""
 
 # Print summary
-TOTAL=26
+TOTAL=$((PASS + FAIL))
 echo "=========================================="
 echo "Summary: $PASS/$TOTAL files present"
 echo "=========================================="
