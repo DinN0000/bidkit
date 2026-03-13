@@ -39,6 +39,24 @@ See `skills/output.md`.
 Natural language input is always accepted and routed automatically to the
 appropriate command or agent.
 
+## Natural Language Routing
+
+The system always accepts natural language — commands are shortcuts, not requirements.
+Common Korean phrases are routed as follows:
+
+| User Says | Routes To | Notes |
+|-----------|-----------|-------|
+| "RFP 받았는데 어디서부터?" | `/design` | |
+| "제안서 만들어야 해" | `/design` | |
+| "이행계획 어떻게 할지 고민 중이야" | `/write impl` | auto-enters explore |
+| "HSM 모델 변경해야 해" | `/write hsm` | auto-enters re-edit |
+| "전체적으로 좀 약한 것 같아" | `/diagnose` | |
+| "교차 검증해줘" | `/verify` | |
+| "진행 상황 알려줘" | `/status` | |
+| "이전 버전이랑 비교해줘" | `output` | version diff |
+| "RFP 보완공고 나왔어" | update RFP | re-verify affected SSOTs |
+| "PDF로 출력해줘" | `output` | format rendering |
+
 ## SSOT Documents
 
 Each proposal section is an independent SSOT (Single Source of Truth) document.
