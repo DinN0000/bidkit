@@ -1,0 +1,6 @@
+terms:
+  - term: ""
+    definition: ""
+    standard_name: ""     # official product/server name
+    category: ""          # product | server | protocol | abbreviation
+    source_ssot: ""       # which SSOT defined this term

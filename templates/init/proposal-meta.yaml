@@ -1,0 +1,18 @@
+project:
+  customer: ""
+  name: ""
+  rfp_id: ""
+  rfp_path: ""
+  timeline:
+    proposal_due: ""
+    project_start: ""
+    project_end: ""
+  team_assignments:
+    overseer: EA
+    ba: []    # list of SSOT ids
+    da: []
+    ta: []
+    sa: []
+  competitors: []
+  strengths: []
+  strategy: ""

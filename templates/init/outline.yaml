@@ -1,0 +1,8 @@
+sections:
+  - order: 1
+    title: ""
+    ssot_id: ""
+    team: ""
+    priority: high | medium | low
+    dependencies: []
+    estimated_pages: 0
