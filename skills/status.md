@@ -185,7 +185,7 @@ Then Proposal Guide with `/write <first section>` recommendation.
 |------|---------|
 | `meta/outline.yaml` | Section ordering, team assignments, dependencies |
 | `meta/proposal-meta.yaml` | Project name and metadata |
-| `ssot/<team>/<id>.yaml` | Per-section SSOT front-matter (status, version, etc.) |
+| `ssot/<team>/<id>.md` | Per-section SSOT front-matter (status, version, etc.) |
 | `reference/proposal-guide-format.md` | Proposal Guide footer format |
 | `reference/state-machine.md` | Valid SSOT states |
 

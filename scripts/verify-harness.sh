@@ -116,15 +116,109 @@ for entry_file in AGENTS.md CLAUDE.md; do
 done
 echo ""
 
+# SSOT Template Structure Check
+echo "=========================================="
+echo "SSOT Template Structure Validation"
+echo "=========================================="
+SSOT_TEMPLATE="templates/ssot.md"
+if [ -f "$SSOT_TEMPLATE" ]; then
+  echo "Checking $SSOT_TEMPLATE for required structure..."
+  # YAML frontmatter markers
+  check_contains "$SSOT_TEMPLATE" "^---" "$SSOT_TEMPLATE contains YAML frontmatter markers (---)"
+  # Required frontmatter fields
+  check_contains "$SSOT_TEMPLATE" "^id:" "$SSOT_TEMPLATE contains frontmatter field: id"
+  check_contains "$SSOT_TEMPLATE" "^title:" "$SSOT_TEMPLATE contains frontmatter field: title"
+  check_contains "$SSOT_TEMPLATE" "^team:" "$SSOT_TEMPLATE contains frontmatter field: team"
+  check_contains "$SSOT_TEMPLATE" "^status:" "$SSOT_TEMPLATE contains frontmatter field: status"
+  check_contains "$SSOT_TEMPLATE" "^version:" "$SSOT_TEMPLATE contains frontmatter field: version"
+  # Required body sections
+  check_contains "$SSOT_TEMPLATE" "## Summary" "$SSOT_TEMPLATE contains section: ## Summary"
+  check_contains "$SSOT_TEMPLATE" "## Content" "$SSOT_TEMPLATE contains section: ## Content"
+  check_contains "$SSOT_TEMPLATE" "## Supporting Evidence" "$SSOT_TEMPLATE contains section: ## Supporting Evidence"
+  check_contains "$SSOT_TEMPLATE" "## Verification Log" "$SSOT_TEMPLATE contains section: ## Verification Log"
+  check_contains "$SSOT_TEMPLATE" "## Overseer Review Log" "$SSOT_TEMPLATE contains section: ## Overseer Review Log"
+else
+  echo -e "${RED}✗${NC} $SSOT_TEMPLATE not found — skipping template checks"
+  ((FAIL++))
+fi
+echo ""
+
+# State Machine Consistency Check
+echo "=========================================="
+echo "State Machine Consistency"
+echo "=========================================="
+STATE_FILE="reference/state-machine.md"
+if [ -f "$STATE_FILE" ]; then
+  echo "Checking $STATE_FILE for all valid states..."
+  check_contains "$STATE_FILE" "ideation" "$STATE_FILE contains state: ideation"
+  check_contains "$STATE_FILE" "draft" "$STATE_FILE contains state: draft"
+  check_contains "$STATE_FILE" "verifying" "$STATE_FILE contains state: verifying"
+  check_contains "$STATE_FILE" "verified" "$STATE_FILE contains state: verified"
+  check_contains "$STATE_FILE" "tentative" "$STATE_FILE contains state: tentative"
+  check_contains "$STATE_FILE" "reviewing" "$STATE_FILE contains state: reviewing"
+  check_contains "$STATE_FILE" "confirmed" "$STATE_FILE contains state: confirmed"
+  check_contains "$STATE_FILE" "revision" "$STATE_FILE contains state: revision"
+else
+  echo -e "${RED}✗${NC} $STATE_FILE not found — skipping state machine checks"
+  ((FAIL++))
+fi
+echo ""
+
+# Cross-Entrypoint Sync Check
+echo "=========================================="
+echo "Cross-Entrypoint Sync (CLAUDE.md vs AGENTS.md)"
+echo "=========================================="
+if [ -f "CLAUDE.md" ] && [ -f "AGENTS.md" ]; then
+  SYNC_OK=true
+
+  # Check agent file references
+  for agent_file in agents/overseer.md agents/team-lead.md agents/writer.md agents/researcher.md agents/critic.md; do
+    CLAUDE_HAS=$(grep -c "$agent_file" CLAUDE.md || true)
+    AGENTS_HAS=$(grep -c "$agent_file" AGENTS.md || true)
+    if [ "$CLAUDE_HAS" -gt 0 ] && [ "$AGENTS_HAS" -gt 0 ]; then
+      echo -e "${GREEN}✓${NC} Both entrypoints reference $agent_file"
+      ((PASS++))
+    else
+      echo -e "${RED}✗${NC} Mismatch: $agent_file (CLAUDE.md: $CLAUDE_HAS, AGENTS.md: $AGENTS_HAS)"
+      ((FAIL++))
+      SYNC_OK=false
+    fi
+  done
+
+  # Check skill file references
+  for skill_file in skills/design.md skills/write.md skills/diagnose.md skills/verify.md skills/status.md skills/output.md; do
+    CLAUDE_HAS=$(grep -c "$skill_file" CLAUDE.md || true)
+    AGENTS_HAS=$(grep -c "$skill_file" AGENTS.md || true)
+    if [ "$CLAUDE_HAS" -gt 0 ] && [ "$AGENTS_HAS" -gt 0 ]; then
+      echo -e "${GREEN}✓${NC} Both entrypoints reference $skill_file"
+      ((PASS++))
+    else
+      echo -e "${RED}✗${NC} Mismatch: $skill_file (CLAUDE.md: $CLAUDE_HAS, AGENTS.md: $AGENTS_HAS)"
+      ((FAIL++))
+      SYNC_OK=false
+    fi
+  done
+
+  if [ "$SYNC_OK" = true ]; then
+    echo -e "${GREEN}Entrypoints are in sync.${NC}"
+  else
+    echo -e "${RED}Entrypoints have mismatched references.${NC}"
+  fi
+else
+  echo -e "${RED}✗${NC} One or both entrypoints missing — skipping sync check"
+  ((FAIL++))
+fi
+echo ""
+
 # Print summary
 TOTAL=$((PASS + FAIL))
 echo "=========================================="
-echo "Summary: $PASS/$TOTAL files present"
+echo "Summary: $PASS/$TOTAL checks passed"
 echo "=========================================="
 if [ $FAIL -eq 0 ]; then
-  echo -e "${GREEN}All required files present!${NC}"
+  echo -e "${GREEN}All checks passed!${NC}"
   exit 0
 else
-  echo -e "${RED}$FAIL files missing${NC}"
+  echo -e "${RED}$FAIL checks failed${NC}"
   exit 1
 fi

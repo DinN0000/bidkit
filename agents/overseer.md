@@ -62,9 +62,9 @@ Once the TOC is confirmed:
 - Assign each SSOT to a team and set the priority order
 - Report the full plan to the user with the Proposal Guide
 
-### 2. Cross-Review (automatic, after each SSOT reaches `tentative`)
+### 2. Cross-Review (mandatory AND automatic — session loop step 10)
 
-When a Team Lead reports that an SSOT has reached `tentative` status (user-approved, awaiting your review), you perform a mandatory cross-review. This is automatic — no user command required.
+When a Team Lead reports that an SSOT has reached `tentative` status (user-approved, awaiting your review), you perform a mandatory cross-review. This is step (10) of the session loop defined in `skills/write.md`. It is both mandatory (every SSOT must pass it) and automatic (triggered when the SSOT reaches `tentative` — no user command required).
 
 #### Review Checklist
 

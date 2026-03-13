@@ -28,15 +28,17 @@ Recommended: /command copy-pasteable example input
 
 Show exactly ONE recommendation — the highest-priority match from top to bottom:
 
-| Current State | Recommended |
-|---|---|
-| No project | /design |
-| Design complete, all SSOTs empty | /write <first priority section> |
-| Some sections in draft | /write on incomplete |
-| 2+ confirmed | /verify |
-| All confirmed | /diagnose for final check |
-| External input received | Natural language |
-| Ideation sections exist | /write <section> |
+| Priority | Current State | Recommended |
+|----------|---|---|
+| 1 | No project | /design |
+| 2 | Design complete, all SSOTs empty | /write <first priority section> |
+| 3 | Some sections in draft | /write on incomplete |
+| 4 | 2+ confirmed | /verify |
+| 5 | All confirmed | /output to generate final deliverable |
+| 6 | Output generated, small change needed | Natural language quick edit |
+| 7 | Versions available | /output diff to compare versions |
+| 8 | External input received | Natural language |
+| 9 | Ideation sections exist | /write <section> |
 
 ## Rules
 

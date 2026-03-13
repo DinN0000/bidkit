@@ -68,9 +68,14 @@ After `output/proposal-vN.md` is generated, render the user-requested format(s):
 | Format | Characteristics |
 |--------|----------------|
 | Markdown | Always generated, editable source of truth |
-| PPT | Company template mapping (`templates/company-ppt.pptx`), slide layout per section |
+| PPT | Company template mapping, slide layout per section |
 | PDF | Page numbers, watermark, TOC auto-generation (`templates/pdf-style.css`) |
 | HTML | Hyperlinks between sections, search, status badges (`templates/html-theme/`) |
+
+> **Note — project-specific templates**: PPT rendering requires a company PPTX
+> template (e.g., `templates/company-ppt.pptx`) that must be provided by the user
+> during `/design` initialization. PDF and HTML templates ship with sensible
+> defaults but can be customized per project.
 
 ### Output Paths
 
@@ -83,7 +88,7 @@ output/proposal-vN/index.html     ← static site
 
 ### PPT Rendering
 
-Source: `templates/company-ppt.pptx`
+Source: Company PPTX template (provided during `/design` initialization)
 
 Mapping rules:
 - Each Level-1 section (`## `) -> new section divider slide.

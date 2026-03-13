@@ -1,5 +1,17 @@
 # SSOT State Machine
 
+## Terminology Note: Three Kinds of "Verification"
+
+This project uses three distinct verification concepts. To avoid confusion, use the specific names below:
+
+| Concept | Performed By | When | Scope |
+|---------|-------------|------|-------|
+| **Critic Verification** | Critic agent | Session loop steps (5) and (7) | Per-SSOT quality check — RFP coverage, data accuracy, glossary compliance, cross-SSOT data consistency |
+| **Overseer Cross-Review** | Overseer agent | Session loop step (10), automatically triggered when SSOT reaches `tentative` | Cross-SSOT consistency — terminology, numeric, naming, strategic alignment across all related SSOTs |
+| **`/verify` Command** | Overseer agent | User-invoked | Comprehensive cross-cutting analysis across all `confirmed` and `tentative` SSOTs — broader than a single cross-review |
+
+When referring to these, prefer the specific name (e.g., "Critic Verification" or "Overseer Cross-Review") rather than the generic word "verification."
+
 ## State Diagram
 
 ```

@@ -339,7 +339,7 @@ Present clear action choices:
 #### Step (10) — Overseer Cross-Review
 
 **Owner**: Overseer
-**Applies to**: After step (9), automatic
+**Applies to**: After step (9) — mandatory AND automatic (triggered when SSOT reaches `tentative`; no user command needed)
 
 The Overseer performs a mandatory cross-review per `agents/overseer.md`:
 

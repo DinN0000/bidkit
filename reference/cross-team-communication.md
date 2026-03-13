@@ -29,7 +29,7 @@ Four communication channels keep teams synchronized. Each channel has a defined 
 
 - **Trigger**: A confirmed SSOT is re-edited.
 - **Flow**: Overseer -> all affected Team Leads
-- **Content**: Full impact analysis (see `impact-rules.md`), list of affected SSOTs, required actions.
+- **Content**: Full impact analysis (see `reference/impact-rules.md`), list of affected SSOTs, required actions.
 - **Expected response**: Affected teams acknowledge and begin revision if severity is High.
 
 ## Conflict Resolution Protocol

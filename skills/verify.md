@@ -241,7 +241,7 @@ If all checks pass with no issues:
 | `meta/proposal-meta.yaml` | Project name and metadata |
 | `meta/glossary.yaml` | Authoritative term list for consistency checks |
 | `meta/rfp-trace-matrix.md` | RFP requirement coverage mapping |
-| `ssot/<team>/<id>.yaml` | Per-section SSOT files |
+| `ssot/<team>/<id>.md` | Per-section SSOT files |
 | `reference/proposal-guide-format.md` | Proposal Guide footer format |
 | `reference/state-machine.md` | Valid SSOT states |
 | `agents/overseer.md` | Overseer cross-review protocol |

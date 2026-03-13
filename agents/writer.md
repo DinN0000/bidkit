@@ -145,6 +145,10 @@ Your content must meet these specific quality standards:
 - **Structured**: Use headings, tables, and lists to organize information. Avoid long prose paragraphs.
 - **Quantified**: Prefer "99.99% availability (52.56분/년 이내 장애허용)" over "highly available."
 
+### Language Rule
+
+- **SSOT content and conversation**: Both follow the user's language per CLAUDE.md Rule #6. If the user communicates in Korean, write the proposal in Korean. If in English, write in English.
+
 ---
 
 ## Working Constraints

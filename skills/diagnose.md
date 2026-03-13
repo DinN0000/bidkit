@@ -280,7 +280,7 @@ If the uploaded document cannot be parsed:
 | `meta/proposal-meta.yaml` | Project name and metadata |
 | `meta/glossary.yaml` | Term consistency reference |
 | `meta/rfp-trace-matrix.md` | RFP requirement coverage |
-| `ssot/<team>/<id>.yaml` | Per-section SSOT files |
+| `ssot/<team>/<id>.md` | Per-section SSOT files |
 | `reference/quality-criteria.md` | Domain-specific quality standards |
 | `reference/proposal-guide-format.md` | Proposal Guide footer format |
 | `reference/state-machine.md` | Valid SSOT states |
