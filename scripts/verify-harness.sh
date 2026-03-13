@@ -170,30 +170,17 @@ echo "Cross-Entrypoint Sync (CLAUDE.md vs AGENTS.md)"
 echo "=========================================="
 if [ -f "CLAUDE.md" ] && [ -f "AGENTS.md" ]; then
   SYNC_OK=true
+  CLAUDE_CONTENT=$(cat CLAUDE.md)
+  AGENTS_CONTENT=$(cat AGENTS.md)
 
-  # Check agent file references
-  for agent_file in agents/overseer.md agents/team-lead.md agents/writer.md agents/researcher.md agents/critic.md; do
-    CLAUDE_HAS=$(grep -c "$agent_file" CLAUDE.md || true)
-    AGENTS_HAS=$(grep -c "$agent_file" AGENTS.md || true)
+  for ref_file in agents/overseer.md agents/team-lead.md agents/writer.md agents/researcher.md agents/critic.md skills/design.md skills/write.md skills/diagnose.md skills/verify.md skills/status.md skills/output.md; do
+    CLAUDE_HAS=$(grep -c "$ref_file" <<< "$CLAUDE_CONTENT" || true)
+    AGENTS_HAS=$(grep -c "$ref_file" <<< "$AGENTS_CONTENT" || true)
     if [ "$CLAUDE_HAS" -gt 0 ] && [ "$AGENTS_HAS" -gt 0 ]; then
-      echo -e "${GREEN}✓${NC} Both entrypoints reference $agent_file"
+      echo -e "${GREEN}✓${NC} Both entrypoints reference $ref_file"
       ((PASS++))
     else
-      echo -e "${RED}✗${NC} Mismatch: $agent_file (CLAUDE.md: $CLAUDE_HAS, AGENTS.md: $AGENTS_HAS)"
-      ((FAIL++))
-      SYNC_OK=false
-    fi
-  done
-
-  # Check skill file references
-  for skill_file in skills/design.md skills/write.md skills/diagnose.md skills/verify.md skills/status.md skills/output.md; do
-    CLAUDE_HAS=$(grep -c "$skill_file" CLAUDE.md || true)
-    AGENTS_HAS=$(grep -c "$skill_file" AGENTS.md || true)
-    if [ "$CLAUDE_HAS" -gt 0 ] && [ "$AGENTS_HAS" -gt 0 ]; then
-      echo -e "${GREEN}✓${NC} Both entrypoints reference $skill_file"
-      ((PASS++))
-    else
-      echo -e "${RED}✗${NC} Mismatch: $skill_file (CLAUDE.md: $CLAUDE_HAS, AGENTS.md: $AGENTS_HAS)"
+      echo -e "${RED}✗${NC} Mismatch: $ref_file (CLAUDE.md: $CLAUDE_HAS, AGENTS.md: $AGENTS_HAS)"
       ((FAIL++))
       SYNC_OK=false
     fi

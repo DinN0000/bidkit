@@ -581,6 +581,8 @@ Show exactly ONE recommendation — the highest-priority match:
 2. Design complete, all SSOTs empty -> `/write <first priority section>`
 3. Some sections in draft -> `/write` on incomplete section
 4. 2+ sections confirmed -> `/verify`
-5. All confirmed -> `/diagnose` for final check
-6. External input received -> natural language guidance
-7. Ideation sections exist -> `/write <section>`
+5. All confirmed -> `/output` to generate final deliverable
+6. Output generated, small change needed -> natural language quick edit
+7. Versions available -> `/output diff` to compare versions
+8. External input received -> natural language guidance
+9. Ideation sections exist -> `/write <section>`

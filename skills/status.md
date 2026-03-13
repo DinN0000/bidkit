@@ -87,8 +87,10 @@ Use the same Recommendation Logic as the Proposal Guide:
 2. Some sections in draft/verifying -> recommend `/write` on the most advanced incomplete section
 3. Any section in `revision` state -> recommend `/write <revision section>` to address Overseer directive
 4. 2+ sections confirmed -> recommend `/verify`
-5. All confirmed -> recommend `/diagnose`
-6. Ideation sections exist (no draft sections) -> recommend `/write <ideation section>`
+5. All confirmed -> recommend `/output`
+6. Output generated, small change needed -> natural language quick edit
+7. Versions available -> recommend `/output diff`
+8. Ideation sections exist (no draft sections) -> recommend `/write <ideation section>`
 
 ---
 
@@ -223,6 +225,8 @@ Show exactly ONE recommendation — the highest-priority match:
 2. Design complete, all SSOTs empty -> `/write <first priority section>`
 3. Some sections in draft -> `/write` on incomplete section
 4. 2+ sections confirmed -> `/verify`
-5. All confirmed -> `/diagnose` for final check
-6. External input received -> natural language guidance
-7. Ideation sections exist -> `/write <section>`
+5. All confirmed -> `/output` to generate final deliverable
+6. Output generated, small change needed -> natural language quick edit
+7. Versions available -> `/output diff` to compare versions
+8. External input received -> natural language guidance
+9. Ideation sections exist -> `/write <section>`
