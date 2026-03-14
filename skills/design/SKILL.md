@@ -43,7 +43,7 @@ When the user provides a document file (PPTX, DOCX, XLSX) as RFP input:
 1. Run `bash scripts/check-deps.sh`
 2. If `bidkit-parser` is `false`, inform the user:
    "PPTX/DOCX 파일을 읽으려면 parser 설치가 필요합니다.
-    터미널에서 실행: pip install bidkit-parser
+    터미널에서 실행: uv pip install bidkit-parser  (uv가 없다면: brew install uv)
     설치 후 다시 파일을 제공해주세요.
     PDF 형식의 RFP라면 바로 진행 가능합니다."
 3. If `true`, parse the document using `from parser import parse` and proceed.

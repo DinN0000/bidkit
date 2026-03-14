@@ -7,6 +7,7 @@ check() {
 }
 
 GIT=$(check command -v git)
+UV=$(check command -v uv)
 PARSER=$(check python3 -c "import bidkit_parser")
 PANDOC=$(check command -v pandoc)
 NODE=$(check command -v node)
@@ -15,6 +16,9 @@ cat <<EOF
 {
   "required": {
     "git": $GIT
+  },
+  "tools": {
+    "uv": $UV
   },
   "optional": {
     "bidkit-parser": $PARSER,

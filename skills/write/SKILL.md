@@ -34,7 +34,7 @@ When source documents (RFP, prior proposals, reference materials) are PPTX, DOCX
 1. Run `bash scripts/check-deps.sh`
 2. If `bidkit-parser` is `false`, inform the user:
    "PPTX/DOCX 파일을 읽으려면 parser 설치가 필요합니다.
-    터미널에서 실행: pip install bidkit-parser
+    터미널에서 실행: uv pip install bidkit-parser  (uv가 없다면: brew install uv)
     설치 후 다시 시도해주세요."
 3. If `true`, parse and provide to Researcher as structured input.
 

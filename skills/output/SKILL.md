@@ -16,7 +16,7 @@ When the user requests output in a specific format:
     Markdown 출력은 바로 가능합니다."
 3. **PPTX requested** and `bidkit-parser` is `false`:
    "PPTX 출력을 위해 bidkit-parser가 필요합니다.
-    설치: pip install bidkit-parser
+    설치: uv pip install bidkit-parser  (uv가 없다면: brew install uv)
     Markdown 출력은 바로 가능합니다."
 4. If tools available, proceed with requested format.
 
