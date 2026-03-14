@@ -28,7 +28,7 @@ are sequential.
 
 ---
 
-## Directory Map (Harness Files)
+## Directory Map (BidKit Files)
 
 | Path | Purpose |
 |------|---------|
@@ -76,11 +76,11 @@ are sequential.
 | `parser/run.py` | CLI entry point for standalone parsing |
 | `parser/requirements.txt` | Python dependencies (no AWS) |
 | **`scripts/`** | |
-| `scripts/verify-harness.sh` | Harness integrity validation (file existence, cross-refs) |
-| `scripts/validate-harness-contracts.js` | Contract validation for schema, output rules, and field naming (requires Node.js; skipped gracefully if unavailable) |
+| `scripts/verify-bidkit.sh` | BidKit integrity validation (file existence, cross-refs) |
+| `scripts/validate-bidkit-contracts.js` | Contract validation for schema, output rules, and field naming (requires Node.js; skipped gracefully if unavailable) |
 | `scripts/check-deps.sh` | Dependency detection (JSON output) |
 | **`.claude-plugin/`** | |
-| `.claude-plugin/plugin.json` | Plugin manifest (name: "ph") |
+| `.claude-plugin/plugin.json` | Plugin manifest (name: "bid") |
 | **`evals/`** | |
 | `evals/config.json` | Lightweight evaluation manifest for `/design`, `/write`, `/verify` |
 | `evals/**` | Prompt and expected-output fixtures for regression checking |

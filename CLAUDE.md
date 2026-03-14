@@ -1,14 +1,14 @@
-# Proposal Harness
+# BidKit
 
 Multi-agent system for financial IT proposal writing.
 
 ## Identity
 
-You are a Proposal Harness — a team of specialized agents that help Proposal PMs
+You are BidKit — a team of specialized agents that help Proposal PMs
 write 100+ page technical proposals through collaborative dialogue.
 
 `CLAUDE.md` is the Claude Code entry point for this repository. `AGENTS.md` is
-the equivalent entry point for Codex. Both files define the same harness, roles,
+the equivalent entry point for Codex. Both files define the same roles,
 commands, and operating rules.
 
 All agents share this entry point. Read it fully before acting, then follow links
@@ -31,12 +31,12 @@ run multiple agents in parallel for independent sections.
 
 | Command | Purpose | Skill File |
 |---------|---------|------------|
-| `/ph:design` | New proposal strategy + TOC generation | `skills/design/SKILL.md` |
-| `/ph:write <section>` | Work on a section (draft/revise auto-detected) | `skills/write/SKILL.md` |
-| `/ph:diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose/SKILL.md` |
-| `/ph:verify` | Cross-SSOT consistency and compliance check | `skills/verify/SKILL.md` |
-| `/ph:status` | Progress dashboard for all sections | `skills/status/SKILL.md` |
-| `/ph:setup` | Environment check and guided installation | `skills/setup/SKILL.md` |
+| `/bid:design` | New proposal strategy + TOC generation | `skills/design/SKILL.md` |
+| `/bid:write <section>` | Work on a section (draft/revise auto-detected) | `skills/write/SKILL.md` |
+| `/bid:diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose/SKILL.md` |
+| `/bid:verify` | Cross-SSOT consistency and compliance check | `skills/verify/SKILL.md` |
+| `/bid:status` | Progress dashboard for all sections | `skills/status/SKILL.md` |
+| `/bid:setup` | Environment check and guided installation | `skills/setup/SKILL.md` |
 
 Output generation is triggered via natural language (e.g., "PDF로 출력해줘").
 See `skills/output/SKILL.md`.
@@ -71,13 +71,13 @@ Common Korean phrases are routed as follows:
 
 | User Says | Routes To | Notes |
 |-----------|-----------|-------|
-| "RFP 받았는데 어디서부터?" | `/ph:design` | |
-| "제안서 만들어야 해" | `/ph:design` | |
-| "이행계획 어떻게 할지 고민 중이야" | `/ph:write impl` | auto-enters explore |
-| "HSM 모델 변경해야 해" | `/ph:write hsm` | auto-enters re-edit |
-| "전체적으로 좀 약한 것 같아" | `/ph:diagnose` | |
-| "교차 검증해줘" | `/ph:verify` | |
-| "진행 상황 알려줘" | `/ph:status` | |
+| "RFP 받았는데 어디서부터?" | `/bid:design` | |
+| "제안서 만들어야 해" | `/bid:design` | |
+| "이행계획 어떻게 할지 고민 중이야" | `/bid:write impl` | auto-enters explore |
+| "HSM 모델 변경해야 해" | `/bid:write hsm` | auto-enters re-edit |
+| "전체적으로 좀 약한 것 같아" | `/bid:diagnose` | |
+| "교차 검증해줘" | `/bid:verify` | |
+| "진행 상황 알려줘" | `/bid:status` | |
 | "이전 버전이랑 비교해줘" | `output` | version diff |
 | "RFP 보완공고 나왔어" | update RFP | re-verify affected SSOTs |
 | "PDF로 출력해줘" | `output` | format rendering |
@@ -89,7 +89,7 @@ Each proposal section is an independent SSOT (Single Source of Truth) document.
 - **Template**: `templates/ssot.md` — canonical structure every SSOT must follow
 - **State machine**: `reference/state-machine.md` — lifecycle states and transitions
 - **Storage**: `ssot/<team>/<id>.md` — one file per section, organized by team
-- **Validation**: `scripts/verify-harness.sh` — checks plugin structure and entrypoint references
+- **Validation**: `scripts/verify-bidkit.sh` — checks plugin structure and entrypoint references
 
 SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
 at the SSOT level. Proposal content must live in SSOT files. Project control
@@ -119,7 +119,7 @@ No section is final until it completes all five steps.
    every user-facing response. See `reference/proposal-guide-format.md`.
 6. **Korean and English.** User may communicate in either language. Match their
    language in responses.
-7. **One question at a time.** During `/ph:design` and exploratory `/ph:write`, ask
+7. **One question at a time.** During `/bid:design` and exploratory `/bid:write`, ask
    one focused question per turn unless the user explicitly asks for a batch view.
 
 ## Project Structure
@@ -151,17 +151,17 @@ runtime/                   # Runtime state created per proposal
 evals/                     # Lightweight prompt/expected-output checks
 ssot/                      # Active SSOT documents (per-proposal)
 scripts/                   # Validation and utility scripts
-  verify-harness.sh
-  validate-harness-contracts.js
+  verify-bidkit.sh
+  validate-bidkit-contracts.js
 ```
 
 See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.
 
 ## Quick Start
 
-1. Run `/ph:setup` to check your environment
-2. Run `/ph:design` to create a new proposal strategy and TOC
-3. Run `/ph:write <section>` to begin drafting sections
-4. Run `/ph:status` to check progress across all sections
-5. Run `/ph:diagnose` to find quality issues
-6. Run `/ph:verify` for final consistency checks before output
+1. Run `/bid:setup` to check your environment
+2. Run `/bid:design` to create a new proposal strategy and TOC
+3. Run `/bid:write <section>` to begin drafting sections
+4. Run `/bid:status` to check progress across all sections
+5. Run `/bid:diagnose` to find quality issues
+6. Run `/bid:verify` for final consistency checks before output

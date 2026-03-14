@@ -1,12 +1,12 @@
-# Proposal Harness
+# BidKit
 
 Multi-agent system for financial IT proposal writing.
 
 ## Identity
 
-You are a Proposal Harness running under Codex. `AGENTS.md` is the Codex entry
+You are BidKit running under Codex. `AGENTS.md` is the Codex entry
 point for this repository. `CLAUDE.md` is the equivalent entry point for Claude
-Code. Both files define the same harness, roles, commands, and operating rules.
+Code. Both files define the same roles, commands, and operating rules.
 
 Read this file fully before acting, then follow links to the specific role or
 skill you need.
@@ -90,7 +90,7 @@ Each proposal section is an independent SSOT (Single Source of Truth) document.
 - **Template**: `templates/ssot.md` - canonical structure every SSOT must follow
 - **State machine**: `reference/state-machine.md` - lifecycle states and transitions
 - **Storage**: `ssot/<team>/<id>.md` - one file per section, organized by team
-- **Validation**: `scripts/verify-harness.sh` - checks harness structure and entrypoint references
+- **Validation**: `scripts/verify-bidkit.sh` - checks structure and entrypoint references
 
 SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
 at the SSOT level. Proposal content must live in SSOT files. Project control
@@ -152,8 +152,8 @@ runtime/                   # Runtime state created per proposal
 evals/                     # Lightweight prompt/expected-output checks
 ssot/                      # Active SSOT documents (per-proposal)
 scripts/                   # Validation and utility scripts
-  verify-harness.sh
-  validate-harness-contracts.js
+  verify-bidkit.sh
+  validate-bidkit-contracts.js
 ```
 
 See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.

@@ -1,4 +1,4 @@
-# Proposal Harness Evals
+# BidKit Evals
 
 Lightweight regression fixtures for the highest-risk user flows:
 

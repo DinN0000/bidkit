@@ -104,9 +104,9 @@ if (!guide.includes('User-Facing Status Labels')) {
 }
 
 if (errors.length > 0) {
-  console.error('Harness contract validation failed:\n');
+  console.error('BidKit contract validation failed:\n');
   for (const error of errors) console.error(`- ${error}`);
   process.exit(1);
 }
 
-console.log('Harness contract validation passed.');
+console.log('BidKit contract validation passed.');

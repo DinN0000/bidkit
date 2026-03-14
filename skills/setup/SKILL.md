@@ -36,4 +36,4 @@ harness-parser 없이도 PDF RFP는 바로 사용 가능합니다.
 ## After Check
 
 Show the Proposal Guide footer with:
-Recommended: /ph:design — 새 제안서 프로젝트를 시작합니다
+Recommended: /bid:design — 새 제안서 프로젝트를 시작합니다

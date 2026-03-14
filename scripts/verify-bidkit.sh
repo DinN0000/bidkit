@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Harness Integrity Validation Script
-# Validates the presence of all required files in the harness structure
+# BidKit Integrity Validation Script
+# Validates the presence of all required files in the BidKit structure
 
 # Color codes for output
 GREEN='\033[0;32m'
@@ -50,7 +50,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
 
 echo "=========================================="
-echo "Harness Integrity Validation"
+echo "BidKit Integrity Validation"
 echo "=========================================="
 echo ""
 
@@ -169,9 +169,9 @@ echo ""
 echo "=========================================="
 echo "Contract Validation"
 echo "=========================================="
-if [ -f "scripts/validate-harness-contracts.js" ]; then
+if [ -f "scripts/validate-bidkit-contracts.js" ]; then
   if command -v node >/dev/null 2>&1; then
-    if node "scripts/validate-harness-contracts.js"; then
+    if node "scripts/validate-bidkit-contracts.js"; then
       echo -e "${GREEN}✓${NC} Contract validation passed"
       ((PASS++))
     else
@@ -184,7 +184,7 @@ if [ -f "scripts/validate-harness-contracts.js" ]; then
     ((INFO++))
   fi
 else
-  echo -e "${RED}✗${NC} scripts/validate-harness-contracts.js not found"
+  echo -e "${RED}✗${NC} scripts/validate-bidkit-contracts.js not found"
   ((FAIL++))
 fi
 echo ""

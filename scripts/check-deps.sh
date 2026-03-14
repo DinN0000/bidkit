@@ -1,5 +1,5 @@
 #!/bin/bash
-# Dependency detection for Proposal Harness
+# Dependency detection for BidKit
 # Outputs JSON with required/optional tool availability
 
 check() {
