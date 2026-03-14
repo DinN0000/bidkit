@@ -6,6 +6,16 @@
 
 ---
 
+## Dependency Check
+
+Before running cross-SSOT verification:
+1. Run `bash scripts/check-deps.sh`
+2. If `node` is `false`:
+   - Skip `scripts/validate-harness-contracts.js` (enhanced contract validation)
+   - Continue with all other verification checks
+   - Note in the report: "고급 계약 검증이 생략되었습니다 (Node.js 미설치). 핵심 검증은 정상 수행됩니다."
+3. If `node` is `true`, run full verification including contract validation.
+
 ## Prerequisites
 
 1. **Project exists** — `meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
