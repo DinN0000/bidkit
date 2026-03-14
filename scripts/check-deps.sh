@@ -7,7 +7,7 @@ check() {
 }
 
 GIT=$(check command -v git)
-PARSER=$(check pip show harness-parser)
+PARSER=$(check python3 -c "import harness_parser")
 PANDOC=$(check command -v pandoc)
 NODE=$(check command -v node)
 

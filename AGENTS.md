@@ -120,7 +120,7 @@ No section is final until it completes all five steps.
    every user-facing response. See `reference/proposal-guide-format.md`.
 6. **Korean and English.** User may communicate in either language. Match their
    language in responses.
-7. **One question at a time.** During `/design` and exploratory `/write`, ask
+7. **One question at a time.** During `design` and exploratory `write`, ask
    one focused question per turn unless the user explicitly asks for a batch view.
 
 ## Project Structure
