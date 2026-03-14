@@ -72,12 +72,19 @@ echo ""
 
 # Check skills documentation
 echo "Skills:"
-check_file "skills/design.md"
-check_file "skills/write.md"
-check_file "skills/diagnose.md"
-check_file "skills/verify.md"
-check_file "skills/status.md"
-check_file "skills/output.md"
+check_file "skills/design/SKILL.md"
+check_file "skills/write/SKILL.md"
+check_file "skills/diagnose/SKILL.md"
+check_file "skills/verify/SKILL.md"
+check_file "skills/status/SKILL.md"
+check_file "skills/output/SKILL.md"
+check_file "skills/setup/SKILL.md"
+echo ""
+
+# Check plugin manifest and dependencies
+echo "Plugin:"
+check_file ".claude-plugin/plugin.json"
+check_file "scripts/check-deps.sh"
 echo ""
 
 # Check templates
@@ -212,7 +219,7 @@ if [ -f "CLAUDE.md" ] && [ -f "AGENTS.md" ]; then
   CLAUDE_CONTENT=$(cat CLAUDE.md)
   AGENTS_CONTENT=$(cat AGENTS.md)
 
-  for ref_file in agents/overseer.md agents/team-lead.md agents/writer.md agents/researcher.md agents/critic.md skills/design.md skills/write.md skills/diagnose.md skills/verify.md skills/status.md skills/output.md; do
+  for ref_file in agents/overseer.md agents/team-lead.md agents/writer.md agents/researcher.md agents/critic.md skills/design/SKILL.md skills/write/SKILL.md skills/diagnose/SKILL.md skills/verify/SKILL.md skills/status/SKILL.md skills/output/SKILL.md skills/setup/SKILL.md; do
     CLAUDE_HAS=$(grep -c "$ref_file" <<< "$CLAUDE_CONTENT" || true)
     AGENTS_HAS=$(grep -c "$ref_file" <<< "$AGENTS_CONTENT" || true)
     if [ "$CLAUDE_HAS" -gt 0 ] && [ "$AGENTS_HAS" -gt 0 ]; then

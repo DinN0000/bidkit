@@ -27,9 +27,10 @@ const requiredFiles = [
   'AGENTS.md',
   'CLAUDE.md',
   'reference/proposal-guide-format.md',
-  'skills/output.md',
+  'skills/output/SKILL.md',
   'templates/init/outline.yaml',
   'templates/init/runtime-state.json',
+  'skills/setup/SKILL.md',
 ];
 
 for (const relPath of requiredFiles) {
@@ -49,18 +50,18 @@ for (const target of ['agents', 'skills', 'reference', 'templates']) {
   }
 }
 
-const outputSkill = read('skills/output.md');
+const outputSkill = read('skills/output/SKILL.md');
 if (!outputSkill.includes('required_for_output')) {
-  errors.push('skills/output.md must reference required_for_output');
+  errors.push('skills/output/SKILL.md must reference required_for_output');
 }
 if (!outputSkill.includes('defaults to `true`')) {
-  errors.push('skills/output.md must document that missing required_for_output defaults to true');
+  errors.push('skills/output/SKILL.md must document that missing required_for_output defaults to true');
 }
 if (!outputSkill.includes('## Summary')) {
-  errors.push('skills/output.md must use the SSOT body Summary section');
+  errors.push('skills/output/SKILL.md must use the SSOT body Summary section');
 }
 if (/summary front-matter/i.test(outputSkill)) {
-  errors.push('skills/output.md must not require a summary front-matter field');
+  errors.push('skills/output/SKILL.md must not require a summary front-matter field');
 }
 
 const outlineTemplate = read('templates/init/outline.yaml');
@@ -80,9 +81,9 @@ for (const entryFile of ['AGENTS.md', 'CLAUDE.md']) {
 
 // Runtime state must be described as optional/fallback in key docs
 const runtimeStateDocs = {
-  'skills/status.md': read('skills/status.md'),
-  'skills/write.md': read('skills/write.md'),
-  'skills/design.md': read('skills/design.md'),
+  'skills/status/SKILL.md': read('skills/status/SKILL.md'),
+  'skills/write/SKILL.md': read('skills/write/SKILL.md'),
+  'skills/design/SKILL.md': read('skills/design/SKILL.md'),
   'ARCHITECTURE.md': read('ARCHITECTURE.md'),
 };
 for (const [file, content] of Object.entries(runtimeStateDocs)) {

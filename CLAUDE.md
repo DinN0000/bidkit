@@ -31,14 +31,15 @@ run multiple agents in parallel for independent sections.
 
 | Command | Purpose | Skill File |
 |---------|---------|------------|
-| `/design` | New proposal strategy + TOC generation | `skills/design.md` |
-| `/write <section>` | Work on a section (draft/revise auto-detected) | `skills/write.md` |
-| `/diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose.md` |
-| `/verify` | Cross-SSOT consistency and compliance check | `skills/verify.md` |
-| `/status` | Progress dashboard for all sections | `skills/status.md` |
+| `/ph:design` | New proposal strategy + TOC generation | `skills/design/SKILL.md` |
+| `/ph:write <section>` | Work on a section (draft/revise auto-detected) | `skills/write/SKILL.md` |
+| `/ph:diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose/SKILL.md` |
+| `/ph:verify` | Cross-SSOT consistency and compliance check | `skills/verify/SKILL.md` |
+| `/ph:status` | Progress dashboard for all sections | `skills/status/SKILL.md` |
+| `/ph:setup` | Environment check and guided installation | `skills/setup/SKILL.md` |
 
 Output generation is triggered via natural language (e.g., "PDF로 출력해줘").
-See `skills/output.md`.
+See `skills/output/SKILL.md`.
 
 Natural language input is always accepted and routed automatically to the
 appropriate command or agent.
@@ -70,13 +71,13 @@ Common Korean phrases are routed as follows:
 
 | User Says | Routes To | Notes |
 |-----------|-----------|-------|
-| "RFP 받았는데 어디서부터?" | `/design` | |
-| "제안서 만들어야 해" | `/design` | |
-| "이행계획 어떻게 할지 고민 중이야" | `/write impl` | auto-enters explore |
-| "HSM 모델 변경해야 해" | `/write hsm` | auto-enters re-edit |
-| "전체적으로 좀 약한 것 같아" | `/diagnose` | |
-| "교차 검증해줘" | `/verify` | |
-| "진행 상황 알려줘" | `/status` | |
+| "RFP 받았는데 어디서부터?" | `/ph:design` | |
+| "제안서 만들어야 해" | `/ph:design` | |
+| "이행계획 어떻게 할지 고민 중이야" | `/ph:write impl` | auto-enters explore |
+| "HSM 모델 변경해야 해" | `/ph:write hsm` | auto-enters re-edit |
+| "전체적으로 좀 약한 것 같아" | `/ph:diagnose` | |
+| "교차 검증해줘" | `/ph:verify` | |
+| "진행 상황 알려줘" | `/ph:status` | |
 | "이전 버전이랑 비교해줘" | `output` | version diff |
 | "RFP 보완공고 나왔어" | update RFP | re-verify affected SSOTs |
 | "PDF로 출력해줘" | `output` | format rendering |
@@ -88,7 +89,7 @@ Each proposal section is an independent SSOT (Single Source of Truth) document.
 - **Template**: `templates/ssot.md` — canonical structure every SSOT must follow
 - **State machine**: `reference/state-machine.md` — lifecycle states and transitions
 - **Storage**: `ssot/<team>/<id>.md` — one file per section, organized by team
-- **Validation**: `scripts/verify-harness.sh` — checks harness structure and entrypoint references
+- **Validation**: `scripts/verify-harness.sh` — checks plugin structure and entrypoint references
 
 SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
 at the SSOT level. Proposal content must live in SSOT files. Project control
@@ -118,7 +119,7 @@ No section is final until it completes all five steps.
    every user-facing response. See `reference/proposal-guide-format.md`.
 6. **Korean and English.** User may communicate in either language. Match their
    language in responses.
-7. **One question at a time.** During `/design` and exploratory `/write`, ask
+7. **One question at a time.** During `/ph:design` and exploratory `/ph:write`, ask
    one focused question per turn unless the user explicitly asks for a batch view.
 
 ## Project Structure
@@ -133,13 +134,14 @@ agents/                    # Agent role definitions
   writer.md
   researcher.md
   critic.md
-skills/                    # Command implementations
-  design.md
-  write.md
-  diagnose.md
-  verify.md
-  status.md
-  output.md
+skills/                    # Command implementations (plugin skill format)
+  design/SKILL.md
+  write/SKILL.md
+  diagnose/SKILL.md
+  verify/SKILL.md
+  status/SKILL.md
+  output/SKILL.md
+  setup/SKILL.md
 templates/                 # SSOT and output templates
   ssot.md
 reference/                 # Shared reference material
@@ -157,8 +159,9 @@ See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.
 
 ## Quick Start
 
-1. Run `/design` to create a new proposal strategy and TOC
-2. Run `/write <section>` to begin drafting sections
-3. Run `/status` to check progress across all sections
-4. Run `/diagnose` to find quality issues
-5. Run `/verify` for final consistency checks before output
+1. Run `/ph:setup` to check your environment
+2. Run `/ph:design` to create a new proposal strategy and TOC
+3. Run `/ph:write <section>` to begin drafting sections
+4. Run `/ph:status` to check progress across all sections
+5. Run `/ph:diagnose` to find quality issues
+6. Run `/ph:verify` for final consistency checks before output

@@ -28,14 +28,19 @@ run multiple agents in parallel for independent sections.
 
 | Command | Purpose | Skill File |
 |---------|---------|------------|
-| `/design` | New proposal strategy + TOC generation | `skills/design.md` |
-| `/write <section>` | Work on a section (draft/revise auto-detected) | `skills/write.md` |
-| `/diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose.md` |
-| `/verify` | Cross-SSOT consistency and compliance check | `skills/verify.md` |
-| `/status` | Progress dashboard for all sections | `skills/status.md` |
+| `design` | New proposal strategy + TOC generation | `skills/design/SKILL.md` |
+| `write <section>` | Work on a section (draft/revise auto-detected) | `skills/write/SKILL.md` |
+| `diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose/SKILL.md` |
+| `verify` | Cross-SSOT consistency and compliance check | `skills/verify/SKILL.md` |
+| `status` | Progress dashboard for all sections | `skills/status/SKILL.md` |
+| `setup` | Environment check and guided installation | `skills/setup/SKILL.md` |
+
+When a skill requires an optional tool that is not installed, run
+`bash scripts/check-deps.sh` and guide the user through installation.
+See individual skill files for specific detection logic.
 
 Output generation is triggered via natural language (for example, "PDF로 출력해줘").
-See `skills/output.md`.
+See `skills/output/SKILL.md`.
 
 Natural language input is always accepted and routed automatically to the
 appropriate command or agent.
@@ -67,13 +72,13 @@ Common Korean phrases are routed as follows:
 
 | User Says | Routes To | Notes |
 |-----------|-----------|-------|
-| "RFP 받았는데 어디서부터?" | `/design` | |
-| "제안서 만들어야 해" | `/design` | |
-| "이행계획 어떻게 할지 고민 중이야" | `/write impl` | auto-enters explore |
-| "HSM 모델 변경해야 해" | `/write hsm` | auto-enters re-edit |
-| "전체적으로 좀 약한 것 같아" | `/diagnose` | |
-| "교차 검증해줘" | `/verify` | |
-| "진행 상황 알려줘" | `/status` | |
+| "RFP 받았는데 어디서부터?" | `design` | |
+| "제안서 만들어야 해" | `design` | |
+| "이행계획 어떻게 할지 고민 중이야" | `write impl` | auto-enters explore |
+| "HSM 모델 변경해야 해" | `write hsm` | auto-enters re-edit |
+| "전체적으로 좀 약한 것 같아" | `diagnose` | |
+| "교차 검증해줘" | `verify` | |
+| "진행 상황 알려줘" | `status` | |
 | "이전 버전이랑 비교해줘" | `output` | version diff |
 | "RFP 보완공고 나왔어" | update RFP | re-verify affected SSOTs |
 | "PDF로 출력해줘" | `output` | format rendering |
@@ -115,7 +120,7 @@ No section is final until it completes all five steps.
    every user-facing response. See `reference/proposal-guide-format.md`.
 6. **Korean and English.** User may communicate in either language. Match their
    language in responses.
-7. **One question at a time.** During `/design` and exploratory `/write`, ask
+7. **One question at a time.** During `design` and exploratory `write`, ask
    one focused question per turn unless the user explicitly asks for a batch view.
 
 ## Project Structure
@@ -130,13 +135,14 @@ agents/                    # Agent role definitions
   writer.md
   researcher.md
   critic.md
-skills/                    # Command implementations
-  design.md
-  write.md
-  diagnose.md
-  verify.md
-  status.md
-  output.md
+skills/                    # Command implementations (plugin skill format)
+  design/SKILL.md
+  write/SKILL.md
+  diagnose/SKILL.md
+  verify/SKILL.md
+  status/SKILL.md
+  output/SKILL.md
+  setup/SKILL.md
 templates/                 # SSOT and output templates
   ssot.md
 reference/                 # Shared reference material
@@ -154,8 +160,9 @@ See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.
 
 ## Quick Start
 
-1. Run `/design` to create a new proposal strategy and TOC
-2. Run `/write <section>` to begin drafting sections
-3. Run `/status` to check progress across all sections
-4. Run `/diagnose` to find quality issues
-5. Run `/verify` for final consistency checks before output
+1. Say "환경 점검해줘" to check your setup
+2. Say "제안서 만들어야 해" or describe your RFP to start
+3. Describe which section to work on
+4. Ask "진행 상황 알려줘" for status
+5. Ask "전체적으로 봐줘" for diagnosis
+6. Ask "교차 검증해줘" for final checks
