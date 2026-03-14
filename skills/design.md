@@ -54,6 +54,14 @@ If any of these are still unsettled, remain in `/design`.
    - Create SSOT files (all in `ideation` state) with dependencies mapped
 7. **Transition**: Show Proposal Guide recommending the first `/write` target
 
+## Document Parsing
+
+When the user provides an RFP document (PDF, DOCX, PPTX, XLSX):
+- Parse the document using `parser/` module: `from parser import parse`
+- Extract text, tables, and images into structured markdown
+- Use extracted content to inform strategy and TOC generation
+- Store raw parsed output in `assets/rfp/` for Researcher reference
+
 ## Input Sources (can combine)
 
 - **RFP upload**: Parse PDF/DOCX, extract requirements, populate trace matrix

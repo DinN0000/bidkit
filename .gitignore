@@ -1,1 +1,5 @@
 .worktrees/
+__pycache__/
+*.pyc
+uv.lock
+.pytest_cache/
