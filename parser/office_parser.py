@@ -1,7 +1,5 @@
 import io
 import logging
-import subprocess
-import tempfile
 from pathlib import Path
 from typing import Optional, Union
 from docx import Document
@@ -26,47 +24,6 @@ def _clean_title(title: Optional[str]) -> Optional[str]:
         return None
     return title.strip()
 
-
-def _pptx_to_slide_images(data: bytes, dpi: int = 150) -> list:
-    """LibreOffice + pdf2image로 pptx를 슬라이드별 PNG 바이트로 변환.
-    반환: [(slide_num, png_bytes), ...] 또는 실패 시 빈 리스트
-    """
-    soffice = "/Applications/LibreOffice.app/Contents/MacOS/soffice"
-    if not Path(soffice).exists():
-        import shutil
-        soffice = shutil.which("libreoffice") or shutil.which("soffice")
-    if not soffice:
-        logger.warning("LibreOffice not found — skipping slide image rendering")
-        return []
-
-    try:
-        from pdf2image import convert_from_path
-    except ImportError:
-        logger.warning("pdf2image not installed — pip install pdf2image")
-        return []
-
-    try:
-        with tempfile.TemporaryDirectory() as tmpdir:
-            pptx_path = Path(tmpdir) / "input.pptx"
-            pptx_path.write_bytes(data)
-            subprocess.run(
-                [soffice, "--headless", "--convert-to", "pdf", str(pptx_path), "--outdir", tmpdir],
-                capture_output=True, timeout=120
-            )
-            pdf_path = Path(tmpdir) / "input.pdf"
-            if not pdf_path.exists():
-                logger.warning("LibreOffice PDF conversion failed")
-                return []
-            images = convert_from_path(str(pdf_path), dpi=dpi)
-            result = []
-            for i, img in enumerate(images, 1):
-                buf = io.BytesIO()
-                img.save(buf, format="PNG")
-                result.append((i, buf.getvalue()))
-            return result
-    except Exception as e:
-        logger.warning("Slide image conversion failed: %s", e)
-        return []
 
 
 class OfficeParser:
@@ -197,20 +154,6 @@ def _extract_docx_images(element, doc, qn) -> list:
             pass
     return images
 
-
-def _extract_section_text(section_node) -> str:
-    """section 노드에서 텍스트 추출"""
-    parts = []
-    if not section_node.children:
-        return section_node.text or ""
-    for child in section_node.children:
-        if child.text:
-            parts.append(child.text)
-        if child.type == "table" and child.children:
-            for row in child.children:
-                if row.children:
-                    parts.append(" | ".join(c.text or "" for c in row.children))
-    return "\n".join(parts)
 
 
 def _parse_docx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
@@ -472,22 +415,6 @@ def _parse_pptx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
     return ast
 
 
-def _extract_slide_text(slide_node: OfficeContentNode) -> str:
-    """슬라이드 노드에서 텍스트 추출"""
-    parts = []
-    if not slide_node.children:
-        return ""
-    for child in slide_node.children:
-        if child.type == "paragraph" and child.text:
-            parts.append(child.text)
-        elif child.type == "table" and child.children:
-            for row in child.children:
-                if row.children:
-                    parts.append(" | ".join(c.text or "" for c in row.children))
-        elif child.type == "notes" and child.text:
-            parts.append(f"[Notes] {child.text}")
-    return "\n".join(parts)
-
 
 def _parse_xlsx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
     wb = load_workbook(io.BytesIO(data), data_only=True)
@@ -612,25 +539,6 @@ def _parse_xlsx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
         attachments=attachments if attachments else None
     )
 
-
-def _extract_sheet_text(sheet_node: OfficeContentNode) -> str:
-    texts = []
-    for child in sheet_node.children:
-        if child.type == "row" and child.children:
-            texts.append(" | ".join(c.text for c in child.children if c.text))
-        elif child.type == "chart" and child.metadata:
-            texts.append(f"[Chart: {child.metadata.get('chartType', '')}] {child.metadata.get('title', '')}")
-    return "\n".join(texts)
-
-
-def _is_large_image(img_data: bytes, min_size: int) -> bool:
-    """이미지가 min_size x min_size 이상인지 확인"""
-    try:
-        from PIL import Image
-        img = Image.open(io.BytesIO(img_data))
-        return img.width >= min_size and img.height >= min_size
-    except Exception:
-        return False
 
 
 def _parse_pdf(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:

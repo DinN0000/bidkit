@@ -9,7 +9,7 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-__all__ = ["parse"]
+__all__ = ["parse", "SUPPORTED_EXTENSIONS"]
 
 PDF_EXTENSIONS = {".pdf"}
 OFFICE_EXTENSIONS = {".docx", ".pptx", ".xlsx", ".odt", ".odp", ".ods", ".rtf"}
@@ -19,14 +19,14 @@ SUPPORTED_EXTENSIONS = PDF_EXTENSIONS | OFFICE_EXTENSIONS
 def parse(
     file_path: str | os.PathLike,
     *,
-    table_mode: str = "markdown",
+    table_extraction: str = "accurate",
     output_format: str = "markdown",
 ) -> str:
     """Parse a document and return extracted content.
 
     Args:
         file_path: Path to the document file.
-        table_mode: How to render tables — "markdown", "html", or "csv".
+        table_extraction: PDF table extraction mode — "accurate" or "fast".
         output_format: Output content format — "markdown", "html", or "text".
 
     Returns:
@@ -49,22 +49,21 @@ def parse(
         )
 
     if ext in PDF_EXTENSIONS:
-        return _parse_pdf(path, table_mode=table_mode, output_format=output_format)
+        return _parse_pdf(path, table_extraction=table_extraction)
     else:
-        return _parse_office(path, table_mode=table_mode, output_format=output_format)
+        return _parse_office(path, output_format=output_format)
 
 
 def _parse_pdf(
     path: Path,
     *,
-    table_mode: str = "markdown",
-    output_format: str = "markdown",
+    table_extraction: str = "accurate",
 ) -> str:
     """Parse PDF using Docling-based extraction."""
     from .pdf_converter import DoclingConverter
     from .pdf_markdown import MarkdownBuilder
 
-    converter = DoclingConverter(table_mode=table_mode)
+    converter = DoclingConverter(table_mode=table_extraction)
     parsed = converter.convert(str(path))
 
     asset_dir = path.parent / f".parsed_{path.stem}"
@@ -78,7 +77,6 @@ def _parse_pdf(
 def _parse_office(
     path: Path,
     *,
-    table_mode: str = "markdown",
     output_format: str = "markdown",
 ) -> str:
     """Parse Office/ODF/RTF documents via AST-based extraction."""

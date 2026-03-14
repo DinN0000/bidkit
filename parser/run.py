@@ -42,10 +42,10 @@ def _build_arg_parser() -> argparse.ArgumentParser:
         help="Number of parallel workers for batch mode (default: CPU count).",
     )
     ap.add_argument(
-        "--table-mode",
-        choices=["markdown", "html", "csv"],
-        default="markdown",
-        help="Table rendering style (default: markdown).",
+        "--table-extraction",
+        choices=["accurate", "fast"],
+        default="accurate",
+        help="PDF table extraction mode (default: accurate).",
     )
     ap.add_argument(
         "--format",
@@ -61,11 +61,11 @@ def _parse_single(
     file_path: Path,
     output_path: Path | None,
     *,
-    table_mode: str,
+    table_extraction: str,
     output_format: str,
 ) -> None:
     """Parse one file and write result to *output_path* or stdout."""
-    content = parse(file_path, table_mode=table_mode, output_format=output_format)
+    content = parse(file_path, table_extraction=table_extraction, output_format=output_format)
     if output_path is None:
         sys.stdout.write(content)
     else:
@@ -77,11 +77,11 @@ def _parse_single(
 def _worker(
     file_path: str,
     output_path: str,
-    table_mode: str,
+    table_extraction: str,
     output_format: str,
 ) -> str:
     """Top-level function so it is picklable for ProcessPoolExecutor."""
-    content = parse(file_path, table_mode=table_mode, output_format=output_format)
+    content = parse(file_path, table_extraction=table_extraction, output_format=output_format)
     out = Path(output_path)
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(content, encoding="utf-8")
@@ -93,7 +93,7 @@ def _parse_batch(
     output_dir: Path | None,
     *,
     workers: int | None,
-    table_mode: str,
+    table_extraction: str,
     output_format: str,
 ) -> None:
     """Parse every supported file in *input_dir* using a process pool."""
@@ -118,7 +118,7 @@ def _parse_batch(
                 _worker,
                 str(f),
                 str(out_file),
-                table_mode,
+                table_extraction,
                 output_format,
             )
             futures[future] = f
@@ -145,7 +145,7 @@ def main(argv: list[str] | None = None) -> None:
         _parse_single(
             input_path,
             output_path,
-            table_mode=args.table_mode,
+            table_extraction=args.table_extraction,
             output_format=args.output_format,
         )
     elif input_path.is_dir():
@@ -154,7 +154,7 @@ def main(argv: list[str] | None = None) -> None:
             input_path,
             output_dir,
             workers=args.workers,
-            table_mode=args.table_mode,
+            table_extraction=args.table_extraction,
             output_format=args.output_format,
         )
     else:
