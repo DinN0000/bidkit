@@ -58,7 +58,7 @@ When the user provides a document file (PPTX, DOCX, XLSX) as RFP input:
 6. **Project initialization**:
    - Create project directory: `meta/`, `ssot/<team>/`, `ideation/`, `runtime/`, `assets/`
    - Populate `meta/proposal-meta.yaml` from context
-   - Populate `meta/outline.yaml` with TOC + SSOT ordering + priorities + `required_for_output` (always set explicitly; older projects that omit the field are treated as `true` — see `skills/output.md`)
+   - Populate `meta/outline.yaml` with TOC + SSOT ordering + priorities + `required_for_output` (always set explicitly; older projects that omit the field are treated as `true` — see `skills/output/SKILL.md`)
    - Populate `meta/glossary.yaml` with initial terms
    - Populate `meta/rfp-trace-matrix.md` if RFP provided
    - Populate `runtime/session-state.json` from `templates/init/runtime-state.json` — initialize `current_label` with the first user-facing situation label (e.g., "전략 정리 중"). Runtime state is optional helper state; if absent later, the harness falls back to SSOT-derived status.

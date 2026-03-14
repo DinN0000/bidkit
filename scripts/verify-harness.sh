@@ -219,7 +219,7 @@ if [ -f "CLAUDE.md" ] && [ -f "AGENTS.md" ]; then
   CLAUDE_CONTENT=$(cat CLAUDE.md)
   AGENTS_CONTENT=$(cat AGENTS.md)
 
-  for ref_file in agents/overseer.md agents/team-lead.md agents/writer.md agents/researcher.md agents/critic.md skills/design/SKILL.md skills/write/SKILL.md skills/diagnose/SKILL.md skills/verify/SKILL.md skills/status/SKILL.md skills/output/SKILL.md; do
+  for ref_file in agents/overseer.md agents/team-lead.md agents/writer.md agents/researcher.md agents/critic.md skills/design/SKILL.md skills/write/SKILL.md skills/diagnose/SKILL.md skills/verify/SKILL.md skills/status/SKILL.md skills/output/SKILL.md skills/setup/SKILL.md; do
     CLAUDE_HAS=$(grep -c "$ref_file" <<< "$CLAUDE_CONTENT" || true)
     AGENTS_HAS=$(grep -c "$ref_file" <<< "$AGENTS_CONTENT" || true)
     if [ "$CLAUDE_HAS" -gt 0 ] && [ "$AGENTS_HAS" -gt 0 ]; then

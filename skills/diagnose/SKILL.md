@@ -296,8 +296,8 @@ If the uploaded document cannot be parsed:
 | `reference/proposal-guide-format.md` | Proposal Guide footer format |
 | `reference/state-machine.md` | Valid SSOT states |
 | `agents/overseer.md` | Overseer grading and cross-review protocol |
-| `skills/write.md` | Session loop for per-section improvement |
-| `skills/verify.md` | Cross-SSOT consistency check |
+| `skills/write/SKILL.md` | Session loop for per-section improvement |
+| `skills/verify/SKILL.md` | Cross-SSOT consistency check |
 
 ---
 

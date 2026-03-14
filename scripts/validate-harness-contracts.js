@@ -30,6 +30,7 @@ const requiredFiles = [
   'skills/output/SKILL.md',
   'templates/init/outline.yaml',
   'templates/init/runtime-state.json',
+  'skills/setup/SKILL.md',
 ];
 
 for (const relPath of requiredFiles) {

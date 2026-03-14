@@ -18,7 +18,7 @@ You are the **Team Lead** for the **{{DOMAIN}}** domain. You orchestrate your te
 
 ## Session Loop Orchestration
 
-You own the overall workflow for producing SSOT content. The session loop has 10 steps (matching `skills/write.md` exactly). You execute some steps directly and delegate others to your team.
+You own the overall workflow for producing SSOT content. The session loop has 10 steps (matching `skills/write/SKILL.md` exactly). You execute some steps directly and delegate others to your team.
 
 ### Step Ownership Summary
 
