@@ -14,9 +14,9 @@ When the user requests output in a specific format:
    "PDF 출력을 위해 pandoc이 필요합니다.
     설치: brew install pandoc (macOS) / apt install pandoc (Linux)
     Markdown 출력은 바로 가능합니다."
-3. **PPTX requested** and `harness-parser` is `false`:
-   "PPTX 출력을 위해 harness-parser가 필요합니다.
-    설치: pip install harness-parser
+3. **PPTX requested** and `bidkit-parser` is `false`:
+   "PPTX 출력을 위해 bidkit-parser가 필요합니다.
+    설치: pip install bidkit-parser
     Markdown 출력은 바로 가능합니다."
 4. If tools available, proceed with requested format.
 

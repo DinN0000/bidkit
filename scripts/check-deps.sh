@@ -7,7 +7,7 @@ check() {
 }
 
 GIT=$(check command -v git)
-PARSER=$(check python3 -c "import harness_parser")
+PARSER=$(check python3 -c "import bidkit_parser")
 PANDOC=$(check command -v pandoc)
 NODE=$(check command -v node)
 
@@ -17,7 +17,7 @@ cat <<EOF
     "git": $GIT
   },
   "optional": {
-    "harness-parser": $PARSER,
+    "bidkit-parser": $PARSER,
     "pandoc": $PANDOC,
     "node": $NODE
   }

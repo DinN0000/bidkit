@@ -7,7 +7,7 @@ Lightweight regression fixtures for the highest-risk user flows:
 - `/verify` decision-first review output
 
 These are prompt and expected-output fixtures, not a full runner. They exist so
-the harness can be checked whenever wording, schemas, or command contracts change.
+BidKit can be checked whenever wording, schemas, or command contracts change.
 
 Minimum expectation for every eval:
 

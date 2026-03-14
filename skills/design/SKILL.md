@@ -41,9 +41,9 @@ If any of these are still unsettled, remain in `/design`.
 
 When the user provides a document file (PPTX, DOCX, XLSX) as RFP input:
 1. Run `bash scripts/check-deps.sh`
-2. If `harness-parser` is `false`, inform the user:
+2. If `bidkit-parser` is `false`, inform the user:
    "PPTX/DOCX 파일을 읽으려면 parser 설치가 필요합니다.
-    터미널에서 실행: pip install harness-parser
+    터미널에서 실행: pip install bidkit-parser
     설치 후 다시 파일을 제공해주세요.
     PDF 형식의 RFP라면 바로 진행 가능합니다."
 3. If `true`, parse the document using `from parser import parse` and proceed.
@@ -61,7 +61,7 @@ When the user provides a document file (PPTX, DOCX, XLSX) as RFP input:
    - Populate `meta/outline.yaml` with TOC + SSOT ordering + priorities + `required_for_output` (always set explicitly; older projects that omit the field are treated as `true` — see `skills/output/SKILL.md`)
    - Populate `meta/glossary.yaml` with initial terms
    - Populate `meta/rfp-trace-matrix.md` if RFP provided
-   - Populate `runtime/session-state.json` from `templates/init/runtime-state.json` — initialize `current_label` with the first user-facing situation label (e.g., "전략 정리 중"). Runtime state is optional helper state; if absent later, the harness falls back to SSOT-derived status.
+   - Populate `runtime/session-state.json` from `templates/init/runtime-state.json` — initialize `current_label` with the first user-facing situation label (e.g., "전략 정리 중"). Runtime state is optional helper state; if absent later, BidKit falls back to SSOT-derived status.
    - Create SSOT files (all in `ideation` state) with dependencies mapped
 7. **Transition**: Show Proposal Guide recommending the first `/write` target
 

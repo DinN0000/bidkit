@@ -24,14 +24,14 @@ Present results as a checklist with installation instructions for missing tools:
 ✅ git — 설치됨
 
 [선택]
-❌ harness-parser — PPTX/DOCX/XLSX 파싱
-   설치: pip install harness-parser
+❌ bidkit-parser — PPTX/DOCX/XLSX 파싱
+   설치: pip install bidkit-parser
 ❌ pandoc — PDF 출력
    설치: brew install pandoc (macOS) / apt install pandoc (Linux)
 ✅ node — 고급 계약 검증
 
 필요한 것만 설치하시면 됩니다.
-harness-parser 없이도 PDF RFP는 바로 사용 가능합니다.
+bidkit-parser 없이도 PDF RFP는 바로 사용 가능합니다.
 
 ## After Check
 

@@ -32,8 +32,8 @@ are sequential.
 
 | Path | Purpose |
 |------|---------|
-| `AGENTS.md` | Codex harness entry point -- read first in Codex sessions |
-| `CLAUDE.md` | Claude Code harness entry point -- same harness as `AGENTS.md` |
+| `AGENTS.md` | Codex BidKit entry point -- read first in Codex sessions |
+| `CLAUDE.md` | Claude Code BidKit entry point -- same as `AGENTS.md` |
 | `ARCHITECTURE.md` | This file -- system topology, file map, data flow |
 | **`agents/`** | |
 | `agents/overseer.md` | EA Overseer -- strategy, cross-review, conflict resolution |
@@ -89,7 +89,7 @@ are sequential.
 
 ## Project Directory (Created Per Proposal)
 
-Created by `/design` at runtime. Lives alongside or inside the harness directory.
+Created by `/design` at runtime. Lives alongside or inside the BidKit directory.
 
 | Path | Purpose |
 |------|---------|
@@ -99,7 +99,7 @@ Created by `/design` at runtime. Lives alongside or inside the harness directory
 | `meta/outline.yaml` | TOC -- section ordering, SSOT assignments, priority |
 | `meta/rfp-trace-matrix.md` | RFP requirement ID -> mapped SSOT -> coverage status |
 | **`runtime/`** | |
-| `runtime/session-state.json` | Optional helper state: current situation label, active section, last completed step, recommended next action. This file is advisory — if missing or stale, the harness falls back to SSOT-derived status. |
+| `runtime/session-state.json` | Optional helper state: current situation label, active section, last completed step, recommended next action. This file is advisory — if missing or stale, BidKit falls back to SSOT-derived status. |
 | **`ssot/<team>/`** | |
 | `ssot/ba/*.md` | Business analysis SSOTs (overview, requirements, process) |
 | `ssot/da/*.md` | Data architecture SSOTs (model, migration, security) |

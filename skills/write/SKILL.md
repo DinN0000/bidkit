@@ -32,9 +32,9 @@ Lead with the user-facing situation label instead of the raw state name:
 
 When source documents (RFP, prior proposals, reference materials) are PPTX, DOCX, or XLSX:
 1. Run `bash scripts/check-deps.sh`
-2. If `harness-parser` is `false`, inform the user:
+2. If `bidkit-parser` is `false`, inform the user:
    "PPTX/DOCX 파일을 읽으려면 parser 설치가 필요합니다.
-    터미널에서 실행: pip install harness-parser
+    터미널에서 실행: pip install bidkit-parser
     설치 후 다시 시도해주세요."
 3. If `true`, parse and provide to Researcher as structured input.
 
