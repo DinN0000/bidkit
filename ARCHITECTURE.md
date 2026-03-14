@@ -42,12 +42,13 @@ are sequential.
 | `agents/researcher.md` | Researcher -- gathers specs, cases, certs, pricing |
 | `agents/critic.md` | Critic -- independent quality verification |
 | **`skills/`** | |
-| `skills/design.md` | `/design` -- new proposal strategy + TOC generation |
-| `skills/write.md` | `/write` -- session loop (draft/verify/revise), state auto-detected |
-| `skills/diagnose.md` | `/diagnose` -- full quality diagnosis across all SSOTs |
-| `skills/verify.md` | `/verify` -- cross-SSOT consistency and compliance check |
-| `skills/status.md` | `/status` -- progress dashboard + Proposal Guide renderer |
-| `skills/output.md` | Output assembly -- MD/PPT/PDF/HTML rendering |
+| `skills/design/SKILL.md` | `/design` -- new proposal strategy + TOC generation |
+| `skills/write/SKILL.md` | `/write` -- session loop (draft/verify/revise), state auto-detected |
+| `skills/diagnose/SKILL.md` | `/diagnose` -- full quality diagnosis across all SSOTs |
+| `skills/verify/SKILL.md` | `/verify` -- cross-SSOT consistency and compliance check |
+| `skills/status/SKILL.md` | `/status` -- progress dashboard + Proposal Guide renderer |
+| `skills/output/SKILL.md` | Output assembly -- MD/PPT/PDF/HTML rendering |
+| `skills/setup/SKILL.md` | Environment check and guided installation |
 | **`templates/`** | |
 | `templates/ssot.md` | SSOT document template (YAML frontmatter + body structure) |
 | `templates/ideation-note.md` | Pre-SSOT exploration note template |
@@ -77,6 +78,9 @@ are sequential.
 | **`scripts/`** | |
 | `scripts/verify-harness.sh` | Harness integrity validation (file existence, cross-refs) |
 | `scripts/validate-harness-contracts.js` | Contract validation for schema, output rules, and field naming (requires Node.js; skipped gracefully if unavailable) |
+| `scripts/check-deps.sh` | Dependency detection (JSON output) |
+| **`.claude-plugin/`** | |
+| `.claude-plugin/plugin.json` | Plugin manifest (name: "ph") |
 | **`evals/`** | |
 | `evals/config.json` | Lightweight evaluation manifest for `/design`, `/write`, `/verify` |
 | `evals/**` | Prompt and expected-output fixtures for regression checking |
