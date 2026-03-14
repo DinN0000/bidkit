@@ -4,6 +4,6 @@ sections:
     ssot_id: ""
     team: ""
     priority: high | medium | low
-    required_for_output: true | false
+    required_for_output: true | false   # Always set explicitly. Defaults to true if omitted.
     dependencies: []
     estimated_pages: 0

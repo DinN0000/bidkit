@@ -6,8 +6,12 @@ const path = require('path');
 const root = path.resolve(__dirname, '..');
 const errors = [];
 
+const fileCache = {};
 function read(relPath) {
-  return fs.readFileSync(path.join(root, relPath), 'utf8');
+  if (!fileCache[relPath]) {
+    fileCache[relPath] = fs.readFileSync(path.join(root, relPath), 'utf8');
+  }
+  return fileCache[relPath];
 }
 
 function walk(dirPath, out = []) {
@@ -38,7 +42,7 @@ for (const target of ['agents', 'skills', 'reference', 'templates']) {
   const abs = path.join(root, target);
   if (!fs.existsSync(abs)) continue;
   for (const file of walk(abs)) {
-    const content = fs.readFileSync(file, 'utf8');
+    const content = read(path.relative(root, file));
     if (content.includes('depends_on')) {
       errors.push(`Use "dependencies" instead of "depends_on": ${path.relative(root, file)}`);
     }
@@ -48,6 +52,9 @@ for (const target of ['agents', 'skills', 'reference', 'templates']) {
 const outputSkill = read('skills/output.md');
 if (!outputSkill.includes('required_for_output')) {
   errors.push('skills/output.md must reference required_for_output');
+}
+if (!outputSkill.includes('defaults to `true`')) {
+  errors.push('skills/output.md must document that missing required_for_output defaults to true');
 }
 if (!outputSkill.includes('## Summary')) {
   errors.push('skills/output.md must use the SSOT body Summary section');
@@ -68,6 +75,22 @@ for (const entryFile of ['AGENTS.md', 'CLAUDE.md']) {
   }
   if (!content.includes('Project control')) {
     errors.push(`${entryFile} must distinguish proposal content from project control data`);
+  }
+}
+
+// Runtime state must be described as optional/fallback in key docs
+const runtimeStateDocs = {
+  'skills/status.md': read('skills/status.md'),
+  'skills/write.md': read('skills/write.md'),
+  'skills/design.md': read('skills/design.md'),
+  'ARCHITECTURE.md': read('ARCHITECTURE.md'),
+};
+for (const [file, content] of Object.entries(runtimeStateDocs)) {
+  const hasOptional = /runtime[^.]*optional|optional[^.]*runtime/i.test(content);
+  const hasFallback = /runtime[^.]*fallback|fallback[^.]*runtime/i.test(content);
+  const hasAdvisory = /runtime[^.]*advisory|advisory[^.]*runtime/i.test(content);
+  if (!hasOptional && !hasFallback && !hasAdvisory) {
+    errors.push(`${file} must describe runtime state as optional, fallback, or advisory`);
   }
 }
 

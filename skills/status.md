@@ -21,7 +21,7 @@ Load the following files in parallel:
 
 1. **`meta/outline.yaml`** — section ordering, team assignments, dependencies.
 2. **`meta/proposal-meta.yaml`** — project name, RFP reference, team composition.
-3. **`runtime/session-state.json`** — current situation label, active section, last completed step, recommended next action (if present).
+3. **`runtime/session-state.json`** (optional, fallback to SSOT-derived status) — current situation label, active section, last completed step, recommended next action. Runtime state is optional: if the file is missing, stale, or inconsistent with SSOT metadata, derive the current situation from SSOT front-matter instead.
 4. **All SSOT files under `ssot/`** — read front-matter (`status`, `version`, `verification`, `dependencies`, `ideation`) for each file. Do not read full body content — only front-matter metadata is needed for the dashboard.
 
 ### Step (2) — Compute Per-Section Status
@@ -145,7 +145,7 @@ Then the standard Proposal Guide footer per `reference/proposal-guide-format.md`
 - If no SSOTs are blocked, omit the **Blocked** section entirely.
 - If no SSOTs are active, omit the **Active Work** section entirely.
 - The **Summary** line always appears.
-- If `runtime/session-state.json` exists, prefer its `current_label` for the `Current` line.
+- Runtime state is optional: if `runtime/session-state.json` exists and is consistent with SSOT metadata, prefer its `current_label` for the `Current` line. If the file is missing or its label conflicts with SSOT-derived status, fall back to the highest-priority in-progress label derived from SSOT front-matter.
 - Sections within each team are listed in `meta/outline.yaml` order.
 - For `[!]` revision items, always include the Overseer directive text (truncated to ~80 chars if long).
 - For `[~]` in-progress items, include the current sub-status when available (e.g., "verifying", "tentative -- user approved, awaiting Overseer").

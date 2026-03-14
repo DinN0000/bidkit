@@ -27,7 +27,9 @@ Scan `ssot/<team>/` for all SSOT files. Classify each by status:
 | `ideation` / empty | Exclude from output; log as missing |
 | `revision` | Exclude from output; log as blocked |
 
-If any sections with `required_for_output: true` in `meta/outline.yaml` are missing or excluded, warn the user before proceeding:
+If a section in `meta/outline.yaml` does not specify `required_for_output`, it defaults to `true`. This ensures older or manually created outlines remain safe — no section is silently excluded from output gating.
+
+If any sections with `required_for_output: true` (or defaulted to `true`) in `meta/outline.yaml` are missing or excluded, warn the user before proceeding:
 *"[section-id] 섹션이 아직 확인되지 않았습니다. 제외하고 출력하시겠습니까?"*
 
 ### Step (3) — Generate Table of Contents

@@ -37,7 +37,7 @@ Before entering the session loop, verify:
 3. **Outline loaded** — read `meta/outline.yaml` for section ordering and dependencies.
 4. **Glossary loaded** — read `meta/glossary.yaml` for term consistency.
 5. **RFP trace matrix loaded** — read `meta/rfp-trace-matrix.md` for requirement mapping to this section.
-6. **Runtime state loaded if present** — read `runtime/session-state.json` for the last active section and current user-facing stage.
+6. **Runtime state loaded if present** (advisory only) — read `runtime/session-state.json` for the last active section and current user-facing stage. Runtime state is advisory only: it may be missing or stale. Always use SSOT front-matter as the authoritative source for section status. If runtime state conflicts with SSOT metadata, prefer the SSOT.
 
 ---
 

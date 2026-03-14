@@ -66,7 +66,7 @@ are sequential.
 | `reference/error-handling.md` | Error scenarios + graceful degradation |
 | **`scripts/`** | |
 | `scripts/verify-harness.sh` | Harness integrity validation (file existence, cross-refs) |
-| `scripts/validate-harness-contracts.js` | Contract validation for schema, output rules, and field naming |
+| `scripts/validate-harness-contracts.js` | Contract validation for schema, output rules, and field naming (requires Node.js; skipped gracefully if unavailable) |
 | **`evals/`** | |
 | `evals/config.json` | Lightweight evaluation manifest for `/design`, `/write`, `/verify` |
 | `evals/**` | Prompt and expected-output fixtures for regression checking |
@@ -85,7 +85,7 @@ Created by `/design` at runtime. Lives alongside or inside the harness directory
 | `meta/outline.yaml` | TOC -- section ordering, SSOT assignments, priority |
 | `meta/rfp-trace-matrix.md` | RFP requirement ID -> mapped SSOT -> coverage status |
 | **`runtime/`** | |
-| `runtime/session-state.json` | Current situation label, active section, last completed step, recommended next action |
+| `runtime/session-state.json` | Optional helper state: current situation label, active section, last completed step, recommended next action. This file is advisory — if missing or stale, the harness falls back to SSOT-derived status. |
 | **`ssot/<team>/`** | |
 | `ssot/ba/*.md` | Business analysis SSOTs (overview, requirements, process) |
 | `ssot/da/*.md` | Data architecture SSOTs (model, migration, security) |
@@ -117,7 +117,7 @@ User Input (RFP / conversation / existing proposal)
             -> Writer revises (loop until pass)
   |
   v
-(4) Runtime state updates current user-facing situation and next action
+(4) Runtime state (optional fallback) updates current user-facing situation and next action
   |
   v
 (5) Team Lead presents to user -- user approves or requests changes

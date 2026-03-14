@@ -6,11 +6,13 @@
 # Color codes for output
 GREEN='\033[0;32m'
 RED='\033[0;31m'
+YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
 # Counters
 PASS=0
 FAIL=0
+INFO=0
 
 # Helper function to check if a file exists
 check_file() {
@@ -161,12 +163,18 @@ echo "=========================================="
 echo "Contract Validation"
 echo "=========================================="
 if [ -f "scripts/validate-harness-contracts.js" ]; then
-  if node "scripts/validate-harness-contracts.js"; then
-    echo -e "${GREEN}✓${NC} Contract validation passed"
-    ((PASS++))
+  if command -v node >/dev/null 2>&1; then
+    if node "scripts/validate-harness-contracts.js"; then
+      echo -e "${GREEN}✓${NC} Contract validation passed"
+      ((PASS++))
+    else
+      echo -e "${RED}✗${NC} Contract validation failed"
+      ((FAIL++))
+    fi
   else
-    echo -e "${RED}✗${NC} Contract validation failed"
-    ((FAIL++))
+    echo -e "${YELLOW}⚠${NC} Node.js not found — skipping enhanced contract validation"
+    echo "  Install Node.js for full contract checks (schema, output rules, field naming)."
+    ((INFO++))
   fi
 else
   echo -e "${RED}✗${NC} scripts/validate-harness-contracts.js not found"
@@ -232,6 +240,9 @@ echo ""
 TOTAL=$((PASS + FAIL))
 echo "=========================================="
 echo "Summary: $PASS/$TOTAL checks passed"
+if [ $INFO -gt 0 ]; then
+  echo "$INFO informational skip(s)"
+fi
 echo "=========================================="
 if [ $FAIL -eq 0 ]; then
   echo -e "${GREEN}All checks passed!${NC}"
