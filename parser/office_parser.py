@@ -64,12 +64,25 @@ class OfficeParser:
 
 def _detect_extension(data: bytes) -> str:
     if data.startswith(b'PK'):
-        return 'docx'
-    elif data.startswith(b'%PDF'):
-        return 'pdf'
+        import zipfile
+        try:
+            with zipfile.ZipFile(io.BytesIO(data)) as zf:
+                names = zf.namelist()
+                if any(n.startswith('word/') for n in names):
+                    return 'docx'
+                elif any(n.startswith('ppt/') for n in names):
+                    return 'pptx'
+                elif any(n.startswith('xl/') for n in names):
+                    return 'xlsx'
+        except zipfile.BadZipFile:
+            pass
+        return 'docx'  # fallback
     elif data.startswith(b'{\\rtf'):
         return 'rtf'
-    raise ValueError("Cannot detect file type")
+    elif data.startswith(b'%PDF'):
+        return 'pdf'
+    else:
+        raise ValueError("Cannot detect file type from bytes")
 
 
 def _extract_theme_colors(wb) -> list:
@@ -281,7 +294,7 @@ def _parse_docx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
         created=doc.core_properties.created, modified=doc.core_properties.modified,
     )
     ast = OfficeParserAST(type="docx", metadata=metadata, content=content,
-                          attachments=attachments if attachments else None)
+                          attachments=attachments or [])
 
     return ast
 
@@ -409,7 +422,7 @@ def _parse_pptx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
 
     ast = OfficeParserAST(
         type="pptx", metadata=metadata, content=content,
-        attachments=attachments if attachments else None
+        attachments=attachments or []
     )
 
     return ast
@@ -476,7 +489,7 @@ def _parse_xlsx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
                 if hasattr(chart, 'title') and chart.title:
                     try:
                         title = str(chart.title.tx.rich.p[0].r[0].t) if chart.title.tx and chart.title.tx.rich else None
-                    except:
+                    except Exception:
                         pass
                 chart_row = 0
                 try:
@@ -536,7 +549,7 @@ def _parse_xlsx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
 
     return OfficeParserAST(
         type="xlsx", metadata=OfficeMetadata(), content=content,
-        attachments=attachments if attachments else None
+        attachments=attachments or []
     )
 
 

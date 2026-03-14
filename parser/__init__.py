@@ -1,7 +1,7 @@
 """Unified document parser for the Proposal Harness.
 
 Auto-dispatches between PDF and Office parsers based on file extension.
-Supports: .pdf, .docx, .pptx, .xlsx, .odt, .odp, .ods, .rtf
+Supports: .pdf, .docx, .pptx, .xlsx, .rtf
 """
 
 from __future__ import annotations
@@ -12,7 +12,7 @@ from pathlib import Path
 __all__ = ["parse", "SUPPORTED_EXTENSIONS"]
 
 PDF_EXTENSIONS = {".pdf"}
-OFFICE_EXTENSIONS = {".docx", ".pptx", ".xlsx", ".odt", ".odp", ".ods", ".rtf"}
+OFFICE_EXTENSIONS = {".docx", ".pptx", ".xlsx", ".rtf"}
 SUPPORTED_EXTENSIONS = PDF_EXTENSIONS | OFFICE_EXTENSIONS
 
 
@@ -28,6 +28,8 @@ def parse(
         file_path: Path to the document file.
         table_extraction: PDF table extraction mode — "accurate" or "fast".
         output_format: Output content format — "markdown", "html", or "text".
+            Note: PDF extraction always returns markdown regardless of
+            output_format.
 
     Returns:
         Extracted content as a string in the requested format.
@@ -71,7 +73,7 @@ def _parse_pdf(
     parsed.save_assets(asset_dir)
 
     builder = MarkdownBuilder(parsed, asset_dir)
-    return builder.build({}, {}, {})
+    return builder.build()
 
 
 def _parse_office(

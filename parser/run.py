@@ -110,10 +110,13 @@ def _parse_batch(
         output_dir = input_dir.parent / f"{input_dir.name}_parsed"
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    ext_map = {"markdown": ".md", "html": ".html", "text": ".txt"}
+    out_ext = ext_map.get(output_format, ".md")
+
     futures = {}
     with ProcessPoolExecutor(max_workers=workers) as pool:
         for f in files:
-            out_file = output_dir / f"{f.stem}.md"
+            out_file = output_dir / f"{f.stem}{out_ext}"
             future = pool.submit(
                 _worker,
                 str(f),

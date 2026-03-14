@@ -41,7 +41,7 @@ class ChartData:
 @dataclass
 class OfficeAttachment:
     type: Literal["image", "chart"]
-    data: bytes = None
+    data: Optional[bytes] = None
     filename: str = ""
     mime_type: str = ""
     extension: str = ""

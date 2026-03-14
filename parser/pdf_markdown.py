@@ -29,11 +29,14 @@ class MarkdownBuilder:
 
     def build(
         self,
-        page_summaries: dict[int, dict],
-        image_summaries: dict[int, dict],
-        table_summaries: dict[int, dict],
+        page_summaries: dict[int, dict] | None = None,
+        image_summaries: dict[int, dict] | None = None,
+        table_summaries: dict[int, dict] | None = None,
     ) -> str:
         """최종 마크다운 문자열 반환."""
+        page_summaries = page_summaries or {}
+        image_summaries = image_summaries or {}
+        table_summaries = table_summaries or {}
         md = self.doc.export_to_markdown(
             image_placeholder="<!-- image -->",
             page_break_placeholder=PAGE_BREAK,

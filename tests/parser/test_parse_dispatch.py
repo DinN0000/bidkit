@@ -9,10 +9,8 @@ def test_supported_extensions_complete():
     assert '.docx' in SUPPORTED_EXTENSIONS
     assert '.pptx' in SUPPORTED_EXTENSIONS
     assert '.xlsx' in SUPPORTED_EXTENSIONS
-    assert '.odt' in SUPPORTED_EXTENSIONS
-    assert '.odp' in SUPPORTED_EXTENSIONS
-    assert '.ods' in SUPPORTED_EXTENSIONS
     assert '.rtf' in SUPPORTED_EXTENSIONS
+    # ODF formats (.odt, .odp, .ods) intentionally excluded — no handler
 
 
 def test_unsupported_extension_raises(tmp_path):
