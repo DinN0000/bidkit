@@ -10,7 +10,14 @@
 
 BidKit은 제안서 작성팀입니다.
 
-전략을 세우는 Overseer, 본문을 쓰는 Writer, 자료를 모으는 Researcher, 품질을 잡는 Critic. 역할이 나뉜 에이전트 팀이 함께 작업합니다. 사용자는 방향을 잡고 승인하면 됩니다.
+**BA Team** — 사업 이해, 요구사항 분석, 비용 산정
+**DA Team** — 데이터 모델, 마이그레이션, 보안 설계
+**TA Team** — 인프라 아키텍처, 플랫폼, 네트워크
+**SA Team** — 솔루션 설계, 제품 선정, 경쟁 분석
+
+각 팀에는 조율하는 Team Lead, 본문을 쓰는 Writer, 자료를 모으는 Researcher, 품질을 검증하는 Critic이 붙습니다. 전체 전략과 섹션 간 일관성은 Overseer가 잡습니다.
+
+사용자는 PM으로서 방향을 잡고 승인합니다.
 
 ## How It Works
 
