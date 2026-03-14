@@ -15,8 +15,8 @@ When the user requests output in a specific format:
     설치: brew install pandoc (macOS) / apt install pandoc (Linux)
     Markdown 출력은 바로 가능합니다."
 3. **PPTX requested** and `bidkit-parser` is `false`:
-   "PPTX 출력을 위해 bidkit-parser가 필요합니다.
-    설치: uv pip install bidkit-parser  (uv가 없다면: brew install uv)
+   "PPTX 출력을 위해 parser의 Python 의존성 설치가 필요합니다.
+    터미널에서 실행: uv pip install -r parser/requirements.txt --system
     Markdown 출력은 바로 가능합니다."
 4. If tools available, proceed with requested format.
 

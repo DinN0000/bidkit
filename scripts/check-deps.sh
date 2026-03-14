@@ -8,7 +8,8 @@ check() {
 
 GIT=$(check command -v git)
 UV=$(check command -v uv)
-PARSER=$(check python3 -c "import bidkit_parser")
+SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
+PARSER=$(check test -f "$SCRIPT_DIR/parser/__init__.py")
 PANDOC=$(check command -v pandoc)
 NODE=$(check command -v node)
 

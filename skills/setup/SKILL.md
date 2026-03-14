@@ -25,7 +25,7 @@ Present results as a checklist with installation instructions for missing tools:
 
 [선택]
 ❌ bidkit-parser — PPTX/DOCX/XLSX 파싱
-   설치: uv pip install bidkit-parser  (uv가 없다면: brew install uv)
+   설치: uv pip install -r parser/requirements.txt --system
 ❌ pandoc — PDF 출력
    설치: brew install pandoc (macOS) / apt install pandoc (Linux)
 ✅ node — 고급 계약 검증
