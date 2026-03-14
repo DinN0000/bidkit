@@ -60,10 +60,19 @@ def _parse_pdf(
     table_mode: str = "markdown",
     output_format: str = "markdown",
 ) -> str:
-    """Delegate PDF parsing to the pdf submodule."""
-    from parser.pdf import extract  # noqa: F811
+    """Parse PDF using Docling-based extraction."""
+    from .pdf_converter import DoclingConverter
+    from .pdf_markdown import MarkdownBuilder
 
-    return extract(path, table_mode=table_mode, output_format=output_format)
+    converter = DoclingConverter(table_mode=table_mode)
+    parsed = converter.convert(str(path))
+
+    asset_dir = path.parent / f".parsed_{path.stem}"
+    asset_dir.mkdir(parents=True, exist_ok=True)
+    parsed.save_assets(asset_dir)
+
+    builder = MarkdownBuilder(parsed, asset_dir)
+    return builder.build({}, {}, {})
 
 
 def _parse_office(
@@ -72,7 +81,16 @@ def _parse_office(
     table_mode: str = "markdown",
     output_format: str = "markdown",
 ) -> str:
-    """Delegate Office/ODF/RTF parsing to the office submodule."""
-    from parser.office import extract  # noqa: F811
+    """Parse Office/ODF/RTF documents via AST-based extraction."""
+    from .office_parser import OfficeParser
+    from .office_types import OfficeParserConfig
 
-    return extract(path, table_mode=table_mode, output_format=output_format)
+    config = OfficeParserConfig(summarize=False, extract_attachments=True)
+    ast = OfficeParser.parse_office(str(path), config)
+
+    if output_format == "html":
+        return ast.to_html()
+    elif output_format == "text":
+        return ast.to_text()
+    else:
+        return ast.to_markdown()
