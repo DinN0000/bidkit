@@ -64,6 +64,16 @@ are sequential.
 | `reference/skills-catalog.md` | All agent skills mapped to roles |
 | `reference/cross-team-communication.md` | Inter-team communication protocol |
 | `reference/error-handling.md` | Error scenarios + graceful degradation |
+| **`parser/`** | |
+| `parser/__init__.py` | Unified `parse()` entry point — auto-dispatches PDF vs Office |
+| `parser/pdf_converter.py` | Docling-based PDF extraction (text, tables, images) |
+| `parser/pdf_utils.py` | Bounding box helpers, figure category mapping |
+| `parser/pdf_markdown.py` | PDF content → Markdown assembly |
+| `parser/office_parser.py` | DOCX/PPTX/XLSX/RTF extraction via AST |
+| `parser/office_types.py` | Office AST data structures and rendering |
+| `parser/office_worker.py` | Batch processing worker |
+| `parser/run.py` | CLI entry point for standalone parsing |
+| `parser/requirements.txt` | Python dependencies (no AWS) |
 | **`scripts/`** | |
 | `scripts/verify-harness.sh` | Harness integrity validation (file existence, cross-refs) |
 | `scripts/validate-harness-contracts.js` | Contract validation for schema, output rules, and field naming |

@@ -157,6 +157,11 @@ Ask: *"방향이 정해졌습니다. 바로 작성을 시작할까요?"*
 **Owner**: Team Lead
 **Applies to**: Create mode
 
+When source documents (RFP, prior proposals, reference materials) are provided:
+- Parse using `parser/` module for structured extraction
+- Researcher uses parsed output as primary source material
+- Extracted tables and images are available in `assets/` directory
+
 Issue a structured research directive to the Researcher. The directive must specify:
 
 - **What to gather**: Specific data points needed for this section.
