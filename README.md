@@ -1,36 +1,95 @@
 # BidKit
 
-**금융 IT 제안서, 이제 AI 에이전트 팀이 같이 씁니다.**
+**제안서, 이제 AI 에이전트 팀이 같이 씁니다.**
 
-RFP 던지면 전략부터 잡고, 섹션별로 나눠서 작성하고, 교차 검증까지 — 탑티어 수준의 기술 제안서를 만들어내는 Claude Code 플러그인입니다.
-
----
-
-## 왜 BidKit인가
-
-제안서 PM이라면 공감할 겁니다:
-
-- HSM 스펙 바뀌면 비용표도 바꿔야 하고, 이행계획도 바꿔야 하고...
-- "이 숫자 아까 그 섹션이랑 맞아?" 교차 확인에 반나절
-- 30명이 쓴 문서의 용어가 제각각
-- 마감 3일 전에 RFP 보완공고
-
-BidKit은 이런 문제를 **5개 전문 에이전트가 협업하는 구조**로 해결합니다:
-
-| 누가 | 뭘 하는가 |
-|------|-----------|
-| **Overseer** | 전체 전략 수립, 섹션 간 일관성 검증, 최종 승인 |
-| **Team Lead** | BA/DA/TA/SA 도메인별 작업 조율 |
-| **Writer** | 제안서 본문 작성 (정확한 스펙, 정량적 근거) |
-| **Researcher** | 제품 스펙, 인증, 레퍼런스, 경쟁사 분석 수집 |
-| **Critic** | RFP 요구사항 커버리지, 수치 정합성, 규정 준수 검증 |
-
-모든 섹션은 작성 → 검증 → 수정 → 사용자 확인 → 최종 승인의 5단계를 거칩니다.
-**사용자가 승인하지 않으면 어떤 내용도 확정되지 않습니다.**
+탑티어 수준의 기술 제안서를 전략 수립부터 최종 출력까지, 5개 전문 에이전트가 분업하여 작성하는 Claude Code 플러그인입니다.
 
 ---
 
-## 30초 시작
+## Why BidKit
+
+제안서를 써본 사람이라면 공감할 겁니다:
+
+- 스펙 하나 바뀌면 비용표도, 이행계획도 줄줄이 수정
+- "이 숫자 저쪽 섹션이랑 맞아?" 교차 확인에 반나절
+- 여러 명이 쓴 문서의 용어가 제각각
+- 마감 직전에 RFP 보완공고
+
+BidKit은 이런 문제를 **5개 전문 에이전트의 협업 구조**로 해결합니다.
+
+---
+
+## How It Works
+
+```mermaid
+graph TB
+    subgraph User["👤 User"]
+        RFP["RFP 제공"]
+        Approve["검토 & 승인"]
+    end
+
+    subgraph BidKit["🤖 BidKit"]
+        Overseer["Overseer\n전략 · 교차검증 · 최종승인"]
+
+        subgraph Teams["Domain Teams"]
+            direction LR
+            BA["BA\n사업분석"]
+            DA["DA\n데이터"]
+            TA["TA\n기술"]
+            SA["SA\n솔루션"]
+        end
+
+        subgraph Agents["Each Team"]
+            direction LR
+            TL["Team Lead\n작업 조율"]
+            W["Writer\n본문 작성"]
+            R["Researcher\n자료 수집"]
+            C["Critic\n품질 검증"]
+        end
+    end
+
+    RFP --> Overseer
+    Overseer --> Teams
+    BA & DA & TA & SA --> Agents
+    TL --> W & R
+    W --> C
+    C -->|"PASS"| Approve
+    C -->|"FAIL"| W
+    Approve --> Overseer
+```
+
+### Session Loop
+
+모든 섹션은 이 사이클을 거칩니다. 사용자가 승인하지 않으면 어떤 내용도 확정되지 않습니다.
+
+```mermaid
+graph LR
+    A["✏️ Generate"] --> B["🔍 Verify"]
+    B --> C["🔧 Revise"]
+    C --> D["👤 User Confirm"]
+    D --> E["🏛️ Overseer Review"]
+    E -->|"Confirmed"| F["✅ Done"]
+    E -->|"Directive"| C
+    B -->|"FAIL"| C
+```
+
+### Cross-Verification
+
+섹션 간 불일치를 자동으로 잡아냅니다:
+
+```mermaid
+graph LR
+    subgraph Checks["🔎 What BidKit Catches"]
+        T["용어 불일치\n같은 서버를 다른 이름으로?"]
+        N["수치 불일치\n아키텍처 10대 vs 비용표 8대?"]
+        R["요구사항 누락\nRFP 항목 빠뜨린 건 없는지"]
+        S["규정 미준수\n보안 가이드라인 충족 여부"]
+    end
+```
+
+---
+
+## Quick Start
 
 ```bash
 # Claude Code에서 플러그인 로드
@@ -47,20 +106,20 @@ BidKit이 알아서 전략 수립부터 시작합니다. 명령어를 외울 필
 
 ---
 
-## 이런 것도 됩니다
+## Usage Examples
 
 ```
-"HSM 모델 변경해야 해"           →  해당 섹션 자동으로 열고 수정 시작
-"전체적으로 좀 약한 것 같아"       →  전 섹션 품질 진단 + 개선 우선순위 제시
-"교차 검증해줘"                   →  숫자, 용어, 서버 수량 일관성 자동 체크
+"HSM 모델 변경해야 해"           →  해당 섹션 자동으로 열고 수정
+"전체적으로 좀 약한 것 같아"       →  전 섹션 품질 진단 + 개선 우선순위
+"교차 검증해줘"                   →  숫자 · 용어 · 수량 일관성 체크
 "진행 상황 알려줘"                →  팀별 진행률 + 다음 할 일 안내
-"PDF로 출력해줘"                  →  확정된 섹션만 모아서 출력
+"PDF로 출력해줘"                  →  확정 섹션만 모아서 렌더링
 ```
 
 명령어를 쓰고 싶다면:
 
-| 명령어 | 용도 |
-|--------|------|
+| Command | Purpose |
+|---------|---------|
 | `/bid:design` | 전략 수립 + 목차 생성 |
 | `/bid:write <section>` | 섹션 작성/수정 |
 | `/bid:diagnose` | 전체 품질 진단 |
@@ -70,65 +129,42 @@ BidKit이 알아서 전략 수립부터 시작합니다. 명령어를 외울 필
 
 ---
 
-## 핵심 기능
+## Key Features
 
-### SSOT 기반 섹션 관리
+### SSOT-Based Section Management
 
-모든 섹션은 독립된 SSOT (Single Source of Truth) 문서입니다. 각 섹션은 자체 상태 머신을 가지고 있어서 누가 무엇을 어디까지 했는지 항상 추적됩니다.
+모든 섹션은 독립된 SSOT (Single Source of Truth) 문서로 관리됩니다. 누가, 무엇을, 어디까지 했는지 항상 추적됩니다.
 
+```mermaid
+graph LR
+    I["ideation"] --> D["draft"] --> V["verifying"] --> VD["verified"]
+    VD --> T["tentative"] --> RV["reviewing"] --> C["confirmed"]
+    V -->|"FAIL"| D
+    RV -->|"Directive"| REV["revision"] --> V
 ```
-ideation → draft → verifying → verified → tentative → reviewing → confirmed
-```
 
-### 교차 검증
-
-서버 수량이 아키텍처 섹션에서는 10대인데 비용표에서는 8대? BidKit이 자동으로 찾아냅니다.
-
-- 용어 일관성 (같은 서버를 다른 이름으로 부르고 있지 않은지)
-- 수치 정합성 (서버 수, 비용, TPS가 섹션 간 일치하는지)
-- RFP 요구사항 커버리지 (빠뜨린 요구사항이 없는지)
-- 규정 준수 (금융보안원 가이드라인, 망분리 등)
-
-### 영향도 분석
+### Impact Analysis
 
 확정된 섹션을 수정하면, 영향받는 다른 섹션을 자동으로 파악하고 알려줍니다.
 
-### RFP 문서 파싱
+### Document Parser (Optional)
 
-PDF는 바로 읽고, PPTX/DOCX/XLSX는 parser 설치 후 읽습니다:
+PDF는 바로 읽고, PPTX/DOCX/XLSX는 parser 설치 후 사용:
 
 ```bash
 pip install bidkit-parser
 ```
 
-필요한 시점에 BidKit이 자동으로 안내하니, 미리 설치하지 않아도 됩니다.
-
----
-
-## Agent Architecture
-
-```
-Overseer (EA)
-├── BA Team (사업분석)
-│   └── Team Lead → Writer, Researcher, Critic
-├── DA Team (데이터아키텍처)
-│   └── Team Lead → Writer, Researcher, Critic
-├── TA Team (기술아키텍처)
-│   └── Team Lead → Writer, Researcher, Critic
-└── SA Team (솔루션아키텍처)
-    └── Team Lead → Writer, Researcher, Critic
-```
-
-독립적인 섹션은 **병렬로 작업**됩니다. 사용자와의 대화는 순차적으로, 백그라운드 작업은 동시에.
+필요한 시점에 BidKit이 자동으로 안내합니다.
 
 ---
 
 ## Platform Support
 
-| 플랫폼 | 엔트리포인트 | 사용법 |
-|--------|-------------|--------|
-| **Claude Code** | `CLAUDE.md` | `/bid:` 명령어 또는 자연어 |
-| **Codex** | `AGENTS.md` | 자연어 |
+| Platform | Entry Point | Interface |
+|----------|-------------|-----------|
+| **Claude Code** | `CLAUDE.md` | `/bid:` commands or natural language |
+| **Codex** | `AGENTS.md` | Natural language |
 
 ---
 
