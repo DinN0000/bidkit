@@ -13,7 +13,7 @@ Project: [project name]
 Current: [user-facing situation label]
 Done: [v] section1 (team), [v] section2 (team)
 In Progress: [~] section3 (team) -- user-facing activity details
-Recommended: /command copy-pasteable example input
+Recommended: /ph:command args — 다음에 할 일 설명
 -------------------------------------------------
 ```
 
@@ -47,15 +47,15 @@ Show exactly ONE recommendation — the highest-priority match from top to botto
 
 | Priority | Current State | Recommended |
 |----------|---|---|
-| 1 | No project | /design |
-| 2 | Design complete, all SSOTs empty | /write <first priority section> |
-| 3 | Some sections in draft | /write on incomplete |
-| 4 | 2+ confirmed | /verify |
-| 5 | All confirmed | /output to generate final deliverable |
+| 1 | No project | `/ph:design — 새 제안서 프로젝트를 시작합니다` |
+| 2 | Design complete, all SSOTs empty | `/ph:write <first priority section> — 첫 번째 섹션 작성을 시작합니다` |
+| 3 | Some sections in draft | `/ph:write <incomplete section> — 미완성 섹션을 이어서 작성합니다` |
+| 4 | 2+ confirmed | `/ph:verify — 교차 검증으로 일관성을 확인합니다` |
+| 5 | All confirmed | `"최종 출력을 요청해주세요" — 예: "PDF로 출력해줘"` |
 | 6 | Output generated, small change needed | Natural language quick edit |
-| 7 | Versions available | /output diff to compare versions |
+| 7 | Versions available | `"이전 버전이랑 비교해줘"` |
 | 8 | External input received | Natural language |
-| 9 | Ideation sections exist | /write <section> |
+| 9 | Ideation sections exist | `/ph:write <section> — 방향 탐색을 시작합니다` |
 
 ## Rules
 
@@ -64,3 +64,22 @@ Show exactly ONE recommendation — the highest-priority match from top to botto
 - Use commas to separate listed items within a status line.
 - Prefer user-facing labels such as `초안 작성 중`, `최종 검토 중`, `수정 필요`.
 - Project name is taken from `meta/proposal-meta.yaml` when available.
+- Recommended line MUST include both the command and a human-readable explanation separated by ` — `.
+
+## Platform Divergence
+
+The Recommended line is the only place where Claude Code and Codex responses differ:
+
+**Claude Code:**
+```
+Recommended: /ph:write sa-hsm-001 — HSM 솔루션 초안을 이어서 작성합니다
+```
+
+**Codex:**
+```
+Recommended: "HSM 솔루션 초안 작성을 이어서 진행해주세요" (sa-hsm-001)
+```
+
+When rendering Proposal Guide, detect the current platform:
+- If CLAUDE.md is the entry point → use `/ph:` command format
+- If AGENTS.md is the entry point → use natural language format
