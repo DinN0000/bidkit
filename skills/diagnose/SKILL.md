@@ -13,6 +13,17 @@
 
 ---
 
+## Dependency Check
+
+When the user uploads an existing proposal as PPTX, DOCX, or XLSX:
+1. Run `bash scripts/check-deps.sh`
+2. If `harness-parser` is `false`, inform the user:
+   "PPTX/DOCX 파일을 읽으려면 parser 설치가 필요합니다.
+    터미널에서 실행: pip install harness-parser
+    설치 후 다시 파일을 제공해주세요.
+    PDF 형식이라면 바로 진단 가능합니다."
+3. If `true`, parse and create SSOT files from extracted content.
+
 ## Entry Paths
 
 `/diagnose` has two entry paths depending on whether the user uploads an existing proposal or works with the current project.
