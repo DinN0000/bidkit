@@ -16,7 +16,7 @@ import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
-from parser import SUPPORTED_EXTENSIONS, parse
+from parser import OUTPUT_EXT_MAP, SUPPORTED_EXTENSIONS, parse
 
 
 def _build_arg_parser() -> argparse.ArgumentParser:
@@ -110,8 +110,7 @@ def _parse_batch(
         output_dir = input_dir.parent / f"{input_dir.name}_parsed"
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    ext_map = {"markdown": ".md", "html": ".html", "text": ".txt"}
-    out_ext = ext_map.get(output_format, ".md")
+    out_ext = OUTPUT_EXT_MAP.get(output_format, ".md")
 
     futures = {}
     with ProcessPoolExecutor(max_workers=workers) as pool:

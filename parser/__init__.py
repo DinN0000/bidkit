@@ -9,11 +9,12 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-__all__ = ["parse", "SUPPORTED_EXTENSIONS"]
+__all__ = ["parse", "SUPPORTED_EXTENSIONS", "OUTPUT_EXT_MAP"]
 
 PDF_EXTENSIONS = {".pdf"}
 OFFICE_EXTENSIONS = {".docx", ".pptx", ".xlsx", ".rtf"}
 SUPPORTED_EXTENSIONS = PDF_EXTENSIONS | OFFICE_EXTENSIONS
+OUTPUT_EXT_MAP = {"markdown": ".md", "html": ".html", "text": ".txt"}
 
 
 def parse(

@@ -6,7 +6,7 @@ from docx import Document
 from pptx import Presentation
 from openpyxl import load_workbook
 
-import pdfplumber
+
 from striprtf.striprtf import rtf_to_text
 
 from .office_types import (
@@ -54,8 +54,6 @@ class OfficeParser:
             return _parse_pptx(data, config)
         elif ext == 'xlsx':
             return _parse_xlsx(data, config)
-        elif ext == 'pdf':
-            return _parse_pdf(data, config)
         elif ext == 'rtf':
             return _parse_rtf(data, config)
         else:
@@ -79,8 +77,6 @@ def _detect_extension(data: bytes) -> str:
         return 'docx'  # fallback
     elif data.startswith(b'{\\rtf'):
         return 'rtf'
-    elif data.startswith(b'%PDF'):
-        return 'pdf'
     else:
         raise ValueError("Cannot detect file type from bytes")
 
@@ -435,6 +431,7 @@ def _parse_xlsx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
     attachments = []
 
     logger.info("Parsing Excel file (%d sheets)", len(wb.sheetnames))
+    theme_colors = _extract_theme_colors(wb)
 
     for sheet_name in wb.sheetnames:
         ws = wb[sheet_name]
@@ -502,9 +499,6 @@ def _parse_xlsx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
                 )
                 positioned.append((chart_row, chart_node))
 
-        # 테마 색상 팔레트 추출
-        theme_colors = _extract_theme_colors(wb)
-
         # 병합 셀 정보 수집: (row, col) -> colspan
         merged_spans = {}
         for mc in ws.merged_cells.ranges:
@@ -553,16 +547,6 @@ def _parse_xlsx(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
     )
 
 
-
-def _parse_pdf(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:
-    content = []
-    with pdfplumber.open(io.BytesIO(data)) as pdf:
-        for i, page in enumerate(pdf.pages, 1):
-            text_content = page.extract_text() or ""
-            if text_content.strip():
-                content.append(OfficeContentNode(type="page", text=text_content, metadata={"pageNumber": i}))
-        metadata = OfficeMetadata(pages=len(pdf.pages))
-    return OfficeParserAST(type="pdf", metadata=metadata, content=content)
 
 
 def _parse_rtf(data: bytes, config: OfficeParserConfig) -> OfficeParserAST:

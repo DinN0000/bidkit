@@ -14,7 +14,7 @@ from docling.datamodel.pipeline_options import (
 )
 from docling.document_converter import DocumentConverter, PdfFormatOption
 
-from .pdf_utils import get_location, get_figure_category
+from .pdf_utils import get_figure_category
 
 logger = logging.getLogger("pdf_parser.converter")
 
