@@ -31,7 +31,7 @@ claude
 터미널에서 아래를 복사해서 붙여넣으세요:
 
 ```bash
-claude plugin marketplace add DinN0000/bidkit
+claude plugin marketplace add DinN0000/bid-marketplace
 ```
 
 그다음 Claude Code 안에서:
