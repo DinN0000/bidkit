@@ -28,13 +28,19 @@ claude
 
 ### 3. BidKit 플러그인 설치
 
-Claude Code 안에서 아래를 입력하세요:
+터미널에서 아래를 복사해서 붙여넣으세요:
+
+```bash
+claude plugin marketplace add DinN0000/bidkit
+```
+
+그다음 Claude Code 안에서:
 
 ```
 /plugin
 ```
 
-화면이 뜨면 **Discover** 탭으로 이동 → `bidkit` 검색 → 설치를 누르세요.
+**Discover** 탭 → `bid` 선택 → 설치
 
 ### 4. 사용하기
 
