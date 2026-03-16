@@ -6,29 +6,55 @@
 
 ---
 
-## Install
+## 시작하기
 
-[Claude Code](https://docs.anthropic.com/en/docs/claude-code)에서 마켓플레이스를 통해 설치합니다.
+### 1. Claude Code 설치
+
+터미널(맥: Terminal, 윈도우: PowerShell)을 열고 아래를 복사해서 붙여넣으세요.
+
+```bash
+npm install -g @anthropic-ai/claude-code
+```
+
+> Node.js가 없다면 먼저 https://nodejs.org 에서 LTS 버전을 설치하세요.
+
+### 2. Claude Code 실행
+
+```bash
+claude
+```
+
+처음 실행하면 Anthropic 로그인 화면이 뜹니다. 안내에 따라 로그인하세요.
+
+### 3. BidKit 플러그인 설치
+
+Claude Code 안에서 아래를 입력하세요:
 
 ```
-/plugin  →  Discover 탭  →  bidkit 검색  →  설치
+/plugin
 ```
 
-설치 끝. 이제 말하면 됩니다:
+화면이 뜨면 **Discover** 탭으로 이동 → `bidkit` 검색 → 설치를 누르세요.
+
+### 4. 사용하기
+
+설치가 끝나면 그대로 말하면 됩니다:
 
 ```
 "RFP 받았는데 제안서 만들어야 해"
 ```
 
-### Document Parser (Optional)
+BidKit이 전략 수립부터 시작합니다.
 
-PDF는 바로 읽습니다. PPTX/DOCX/XLSX도 읽으려면:
+### 5. 문서 파서 (선택)
+
+RFP가 PDF라면 바로 읽습니다. PPTX/DOCX/XLSX 파일도 읽으려면:
 
 ```bash
 uv pip install -r parser/requirements.txt --system
 ```
 
-미리 설치하지 않아도 됩니다. 필요한 시점에 BidKit이 안내합니다.
+지금 안 해도 됩니다. 필요할 때 BidKit이 안내해줍니다.
 
 ---
 
