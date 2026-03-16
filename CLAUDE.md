@@ -183,5 +183,4 @@ See `ARCHITECTURE.md` for the full file map with descriptions and dependencies.
 2. Run `/bid:design` to create a new proposal strategy and TOC
 3. Run `/bid:write <section>` to begin drafting sections
 4. Run `/bid:status` to check progress across all sections
-5. Run `/bid:diagnose` to find quality issues
-6. Run `/bid:verify` for final consistency checks before output
+5. Run `/bid:diagnose` to find quality issues and run consistency checks
