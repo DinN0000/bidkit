@@ -44,8 +44,7 @@ are sequential.
 | **`skills/`** | |
 | `skills/design/SKILL.md` | `/design` -- new proposal strategy + TOC generation |
 | `skills/write/SKILL.md` | `/write` -- session loop (draft/verify/revise), state auto-detected |
-| `skills/diagnose/SKILL.md` | `/diagnose` -- full quality diagnosis across all SSOTs |
-| `skills/verify/SKILL.md` | `/verify` -- cross-SSOT consistency and compliance check |
+| `skills/diagnose/SKILL.md` | `/diagnose` -- quality diagnosis + cross-SSOT consistency check |
 | `skills/status/SKILL.md` | `/status` -- progress dashboard + Proposal Guide renderer |
 | `skills/output/SKILL.md` | Output assembly -- MD/PPT/PDF/HTML rendering |
 | `skills/setup/SKILL.md` | Environment check and guided installation |
@@ -65,6 +64,10 @@ are sequential.
 | `reference/skills-catalog.md` | All agent skills mapped to roles |
 | `reference/cross-team-communication.md` | Inter-team communication protocol |
 | `reference/error-handling.md` | Error scenarios + graceful degradation |
+| `reference/domain/ba.md` | BA domain structural patterns and Critic verification points |
+| `reference/domain/da.md` | DA domain structural patterns and Critic verification points |
+| `reference/domain/ta.md` | TA domain structural patterns and Critic verification points |
+| `reference/domain/sa.md` | SA domain structural patterns and Critic verification points |
 | **`parser/`** | |
 | `parser/__init__.py` | Unified `parse()` entry point — auto-dispatches PDF vs Office |
 | `parser/pdf_converter.py` | Docling-based PDF extraction (text, tables, images) |

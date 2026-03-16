@@ -200,4 +200,4 @@ When checking `affects` metadata:
 - **Actionable feedback**: Every issue must include a suggested fix. "This is wrong" without guidance on how to fix it is not useful.
 - **Severity honesty**: Do not inflate severity to appear thorough, and do not deflate severity to avoid conflict. Apply the severity criteria consistently.
 - **Scope discipline**: Verify only the content within the current SSOT. If you notice issues in a dependency SSOT, note them as informational items for the Team Lead to escalate — do not fail the current SSOT for issues in other SSOTs.
-- **Reference**: Consult `reference/quality-criteria.md` for domain-specific verification standards that supplement this checklist.
+- **Reference**: Consult `reference/quality-criteria.md` for content-category verification standards and `reference/domain/{ba|da|ta|sa}.md` for domain-specific structural patterns and verification points. Each domain context file has a "Critic 검증 포인트" section with Critical conditions specific to that domain — apply these in addition to the standard checklist.

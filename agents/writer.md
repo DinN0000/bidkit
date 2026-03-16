@@ -106,6 +106,12 @@ When the Team Lead directs you to produce cost or sizing estimates:
 
 ---
 
+## Domain Context
+
+Before drafting, read the domain context file assigned to your team: `reference/domain/{ba|da|ta|sa}.md`. These files define the structural patterns your content must follow — section organization, table formats, diagram conventions, and labeling standards specific to your domain. The Team Lead will specify which patterns to apply for the current SSOT.
+
+---
+
 ## Quality Target
 
 Your content must meet these specific quality standards:

@@ -6,86 +6,123 @@
 
 ---
 
-## Why BidKit
+## Install
 
-BidKit은 제안서 작성팀입니다.
+### 사전 준비
 
-**BA Team** — 사업 이해, 요구사항 분석, 비용 산정 <br/>
-**DA Team** — 데이터 모델, 마이그레이션, 보안 설계 <br/>
-**TA Team** — 인프라 아키텍처, 플랫폼, 네트워크 <br/>
-**SA Team** — 솔루션 설계, 제품 선정, 경쟁 분석 <br/>
-
-각 팀에는 조율하는 Team Lead, 본문을 쓰는 Writer, 자료를 모으는 Researcher, 품질을 검증하는 Critic이 붙습니다. 전체 전략과 섹션 간 일관성은 Overseer가 잡습니다.
-
-사용자는 PM으로서 방향을 잡고 승인합니다.
-
-## How It Works
-
-```
-╔═══════════════════════════════════════════════════════════════╗
-║  B I D K I T — AI-Powered Proposal Writing System             ║
-╠═══════════════════════════════════════════════════════════════╣
-║                                                               ║
-║  RFP ──▶ Overseer (EA)                                        ║
-║          │ 전략 · 용어 통일 · 교차검증 · 최종승인                     ║
-║          │                                                    ║
-║          ├──▶ BA Team ──┐                                     ║
-║          ├──▶ DA Team   ├── 독립 섹션은 병렬 작업                  ║
-║          ├──▶ TA Team   │                                     ║
-║          └──▶ SA Team ──┘                                     ║
-║                │                                              ║
-║                ▼                                              ║
-║  ┌─ Team Lead ── Writer ─── 스펙 기반 본문 작성                   ║
-║  │               Researcher  제품·인증·실적·경쟁사 조사             ║
-║  │               Critic ──── RFP 커버리지, 수치, 규정 검증          ║
-║  │                                                            ║
-║  │  ┌──────── Session Loop ────────┐                          ║
-║  │  │                              │                          ║
-║  │  │  Generate ──▶ Verify         │                          ║
-║  │  │     ▲          │    │        │                          ║
-║  │  │     │        PASS  FAIL──┐   │                          ║
-║  │  │     │          │         │   │                          ║
-║  │  │  Revise ◄──────┘    Revise   │                          ║
-║  │  │     ▲                        │                          ║
-║  │  │     │          ▼             │                          ║
-║  │  │     │    User Confirm        │                          ║
-║  │  │     │          │             │                          ║
-║  │  │     │    Overseer Review     │                          ║
-║  │  │     │     │          │       │                          ║
-║  │  │     └─ Directive  Confirmed ✓│                          ║
-║  │  │                              │                          ║
-║  │  └──────────────────────────────┘                          ║
-║  │                                                            ║
-║  │  ✗ "HSM 장비" vs "HSM 서버" ─── 용어 통일                       ║
-║  │  ✗ 아키텍처 10대 vs 비용표 8대 ─ 수치 검증                         ║
-║  │  ✗ RFP 3.2.1항 미반영 ──────── 누락 탐지                        ║
-║  │  ✗ 망분리 기준 미충족 ──────── 규정 검증                          ║
-║  │                                                            ║
-║  └──▶ Output (MD · PDF · PPTX · HTML)                         ║
-║                                                               ║
-╚═══════════════════════════════════════════════════════════════╝
-```
-
----
-
-## Quick Start
+[Claude Code](https://docs.anthropic.com/en/docs/claude-code)가 설치되어 있어야 합니다.
 
 ```bash
-# Claude Code에서 플러그인 로드
-claude --plugin-dir /path/to/bidkit
+# Claude Code 설치 (아직 없다면)
+npm install -g @anthropic-ai/claude-code
 ```
 
-그다음, 말만 하면 됩니다:
+### Step 1. 플러그인 설치
+
+Claude Code 안에서 `/plugin` 입력 → **Discover** 탭 → `bidkit` 검색 → 설치
+
+또는 터미널에서 직접:
+
+```bash
+claude plugin add bidkit
+```
+
+### Step 2. 제안서 프로젝트 시작
+
+```bash
+mkdir my-proposal && cd my-proposal
+claude
+```
+
+### Step 3. 말하기
 
 ```
 "RFP 받았는데 제안서 만들어야 해"
 ```
 
-BidKit이 알아서 전략 수립부터 시작합니다. 명령어를 외울 필요 없습니다.
+BidKit이 전략 수립부터 시작합니다. 끝.
+
+### Document Parser (Optional)
+
+PDF는 바로 읽습니다. PPTX/DOCX/XLSX도 읽으려면:
+
+```bash
+uv pip install -r parser/requirements.txt --system
+```
+
+미리 설치하지 않아도 됩니다. 필요한 시점에 BidKit이 안내합니다.
+`/bid:setup`으로 환경을 한 번에 점검할 수도 있습니다.
 
 ---
 
-## Usage Examples
+## How It Works
+
+### 팀 구조
+
+```
+                     ┌───────────┐
+                     │ Overseer  │  전략, 교차검증, 최종승인
+                     └─────┬─────┘
+          ┌────────┬───────┼───────┬────────┐
+          ▼        ▼       ▼       ▼        ▼
+       ┌──────┐ ┌──────┐ ┌──────┐ ┌──────┐  meta/
+       │  BA  │ │  DA  │ │  TA  │ │  SA  │  outline, glossary
+       │  Team│ │  Team│ │  Team│ │  Team│  rfp-trace-matrix
+       └──┬───┘ └──┬───┘ └──┬───┘ └──┬───┘
+          ▼        ▼        ▼        ▼
+       ssot/ba/ ssot/da/ ssot/ta/ ssot/sa/
+```
+
+| Team | 산출물 | 핵심 규칙 |
+|------|--------|---------|
+| **BA** | 사업 개요, 요구사항, 업무 프로세스 | 모든 기능 = 흐름도 + 화면 |
+| **DA** | 데이터 모델, 마이그레이션, 보안 | 5-Part 순서, PK/FK 필수, 암호화 기준 |
+| **TA** | 아키텍처, H/W-S/W 구성, 이행, 비용 | 3환경 분리, H/W 수량 = 비용표 |
+| **SA** | 솔루션 스펙, 비교표, 레퍼런스, 라이선스 | 5-Part 구조, 성능 = 측정조건 포함 |
+
+### 작업 프로세스
+
+각 팀 안에서 4명이 릴레이로 움직입니다.
+
+```
+① Team Lead: SSOT 상태 읽고 모드 감지
+        │
+② Researcher: 자료 수집 (스펙, 레퍼런스, RFP)
+        │
+③ Writer: 초안 작성 (도메인 패턴 적용)
+        │
+   ┌───────────────────────────────┐
+   │ ④ Critic: 검증                 │
+   │    품질 기준 + RFP 대조         │
+   │         │                     │
+   │     FAIL │    PASS            │
+   │         ▼      │             │
+   │ ⑤ Writer: 수정  │             │  ◀── PASS 날 때까지 반복
+   │         └──▶ ④ 재검증          │
+   └───────────────────────────────┘
+                    │ PASS
+⑥ Team Lead: 사용자에게 제시 → User Confirm
+                    │
+⑦ Overseer: 교차 검토 (용어, 수치, 의존성)
+              │            │
+          Directive     Confirmed ✓
+              └──▶ Writer 수정 ──▶ Critic 재검증
+```
+
+이런 걸 잡아줍니다:
+
+```
+✗ "HSM 장비" vs "HSM 서버" ─── 용어 통일
+✗ 아키텍처 10대 vs 비용표 8대 ─ 수치 검증
+✗ RFP 3.2.1항 미반영 ──────── 누락 탐지
+✗ 망분리 기준 미충족 ──────── 규정 검증
+```
+
+---
+
+## Usage
+
+명령어를 외울 필요 없습니다. 자연어로 말하면 자동 라우팅됩니다.
 
 ```
 "HSM 모델 변경해야 해"           →  해당 섹션 자동으로 열고 수정
@@ -101,8 +138,7 @@ BidKit이 알아서 전략 수립부터 시작합니다. 명령어를 외울 필
 |---------|---------|
 | `/bid:design` | 전략 수립 + 목차 생성 |
 | `/bid:write <section>` | 섹션 작성/수정 |
-| `/bid:diagnose` | 전체 품질 진단 |
-| `/bid:verify` | 교차 검증 |
+| `/bid:diagnose` | 품질 진단 + 교차 검증 |
 | `/bid:status` | 진행 현황 |
 | `/bid:setup` | 환경 점검 |
 
@@ -112,27 +148,15 @@ BidKit이 알아서 전략 수립부터 시작합니다. 명령어를 외울 필
 
 ### SSOT-Based Section Management
 
-모든 섹션은 독립된 SSOT (Single Source of Truth) 문서로 관리됩니다. 누가, 무엇을, 어디까지 했는지 항상 추적됩니다.
+모든 섹션은 독립된 SSOT (Single Source of Truth) 문서로 관리됩니다.
 
 ```
-ideation ──▶ draft ──▶ verifying ──▶ verified ──▶ tentative ──▶ reviewing ──▶ confirmed ✓
-                          │                                        │
-                          └── FAIL ──▶ draft                       └── directive ──▶ revision ──▶ verifying
+ideation → draft → verifying → verified → tentative → reviewing → confirmed ✓
 ```
 
 ### Impact Analysis
 
 확정된 섹션을 수정하면, 영향받는 다른 섹션을 자동으로 파악하고 알려줍니다.
-
-### Document Parser (Optional)
-
-PDF는 바로 읽고, PPTX/DOCX/XLSX는 parser 설치 후 사용:
-
-```bash
-pip install bidkit-parser
-```
-
-필요한 시점에 BidKit이 자동으로 안내합니다.
 
 ---
 

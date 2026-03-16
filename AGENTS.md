@@ -30,8 +30,7 @@ run multiple agents in parallel for independent sections.
 |---------|---------|------------|
 | `design` | New proposal strategy + TOC generation | `skills/design/SKILL.md` |
 | `write <section>` | Work on a section (draft/revise auto-detected) | `skills/write/SKILL.md` |
-| `diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose/SKILL.md` |
-| `verify` | Cross-SSOT consistency and compliance check | `skills/verify/SKILL.md` |
+| `diagnose` | Quality diagnosis + cross-SSOT consistency check | `skills/diagnose/SKILL.md` |
 | `status` | Progress dashboard for all sections | `skills/status/SKILL.md` |
 | `setup` | Environment check and guided installation | `skills/setup/SKILL.md` |
 
@@ -77,7 +76,7 @@ Common Korean phrases are routed as follows:
 | "이행계획 어떻게 할지 고민 중이야" | `write impl` | auto-enters explore |
 | "HSM 모델 변경해야 해" | `write hsm` | auto-enters re-edit |
 | "전체적으로 좀 약한 것 같아" | `diagnose` | |
-| "교차 검증해줘" | `verify` | |
+| "교차 검증해줘" | `diagnose` | cross-cutting verification |
 | "진행 상황 알려줘" | `status` | |
 | "이전 버전이랑 비교해줘" | `output` | version diff |
 | "RFP 보완공고 나왔어" | update RFP | re-verify affected SSOTs |

@@ -6,15 +6,16 @@ needing to know internal role names or raw state-machine terminology.
 
 ## Format
 
+Render inside a fenced code block (` ``` `) so lines display consistently across terminals:
+
 ```
--------------------------------------------------
-Project: [project name]
--------------------------------------------------
-Current: [user-facing situation label]
-Done: [v] section1 (team), [v] section2 (team)
-In Progress: [~] section3 (team) -- user-facing activity details
-Recommended: /bid:command args — 다음에 할 일 설명
--------------------------------------------------
+─────────────────────────────────────────────────
+📋 Project: [project name]
+─────────────────────────────────────────────────
+✅ Done    : [v] section1 (team), [v] section2 (team)
+🔄 Current : [~] section3 (team) — activity detail
+💡 Next    : /bid:command args — 다음에 할 일 설명
+─────────────────────────────────────────────────
 ```
 
 ## User-Facing Status Labels
@@ -50,7 +51,7 @@ Show exactly ONE recommendation — the highest-priority match from top to botto
 | 1 | No project | `/bid:design — 새 제안서 프로젝트를 시작합니다` |
 | 2 | Design complete, all SSOTs empty | `/bid:write <first priority section> — 첫 번째 섹션 작성을 시작합니다` |
 | 3 | Some sections in draft | `/bid:write <incomplete section> — 미완성 섹션을 이어서 작성합니다` |
-| 4 | 2+ confirmed | `/bid:verify — 교차 검증으로 일관성을 확인합니다` |
+| 4 | 2+ confirmed | `/bid:diagnose — 품질 진단 및 교차 검증을 수행합니다` |
 | 5 | All confirmed | `"최종 출력을 요청해주세요" — 예: "PDF로 출력해줘"` |
 | 6 | Output generated, small change needed | Natural language quick edit |
 | 7 | Versions available | `"이전 버전이랑 비교해줘"` |

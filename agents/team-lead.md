@@ -184,14 +184,13 @@ When the Overseer issues a directive (e.g., after cross-review):
 **You MUST render the Proposal Guide at the bottom of every response**, following the format specified in `reference/proposal-guide-format.md`.
 
 ```
--------------------------------------------------
-Project: [project name]
--------------------------------------------------
-Current: [user-facing situation label]
-Done: [v] section1 (team), [v] section2 (team)
-In Progress: [~] section3 (team) -- current activity details
-Recommended: /command copy-pasteable example input
--------------------------------------------------
+─────────────────────────────────────────────────
+📋 Project: [project name]
+─────────────────────────────────────────────────
+✅ Done    : [v] section1 (team), [v] section2 (team)
+🔄 Current : [~] section3 (team) — activity detail
+💡 Next    : /bid:command args — 다음에 할 일 설명
+─────────────────────────────────────────────────
 ```
 
 ### Status Icons
@@ -211,12 +210,31 @@ Show exactly ONE recommendation — the highest-priority match:
 1. No project exists -> `/design`
 2. Design complete, all SSOTs empty -> `/write <first priority section>`
 3. Some sections in draft -> `/write` on incomplete section
-4. 2+ sections confirmed -> `/verify`
+4. 2+ sections confirmed -> `/diagnose`
 5. All confirmed -> `/output` to generate final deliverable
 6. Output generated, small change needed -> natural language quick edit
 7. Versions available -> `/output diff` to compare versions
 8. External input received -> natural language guidance
 9. Ideation sections exist -> `/write <section>`
+
+---
+
+## Domain Context
+
+On every invocation, load the domain context file for your `{{DOMAIN}}`:
+
+| Domain | Context File |
+|--------|-------------|
+| BA | `reference/domain/ba.md` |
+| DA | `reference/domain/da.md` |
+| TA | `reference/domain/ta.md` |
+| SA | `reference/domain/sa.md` |
+
+These files define **structural patterns, standard formats, and domain-specific Critic verification points** that distinguish a top-tier proposal from a generic one. Use them to:
+
+1. **Direct the Writer**: When assigning work in step (2), reference the domain context to specify expected structure (e.g., "SA 솔루션 소개 5-Part 구조로 작성", "BA 2단 구조(흐름도+화면)로 작성").
+2. **Brief the Researcher**: Tell the Researcher what data points the domain patterns require (e.g., "성능 수치에 측정 조건 필요하니 조건도 같이 조사").
+3. **Guide the Critic**: The Critic uses the domain-specific verification points in addition to the standard checklist.
 
 ---
 
@@ -230,3 +248,4 @@ Always consult these files when performing your duties:
 | `reference/proposal-guide-format.md` | Rendering the Proposal Guide footer |
 | `reference/impact-rules.md` | Impact severity classification and cascade rules for re-edits |
 | `reference/skills-catalog.md` | Available skills (Mermaid, tables, FP estimation, etc.) to leverage during content creation |
+| `reference/domain/{{DOMAIN}}.md` | Domain-specific structural patterns and quality criteria |

@@ -2,7 +2,7 @@
 
 ## Trigger
 
-`/diagnose` command or natural language like "전체적으로 좀 약한 것 같아", "기존 제안서 있는데 전체적으로 봐줘"
+`/diagnose` command or natural language like "전체적으로 좀 약한 것 같아", "기존 제안서 있는데 전체적으로 봐줘", "교차 검증해줘", "일관성 확인해줘"
 
 ---
 
@@ -80,23 +80,68 @@ For each SSOT graded C or D, identify specific issues:
 - **Structure problems** — poor organization, missing diagrams/tables, unclear flow
 - **Quality shortfalls** — per `reference/quality-criteria.md` standards
 
-### Step (3) — Cross-Cutting Problem Identification
+### Step (3) — Cross-Cutting Verification
 
-Analyze ALL SSOTs together to find systemic issues:
+Analyze ALL SSOTs together across five dimensions. This replaces the former `/verify` command.
 
-- **Terminology inconsistency** — same concept referred to by different names, abbreviation mismatches, glossary violations
-- **Data mismatches** — numbers that should match across sections but do not (server counts, costs, throughput figures)
-- **Narrative gaps** — sections that do not connect logically, missing transitions, story arc breaks
-- **Redundancy** — same content duplicated across multiple sections without purpose
-- **Strategy misalignment** — sections that contradict the agreed strategy or each other
-- **RFP coverage gaps** — requirements in `meta/rfp-trace-matrix.md` not covered by any section
+#### 3a. Terminology Consistency
+
+Check all SSOTs for consistent use of terms against `meta/glossary.yaml`:
+
+- **Server names** — the same server must be referred to by the same name everywhere
+- **Product names** — exact product names, model numbers, and version strings must match
+- **Abbreviations** — defined on first use and used consistently
+- **Organization names** — customer, partner, vendor names identical everywhere
+- **Technical terms** — match glossary definition
+
+#### 3b. Data Accuracy
+
+Check that numerical data is consistent across all SSOTs:
+
+- **Server counts** — totals and per-type counts match between architecture and cost sections
+- **Cost figures** — unit prices, totals, subtotals arithmetically correct and consistent
+- **Performance metrics** — TPS, throughput, latency figures match between solution and architecture
+- **Sizing data** — storage, memory, CPU specs match between solution specs and infra plans
+- **Timeline data** — dates, durations, milestones consistent between implementation plan and overview
+- **Licensing** — license counts match server/user counts in other sections
+
+#### 3c. Redundancy Detection
+
+- **Exact duplicates** — identical paragraphs or tables in multiple SSOTs
+- **Near duplicates** — substantially similar content with minor variations (more dangerous as they may diverge)
+- For each: determine if appropriate (e.g., executive summary) or should be consolidated
+
+#### 3d. RFP Coverage Gap Analysis
+
+- **Unmapped requirements** — requirements in `meta/rfp-trace-matrix.md` not assigned to any SSOT
+- **Mapped but unaddressed** — assigned but not actually covered in content
+- **Partial coverage** — mentioned but not elaborated
+- **Orphan content** — content not mapping to any RFP requirement (scope creep)
+
+#### 3e. Narrative Flow
+
+- **Logical progression** — each section builds on the previous
+- **Transitions** — sections reference or connect to adjacent sections
+- **Consistency of tone** — writing style consistent across sections
+- **Story arc** — clear beginning (problem), middle (solution), end (implementation + value)
+- **Strategic coherence** — all sections support the same win strategy
+
+#### Contract Validation (Optional)
+
+If Node.js is available (`bash scripts/check-deps.sh` → `node: true`), run `scripts/validate-bidkit-contracts.js` for enhanced contract validation. If unavailable, skip with note: "고급 계약 검증이 생략되었습니다 (Node.js 미설치). 핵심 검증은 정상 수행됩니다."
 
 ### Step (4) — Diagnosis Report
 
-Present the diagnosis report to the user with the following structure:
+Present the diagnosis report in two layers: **Decision List first** (what the user needs to decide), then **detailed report** (full breakdown).
 
 ```
 ## Diagnosis Report: [project name]
+
+### 지금 결정할 것
+
+1. [필수] sa-hsm-001 서버 수량을 12대와 14대 중 어떤 값으로 확정할지 결정
+2. [필수] 제품 표준 명칭을 glossary 기준으로 통일 승인
+3. [권장] ta-infra-001의 중복 사양표를 참조 방식으로 바꿀지 승인
 
 ### Overall Assessment
 Grade distribution: A: N, B: N, C: N, D: N
@@ -124,9 +169,9 @@ Overall quality: [summary statement]
 #### [A] section-id: Section Title (team)
 - Rationale: ...
 
-### Cross-Cutting Problems (priority order)
+### Cross-Cutting Issues (priority order)
 
-1. [Critical] Terminology: "보안 서버" vs "Security Server" — used inconsistently in sa-hsm-001, ta-infra-001
+1. [Critical] Terminology: "보안 서버" vs "Security Server" — sa-hsm-001, ta-infra-001
 2. [Critical] Data mismatch: server count 12 in sa-hsm-001 vs 14 in ba-cost-001
 3. [Warning] Narrative gap: no transition between architecture and implementation plan
 4. [Info] Redundancy: HSM specification duplicated in sa-hsm-001 and ta-infra-001
@@ -297,7 +342,6 @@ If the uploaded document cannot be parsed:
 | `reference/state-machine.md` | Valid SSOT states |
 | `agents/overseer.md` | Overseer grading and cross-review protocol |
 | `skills/write/SKILL.md` | Session loop for per-section improvement |
-| `skills/verify/SKILL.md` | Cross-SSOT consistency check |
 
 ---
 
@@ -305,37 +349,4 @@ If the uploaded document cannot be parsed:
 
 **Render at the bottom of every response** per `reference/proposal-guide-format.md`.
 
-```
--------------------------------------------------
-Project: [project name]
--------------------------------------------------
-Current: [user-facing situation label]
-Done: [v] section1 (team), [v] section2 (team)
-In Progress: [~] section3 (team) -- current activity details
-Recommended: /command copy-pasteable example input
--------------------------------------------------
-```
-
-### Status Icons
-
-| Icon | Meaning |
-|------|---------|
-| [v] | confirmed |
-| [~] | in progress (draft / verifying / verified / tentative / reviewing) |
-| [>] | ideation |
-| [ ] | not started |
-| [!] | revision (Overseer directive or re-edit of confirmed) |
-
-### Recommendation Logic
-
-Show exactly ONE recommendation — the highest-priority match:
-
-1. No project exists -> `/design`
-2. Design complete, all SSOTs empty -> `/write <first priority section>`
-3. Some sections in draft -> `/write` on incomplete section
-4. 2+ sections confirmed -> `/verify`
-5. All confirmed -> `/output` to generate final deliverable
-6. Output generated, small change needed -> natural language quick edit
-7. Versions available -> `/output diff` to compare versions
-8. External input received -> natural language guidance
-9. Ideation sections exist -> `/write <section>`
+Follows `reference/proposal-guide-format.md`.

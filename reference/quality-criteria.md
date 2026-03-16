@@ -1,6 +1,8 @@
 # Quality Criteria
 
-Verification checklist defining "top-tier SI firm" quality for each category of proposal content. Critics and the Overseer use these criteria to decide whether an SSOT section passes or requires revision.
+Verification checklist defining "top-tier SI firm" quality for each **content category** of proposal content. Critics and the Overseer use these criteria to decide whether an SSOT section passes or requires revision.
+
+> **Relationship to domain context files**: This file defines quality standards by *content category* (Product Specifications, Solution Architecture, etc.) — what to check regardless of which team wrote it. The domain context files (`reference/domain/*.md`) define quality standards by *team domain* (BA/DA/TA/SA) — structural patterns and formatting conventions specific to each domain. Both apply during verification: this file checks the content substance, domain files check the structural execution.
 
 ## Product Specifications
 

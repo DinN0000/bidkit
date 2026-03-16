@@ -54,8 +54,7 @@ run multiple agents in parallel for independent sections.
 |---------|---------|------------|
 | `/bid:design` | New proposal strategy + TOC generation | `skills/design/SKILL.md` |
 | `/bid:write <section>` | Work on a section (draft/revise auto-detected) | `skills/write/SKILL.md` |
-| `/bid:diagnose` | Full quality diagnosis across all SSOTs | `skills/diagnose/SKILL.md` |
-| `/bid:verify` | Cross-SSOT consistency and compliance check | `skills/verify/SKILL.md` |
+| `/bid:diagnose` | Quality diagnosis + cross-SSOT consistency check | `skills/diagnose/SKILL.md` |
 | `/bid:status` | Progress dashboard for all sections | `skills/status/SKILL.md` |
 | `/bid:setup` | Environment check and guided installation | `skills/setup/SKILL.md` |
 
@@ -97,7 +96,7 @@ Common Korean phrases are routed as follows:
 | "이행계획 어떻게 할지 고민 중이야" | `/bid:write impl` | auto-enters explore |
 | "HSM 모델 변경해야 해" | `/bid:write hsm` | auto-enters re-edit |
 | "전체적으로 좀 약한 것 같아" | `/bid:diagnose` | |
-| "교차 검증해줘" | `/bid:verify` | |
+| "교차 검증해줘" | `/bid:diagnose` | cross-cutting verification |
 | "진행 상황 알려줘" | `/bid:status` | |
 | "이전 버전이랑 비교해줘" | `output` | version diff |
 | "RFP 보완공고 나왔어" | update RFP | re-verify affected SSOTs |

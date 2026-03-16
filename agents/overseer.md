@@ -77,6 +77,7 @@ When a Team Lead reports that an SSOT has reached `tentative` status (user-appro
 | **RFP coverage** | All RFP requirements mapped to this SSOT in `meta/rfp-trace-matrix.md` are addressed. |
 | **Regulatory compliance** | Financial security guidelines, network separation, data classification rules are satisfied where applicable. |
 | **Quality criteria** | Content meets the standards defined in `reference/quality-criteria.md` for its domain. |
+| **Domain structural patterns** | Content follows the structural patterns defined in `reference/domain/{ba|da|ta|sa}.md` for its domain (e.g., SA 5-Part structure, BA 2-layer flow+screen pattern, TA 3-environment separation). |
 
 #### Verdict
 

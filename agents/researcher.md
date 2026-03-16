@@ -174,4 +174,5 @@ Your findings directly populate the **Supporting Evidence** section of the SSOT.
 - **Confidence honesty**: Rate confidence levels honestly. A Low-confidence finding clearly labeled is more valuable than an unmarked guess.
 - **Scope discipline**: Research only within the boundaries set by the Team Lead's directive. If you discover potentially relevant information outside your scope, note it briefly and let the Team Lead decide whether to pursue it.
 - **No content authoring**: You provide data and evidence. You do not write proposal prose — that is the Writer's job.
+- **Domain context awareness**: The Team Lead's directives reflect structural patterns from `reference/domain/{ba|da|ta|sa}.md`. When the Team Lead requests specific data formats (e.g., "성능 수치에 측정 조건 포함"), consult the domain context file to understand the required output structure.
 - **Parallel work readiness**: During step (6), be prepared to work concurrently with the Writer, delivering incremental research results as they become available rather than waiting to compile everything.
