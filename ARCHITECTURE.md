@@ -44,10 +44,12 @@ are sequential.
 | **`skills/`** | |
 | `skills/design/SKILL.md` | `/design` -- new proposal strategy + TOC generation |
 | `skills/write/SKILL.md` | `/write` -- session loop (draft/verify/revise), state auto-detected |
-| `playbooks/diagnose/SKILL.md` | Quality diagnosis + cross-SSOT consistency check (natural language only) |
 | `skills/status/SKILL.md` | `/status` -- progress dashboard + Proposal Guide renderer |
-| `playbooks/output/SKILL.md` | Output assembly -- MD/PPT/PDF/HTML rendering (natural language only) |
 | `skills/setup/SKILL.md` | Environment check and guided installation |
+| `skills/notion/SKILL.md` | `/notion` -- upload proposal to Notion for team review |
+| **`playbooks/`** | Natural-language-only workflows (not registered as commands) |
+| `playbooks/diagnose/SKILL.md` | Quality diagnosis + cross-SSOT consistency check |
+| `playbooks/output/SKILL.md` | Output assembly -- MD/PPT/PDF/HTML rendering |
 | **`templates/`** | |
 | `templates/ssot.md` | SSOT document template (YAML frontmatter + body structure) |
 | `templates/ideation-note.md` | Pre-SSOT exploration note template |

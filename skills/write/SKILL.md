@@ -606,14 +606,4 @@ When the Writer cannot resolve an issue without external input:
 
 ### Recommendation Logic
 
-Show exactly ONE recommendation — the highest-priority match:
-
-1. No project exists -> `/bid:design`
-2. Design complete, all SSOTs empty -> `/bid:write <first priority section>`
-3. Some sections in draft -> `/bid:write` on incomplete section
-4. 2+ sections confirmed -> `"교차 검증해줘"`
-5. All confirmed -> `"최종 출력을 요청해주세요"` — natural language output request
-6. Output generated, small change needed -> natural language quick edit
-7. Versions available -> `"이전 버전이랑 비교해줘"`
-8. External input received -> natural language guidance
-9. Ideation sections exist -> `/bid:write <section>`
+Follow the Recommendation Logic in `reference/proposal-guide-format.md`.
