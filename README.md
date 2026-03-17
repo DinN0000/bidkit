@@ -35,7 +35,21 @@ Claude Code 안에서 아래 두 줄을 순서대로 입력하세요:
 /plugin install bid
 ```
 
-### 4. 사용하기
+### 4. 업데이트
+
+이력 재작성으로 인해 기존 설치에서 업데이트 충돌이 날 수 있습니다.
+문제가 생기면 마켓플레이스를 삭제 후 재추가하세요:
+
+```
+/plugin marketplace remove DinN0000/bid-marketplace
+/plugin marketplace add DinN0000/bid-marketplace
+/plugin install bid
+```
+
+자동 업데이트를 켜두면 이후부터는 세션 시작 시 자동 반영됩니다:
+플러그인 TUI → Marketplaces 탭 → DinN0000/bid-marketplace → Auto-update ON
+
+### 5. 사용하기
 
 설치가 끝나면 그대로 말하면 됩니다:
 
@@ -45,7 +59,7 @@ Claude Code 안에서 아래 두 줄을 순서대로 입력하세요:
 
 BidKit이 전략 수립부터 시작합니다.
 
-### 5. 문서 파서 (선택)
+### 6. 문서 파서 (선택)
 
 RFP가 PDF라면 바로 읽습니다. PPTX/DOCX/XLSX 파일도 읽으려면:
 
