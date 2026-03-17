@@ -90,7 +90,7 @@ After `proposal/output/proposal-vN.md` is generated, render the user-requested f
 
 > **Note — project-specific templates**: PPT rendering requires a company PPTX
 > template (e.g., `templates/company-ppt.pptx`) that must be provided by the user
-> during `/design` initialization. PDF and HTML templates ship with sensible
+> during `/bid:design` initialization. PDF and HTML templates ship with sensible
 > defaults but can be customized per project.
 
 ### Output Paths
@@ -104,7 +104,7 @@ proposal/output/proposal-vN/index.html     ← static site
 
 ### PPT Rendering
 
-Source: Company PPTX template (provided during `/design` initialization)
+Source: Company PPTX template (provided during `/bid:design` initialization)
 
 Mapping rules:
 - Each Level-1 section (`## `) -> new section divider slide.
@@ -201,14 +201,13 @@ When the user requests an executive summary (e.g., "요약본 만들어줘", "PM
 **Render at the bottom of every response** per `reference/proposal-guide-format.md`.
 
 ```
--------------------------------------------------
-Project: [project name]
--------------------------------------------------
-Current: [user-facing situation label]
-Done: [v] section1 (team), [v] section2 (team)
-In Progress: [~] section3 (team) -- current activity details
-Recommended: /command copy-pasteable example input
--------------------------------------------------
+─────────────────────────────────────────────────
+📋 Project: [project name]
+─────────────────────────────────────────────────
+✅ Done    : [v] section1 (team), [v] section2 (team)
+🔄 Current : [~] section3 (team) — activity detail
+💡 Next    : /bid:command args — 다음에 할 일 설명
+─────────────────────────────────────────────────
 ```
 
 ### Status Icons
@@ -225,10 +224,10 @@ Recommended: /command copy-pasteable example input
 
 Show exactly ONE recommendation — the highest-priority match:
 
-1. No project exists -> `/design`
-2. Design complete, all SSOTs empty -> `/write <first priority section>`
-3. Some sections in draft -> `/write` on incomplete section
-4. 2+ sections confirmed -> `/verify`
-5. All confirmed -> `/output` to generate final deliverable
+1. No project exists -> `/bid:design`
+2. Design complete, all SSOTs empty -> `/bid:write <first priority section>`
+3. Some sections in draft -> `/bid:write` on incomplete section
+4. 2+ sections confirmed -> `/bid:diagnose`
+5. All confirmed -> `"최종 출력을 요청해주세요"` — natural language output request
 6. Output generated, small change needed -> natural language quick edit guidance
-7. Versions available -> `/output diff` to compare versions
+7. Versions available -> `"이전 버전이랑 비교해줘"`

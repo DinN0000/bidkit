@@ -8,8 +8,8 @@
 
 ## Prerequisites
 
-1. **Project exists** — `proposal/.bidkit/meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
-2. **Outline loaded** — `proposal/.bidkit/meta/outline.yaml` must exist. If not, redirect to `/design`.
+1. **Project exists** — `proposal/.bidkit/meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/bid:design`으로 먼저 시작할까요?"*
+2. **Outline loaded** — `proposal/.bidkit/meta/outline.yaml` must exist. If not, redirect to `/bid:design`.
 
 ---
 
@@ -88,14 +88,14 @@ For each active SSOT, show:
 
 Use the same Recommendation Logic as the Proposal Guide:
 
-1. All SSOTs empty or not started -> recommend `/write <first priority section>`
-2. Some sections in draft/verifying -> recommend `/write` on the most advanced incomplete section
-3. Any section in `revision` state -> recommend `/write <revision section>` to address Overseer directive
-4. 2+ sections confirmed -> recommend `/verify`
-5. All confirmed -> recommend `/output`
+1. All SSOTs empty or not started -> recommend `/bid:write <first priority section>`
+2. Some sections in draft/verifying -> recommend `/bid:write` on the most advanced incomplete section
+3. Any section in `revision` state -> recommend `/bid:write <revision section>` to address Overseer directive
+4. 2+ sections confirmed -> recommend `/bid:diagnose` — quality diagnosis and cross-SSOT consistency check
+5. All confirmed -> recommend output via natural language (e.g., "PDF로 출력해줘")
 6. Output generated, small change needed -> natural language quick edit
-7. Versions available -> recommend `/output diff`
-8. Ideation sections exist (no draft sections) -> recommend `/write <ideation section>`
+7. Versions available -> recommend "이전 버전이랑 비교해줘"
+8. Ideation sections exist (no draft sections) -> recommend `/bid:write <ideation section>`
 
 ---
 
@@ -132,7 +132,7 @@ Current: [runtime situation label or highest-priority in-progress label]
 
 ### Summary
 - 2 confirmed, 1 in progress, 1 revision, 1 ideation, 2 not started
-- Next priority: /write ta-cost
+- Next priority: /bid:write ta-cost
 ```
 
 Then the standard Proposal Guide footer per `reference/proposal-guide-format.md`.
@@ -159,17 +159,17 @@ Then the standard Proposal Guide footer per `reference/proposal-guide-format.md`
 If `proposal/.bidkit/meta/proposal-meta.yaml` does not exist:
 
 ```
-프로젝트가 아직 없습니다. `/design`으로 프로젝트를 먼저 만들어 주세요.
+프로젝트가 아직 없습니다. `/bid:design`으로 프로젝트를 먼저 만들어 주세요.
 ```
 
-Then show the Proposal Guide with recommendation `/design`.
+Then show the Proposal Guide with recommendation `/bid:design`.
 
 ### Outline Not Found
 
 If `proposal/.bidkit/meta/outline.yaml` does not exist:
 
 ```
-outline.yaml을 찾을 수 없습니다. `/design`으로 프로젝트 구조를 정의해 주세요.
+outline.yaml을 찾을 수 없습니다. `/bid:design`으로 프로젝트 구조를 정의해 주세요.
 ```
 
 ### No SSOTs Yet
@@ -184,7 +184,7 @@ Overall: 0/N sections confirmed (0%)
 모든 섹션이 아직 시작되지 않았습니다. 아래 명령어로 작성을 시작하세요.
 ```
 
-Then Proposal Guide with `/write <first section>` recommendation.
+Then Proposal Guide with `/bid:write <first section>` recommendation.
 
 ---
 
@@ -205,14 +205,13 @@ Then Proposal Guide with `/write <first section>` recommendation.
 **Render at the bottom of every response** per `reference/proposal-guide-format.md`.
 
 ```
--------------------------------------------------
-Project: [project name]
--------------------------------------------------
-Current: [user-facing situation label]
-Done: [v] section1 (team), [v] section2 (team)
-In Progress: [~] section3 (team) -- current activity details
-Recommended: /command copy-pasteable example input
--------------------------------------------------
+─────────────────────────────────────────────────
+📋 Project: [project name]
+─────────────────────────────────────────────────
+✅ Done    : [v] section1 (team), [v] section2 (team)
+🔄 Current : [~] section3 (team) — activity detail
+💡 Next    : /bid:command args — 다음에 할 일 설명
+─────────────────────────────────────────────────
 ```
 
 ### Status Icons
@@ -229,12 +228,12 @@ Recommended: /command copy-pasteable example input
 
 Show exactly ONE recommendation — the highest-priority match:
 
-1. No project exists -> `/design`
-2. Design complete, all SSOTs empty -> `/write <first priority section>`
-3. Some sections in draft -> `/write` on incomplete section
-4. 2+ sections confirmed -> `/verify`
-5. All confirmed -> `/output` to generate final deliverable
+1. No project exists -> `/bid:design`
+2. Design complete, all SSOTs empty -> `/bid:write <first priority section>`
+3. Some sections in draft -> `/bid:write` on incomplete section
+4. 2+ sections confirmed -> `/bid:diagnose`
+5. All confirmed -> `"최종 출력을 요청해주세요"` — natural language output request
 6. Output generated, small change needed -> natural language quick edit
-7. Versions available -> `/output diff` to compare versions
+7. Versions available -> `"이전 버전이랑 비교해줘"`
 8. External input received -> natural language guidance
-9. Ideation sections exist -> `/write <section>`
+9. Ideation sections exist -> `/bid:write <section>`

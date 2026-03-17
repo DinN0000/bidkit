@@ -19,13 +19,13 @@ Avoid leading with internal role names unless needed for traceability.
 
 ## Hard Gate
 
-Do not create SSOT files or start `/write` work until ALL of the following are approved:
+Do not create SSOT files or start `/bid:write` work until ALL of the following are approved:
 
 1. Proposal strategy direction
 2. Table of contents and team ownership
 3. Initial section directions
 
-If any of these are still unsettled, remain in `/design`.
+If any of these are still unsettled, remain in `/bid:design`.
 
 ## Conversation Rules
 
@@ -63,7 +63,7 @@ When the user provides a document file (PPTX, DOCX, XLSX) as RFP input:
    - Populate `proposal/.bidkit/meta/rfp-trace-matrix.md` if RFP provided
    - Populate `proposal/.bidkit/runtime/session-state.json` from `templates/init/runtime-state.json` — initialize `current_label` with the first user-facing situation label (e.g., "전략 정리 중"). Runtime state is optional helper state; if absent later, BidKit falls back to SSOT-derived status.
    - Create SSOT files (all in `ideation` state) with dependencies mapped
-7. **Transition**: Show Proposal Guide recommending the first `/write` target
+7. **Transition**: Show Proposal Guide recommending the first `/bid:write` target
 
 ## Document Parsing
 
