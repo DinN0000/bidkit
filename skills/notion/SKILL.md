@@ -27,7 +27,7 @@ If neither is available, guide the user through setup:
 
 Check which Notion integration is available:
 - If Notion MCP tools are available (e.g., `notion-create-pages`), use MCP mode.
-- If `notion-cli` is installed (check via `which notion-cli`), use CLI mode.
+- If `notion-cli` is installed (check via `command -v notion-cli`), use CLI mode.
 - If both are available, prefer MCP mode.
 
 ### Step (2) — Determine Upload Scope

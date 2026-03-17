@@ -15,12 +15,13 @@ NODE=$(check command -v node)
 MMDC=$(check command -v mmdc)
 NOTION_CLI=$(check command -v notion-cli)
 
-# Notion MCP: check if registered in claude mcp list
-if command -v claude >/dev/null 2>&1 && claude mcp list 2>/dev/null | grep -q "notion"; then
-  NOTION_MCP="true"
-else
-  NOTION_MCP="false"
-fi
+# Notion MCP: check config files directly (avoids slow claude mcp list call
+# and works inside nested Claude Code sessions)
+_notion_mcp_configured() {
+  grep -q '"notion"' "$HOME/.mcp.json" 2>/dev/null ||
+  grep -q '"notion"' .mcp.json 2>/dev/null
+}
+NOTION_MCP=$(check _notion_mcp_configured)
 
 cat <<EOF
 {
