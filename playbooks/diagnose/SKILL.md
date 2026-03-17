@@ -1,8 +1,8 @@
-# /diagnose — Full Quality Diagnosis + Improvement
+# Quality Diagnosis + Improvement
 
 ## Trigger
 
-`/diagnose` command or natural language like "전체적으로 좀 약한 것 같아", "기존 제안서 있는데 전체적으로 봐줘", "교차 검증해줘", "일관성 확인해줘"
+Natural language: "전체적으로 좀 약한 것 같아", "기존 제안서 있는데 전체적으로 봐줘", "교차 검증해줘", "일관성 확인해줘"
 
 ---
 
@@ -26,11 +26,11 @@ When the user uploads an existing proposal as PPTX, DOCX, or XLSX:
 
 ## Entry Paths
 
-`/diagnose` has two entry paths depending on whether the user uploads an existing proposal or works with the current project.
+Diagnosis has two entry paths depending on whether the user uploads an existing proposal or works with the current project.
 
 ### Path A: Existing Proposal Uploaded
 
-When the user uploads a document (PDF/DOCX/PPTX) alongside the `/diagnose` command:
+When the user uploads a document (PDF/DOCX/PPTX) alongside the diagnosis request:
 
 1. **Parse document** — Extract content from the uploaded file, splitting into logical sections that map to the proposal outline.
 2. **Create SSOT files** — For each identified section:
@@ -82,7 +82,7 @@ For each SSOT graded C or D, identify specific issues:
 
 ### Step (3) — Cross-Cutting Verification
 
-Analyze ALL SSOTs together across five dimensions. This replaces the former `/verify` command (now integrated into `/bid:diagnose`).
+Analyze ALL SSOTs together across five dimensions. This replaces the former `/verify` command (now integrated into diagnosis).
 
 #### 3a. Terminology Consistency
 
@@ -294,7 +294,7 @@ After:  A: 3, B: 3, C: 1, D: 0
 
 ### Step (F4) — Cross-Cutting Re-Check
 
-Run a final cross-cutting consistency check (equivalent to the cross-cutting verification in `/bid:diagnose`) to ensure improvements did not introduce new inconsistencies.
+Run a final cross-cutting consistency check (equivalent to the cross-cutting verification in the diagnosis phase) to ensure improvements did not introduce new inconsistencies.
 
 ---
 

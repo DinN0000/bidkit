@@ -63,8 +63,8 @@ natural language. Commands are shortcuts, not requirements.
 
 | Action | Natural Language | Skill File |
 |--------|-----------------|------------|
-| Quality diagnosis | "교차 검증해줘", "전체적으로 봐줘" | `skills/diagnose/SKILL.md` |
-| Output rendering | "PDF로 출력해줘", "최종본 출력" | `skills/output/SKILL.md` |
+| Quality diagnosis | "교차 검증해줘", "전체적으로 봐줘" | `playbooks/diagnose/SKILL.md` |
+| Output rendering | "PDF로 출력해줘", "최종본 출력" | `playbooks/output/SKILL.md` |
 
 ## How Users Work
 
@@ -160,11 +160,12 @@ agents/                    # Agent role definitions
 skills/                    # Command implementations (plugin skill format)
   design/SKILL.md
   write/SKILL.md
-  diagnose/SKILL.md          # natural language only
   status/SKILL.md
-  output/SKILL.md            # natural language only
   notion/SKILL.md
   setup/SKILL.md
+playbooks/                 # Natural-language-only workflows (not registered as commands)
+  diagnose/SKILL.md
+  output/SKILL.md
 templates/                 # SSOT and output templates
   ssot.md
 reference/                 # Shared reference material

@@ -154,9 +154,13 @@ uv pip install -r parser/requirements.txt --system
 |---------|---------|
 | `/bid:design` | 전략 수립 + 목차 생성 |
 | `/bid:write <section>` | 섹션 작성/수정 |
-| `/bid:diagnose` | 품질 진단 + 교차 검증 |
 | `/bid:status` | 진행 현황 |
 | `/bid:setup` | 환경 점검 |
+| `/bid:notion` | 노션에 업로드 (팀 리뷰) |
+
+자연어로도 가능합니다:
+- "교차 검증해줘" → 품질 진단 + 교차 검증
+- "PDF로 출력해줘" → 최종 출력
 
 ---
 

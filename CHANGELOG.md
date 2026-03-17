@@ -10,7 +10,8 @@
 
 - **Plugin packaging** — Claude Code 플러그인 (`bid`)으로 패키징
   - `.claude-plugin/plugin.json` 매니페스트
-  - `/bid:design`, `/bid:write`, `/bid:diagnose`, `/bid:status`, `/bid:setup` 명령어
+  - `/bid:design`, `/bid:write`, `/bid:status`, `/bid:setup`, `/bid:notion` 명령어
+  - 자연어 전용: 진단 ("교차 검증해줘"), 출력 ("PDF로 출력해줘")
   - 스킬 폴더 구조 (`skills/*/SKILL.md`)
 - **Dependency detection** — `scripts/check-deps.sh`로 환경 자동 감지
   - 각 스킬에서 필요한 도구가 없으면 설치 안내

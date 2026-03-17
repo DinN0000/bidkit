@@ -44,9 +44,9 @@ are sequential.
 | **`skills/`** | |
 | `skills/design/SKILL.md` | `/design` -- new proposal strategy + TOC generation |
 | `skills/write/SKILL.md` | `/write` -- session loop (draft/verify/revise), state auto-detected |
-| `skills/diagnose/SKILL.md` | `/diagnose` -- quality diagnosis + cross-SSOT consistency check |
+| `playbooks/diagnose/SKILL.md` | Quality diagnosis + cross-SSOT consistency check (natural language only) |
 | `skills/status/SKILL.md` | `/status` -- progress dashboard + Proposal Guide renderer |
-| `skills/output/SKILL.md` | Output assembly -- MD/PPT/PDF/HTML rendering |
+| `playbooks/output/SKILL.md` | Output assembly -- MD/PPT/PDF/HTML rendering (natural language only) |
 | `skills/setup/SKILL.md` | Environment check and guided installation |
 | **`templates/`** | |
 | `templates/ssot.md` | SSOT document template (YAML frontmatter + body structure) |
@@ -139,7 +139,7 @@ proposal/                        # Created by /design — all proposal data live
 User Input (RFP / conversation / existing proposal)
   |
   v
-(1) Skill router ---- /design | /write | /diagnose | /verify | /status
+(1) Skill router ---- /design | /write | /status | /notion | /setup | diagnose | output
   |
   v
 (2) Overseer assigns teams, sets strategy

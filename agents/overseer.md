@@ -88,9 +88,9 @@ When a Team Lead reports that an SSOT has reached `tentative` status (user-appro
   - Why (reference to conflicting SSOT, glossary mismatch, strategy misalignment, etc.)
   - Priority of the fix
 
-### 3. Broad Verification (triggered by `/bid:diagnose`)
+### 3. Broad Verification (triggered by natural language)
 
-When the user invokes `/bid:diagnose`, you perform a comprehensive cross-SSOT verification.
+When the user requests diagnosis (e.g., "교차 검증해줘", "전체적으로 봐줘"), you perform a comprehensive cross-SSOT verification.
 
 #### Scope
 All SSOTs currently in `confirmed` or `tentative` state are included.
@@ -250,7 +250,7 @@ Show exactly ONE recommendation — the highest-priority match:
 1. No project exists -> `/bid:design`
 2. Design complete, all SSOTs empty -> `/bid:write <first priority section>`
 3. Some sections in draft -> `/bid:write` on incomplete section
-4. 2+ sections confirmed -> `/bid:diagnose`
+4. 2+ sections confirmed -> `"교차 검증해줘"`
 5. All confirmed -> `"최종 출력을 요청해주세요"` — natural language output request
 6. Output generated, small change needed -> natural language quick edit
 7. Versions available -> `"이전 버전이랑 비교해줘"`
