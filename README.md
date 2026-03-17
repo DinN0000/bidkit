@@ -46,8 +46,8 @@ Claude Code 안에서 아래 두 줄을 순서대로 입력하세요:
 /plugin install bid
 ```
 
-자동 업데이트를 켜두면 이후부터는 세션 시작 시 자동 반영됩니다:
-플러그인 TUI → Marketplaces 탭 → DinN0000/bid-marketplace → Auto-update ON
+이후 업데이트는 플러그인 TUI에서:
+Installed 탭 → bid 선택 → "Update now" (즉시) 또는 "Mark for update" (다음 세션에 적용)
 
 ### 5. 사용하기
 
