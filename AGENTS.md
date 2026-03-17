@@ -88,12 +88,13 @@ Each proposal section is an independent SSOT (Single Source of Truth) document.
 
 - **Template**: `templates/ssot.md` - canonical structure every SSOT must follow
 - **State machine**: `reference/state-machine.md` - lifecycle states and transitions
-- **Storage**: `ssot/<team>/<id>.md` - one file per section, organized by team
+- **Storage**: `proposal/ssot/<team>/<id>.md` - one file per section, organized by team
 - **Validation**: `scripts/verify-bidkit.sh` - checks structure and entrypoint references
 
 SSOTs are the atomic unit of work. All reading, writing, and reviewing happens
 at the SSOT level. Proposal content must live in SSOT files. Project control
-data may live in `meta/`, `ideation/`, `runtime/`, and `output/`.
+data may live in `proposal/.bidkit/meta/`, `proposal/.bidkit/ideation/`,
+`proposal/.bidkit/runtime/`, and `proposal/output/`.
 
 ## Session Loop
 
@@ -138,7 +139,6 @@ skills/                    # Command implementations (plugin skill format)
   design/SKILL.md
   write/SKILL.md
   diagnose/SKILL.md
-  verify/SKILL.md
   status/SKILL.md
   output/SKILL.md
   setup/SKILL.md
@@ -147,9 +147,16 @@ templates/                 # SSOT and output templates
 reference/                 # Shared reference material
   state-machine.md
   proposal-guide-format.md
-runtime/                   # Runtime state created per proposal
+proposal/                  # Per-proposal data root
+  sections/                # Active SSOT documents (one per section)
+    <team>/<id>.md
+  output/                  # Generated output files
+  assets/                  # Proposal assets (images, diagrams, etc.)
+  .bidkit/                 # Hidden internal state
+    meta/                  # Proposal metadata (outline, glossary, trace matrix)
+    runtime/               # Session and runtime state
+    ideation/              # Ideation notes
 evals/                     # Lightweight prompt/expected-output checks
-ssot/                      # Active SSOT documents (per-proposal)
 scripts/                   # Validation and utility scripts
   verify-bidkit.sh
   validate-bidkit-contracts.js

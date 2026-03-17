@@ -42,12 +42,12 @@ When source documents (RFP, prior proposals, reference materials) are PPTX, DOCX
 
 Before entering the session loop, verify:
 
-1. **Project exists** — `meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
-2. **SSOT exists** — the target SSOT file must exist under `ssot/<team>/`. If not found in `meta/outline.yaml` either, redirect to `/design` to add the section.
-3. **Outline loaded** — read `meta/outline.yaml` for section ordering and dependencies.
-4. **Glossary loaded** — read `meta/glossary.yaml` for term consistency.
-5. **RFP trace matrix loaded** — read `meta/rfp-trace-matrix.md` for requirement mapping to this section.
-6. **Runtime state loaded if present** (advisory only) — read `runtime/session-state.json` for the last active section and current user-facing stage. Runtime state is advisory only: it may be missing or stale. Always use SSOT front-matter as the authoritative source for section status. If runtime state conflicts with SSOT metadata, prefer the SSOT.
+1. **Project exists** — `proposal/.bidkit/meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
+2. **SSOT exists** — the target SSOT file must exist under `proposal/ssot/<team>/`. If not found in `proposal/.bidkit/meta/outline.yaml` either, redirect to `/design` to add the section.
+3. **Outline loaded** — read `proposal/.bidkit/meta/outline.yaml` for section ordering and dependencies.
+4. **Glossary loaded** — read `proposal/.bidkit/meta/glossary.yaml` for term consistency.
+5. **RFP trace matrix loaded** — read `proposal/.bidkit/meta/rfp-trace-matrix.md` for requirement mapping to this section.
+6. **Runtime state loaded if present** (advisory only) — read `proposal/.bidkit/runtime/session-state.json` for the last active section and current user-facing stage. Runtime state is advisory only: it may be missing or stale. Always use SSOT front-matter as the authoritative source for section status. If runtime state conflicts with SSOT metadata, prefer the SSOT.
 
 ---
 
@@ -87,8 +87,8 @@ When `/write` targets a section with no established direction (empty SSOT or `id
 
 #### (E1) Team Lead Opens Exploration
 
-- Read related SSOTs and project context from `meta/proposal-meta.yaml`.
-- Identify what this section needs to cover based on `meta/outline.yaml` and `meta/rfp-trace-matrix.md`.
+- Read related SSOTs and project context from `proposal/.bidkit/meta/proposal-meta.yaml`.
+- Identify what this section needs to cover based on `proposal/.bidkit/meta/outline.yaml` and `proposal/.bidkit/meta/rfp-trace-matrix.md`.
 - Ask the user exactly one structured question per turn, and explain why it matters:
   *"HSM 방식은 크게 두 가지입니다: (A) 네트워크 HSM (추천) — 중앙 관리 용이, (B) PCIe HSM — 지연시간 최소화. 어떤 방향이 맞을까요?"*
 
@@ -130,7 +130,7 @@ Once direction is confirmed:
 2. Update `ideation.alternatives_considered` with rejected options and rationale.
 3. Update `ideation.notes` with key decisions and constraints.
 4. Set SSOT status to `ideation` (if not already).
-5. Save an ideation note file to `ideation/<ssot-id>.md` using the `templates/ideation-note.md` template.
+5. Save an ideation note file to `proposal/.bidkit/ideation/<ssot-id>.md` using the `templates/ideation-note.md` template.
 
 #### (E6) Transition to Create Mode
 
@@ -154,8 +154,8 @@ Ask: *"방향이 정해졌습니다. 바로 작성을 시작할까요?"*
    - If dependency is `confirmed` -> use its data as authoritative.
    - If dependency is `draft` or later -> use its data but flag as potentially changing.
    - If dependency is `ideation` or empty -> note as `[PENDING]` placeholder.
-3. **Check RFP mapping**: Read `meta/rfp-trace-matrix.md` to identify which RFP requirements this section must address. List them explicitly.
-4. **Check glossary**: Read `meta/glossary.yaml` for terms relevant to this section's domain.
+3. **Check RFP mapping**: Read `proposal/.bidkit/meta/rfp-trace-matrix.md` to identify which RFP requirements this section must address. List them explicitly.
+4. **Check glossary**: Read `proposal/.bidkit/meta/glossary.yaml` for terms relevant to this section's domain.
 5. **Ask user questions** with recommended options:
    - Ask one question first. Ask a second only if the first answer creates a new blocker.
    - Questions must be specific to this section, not generic.
@@ -170,7 +170,7 @@ Ask: *"방향이 정해졌습니다. 바로 작성을 시작할까요?"*
 When source documents (RFP, prior proposals, reference materials) are provided:
 - Parse using `parser/` module for structured extraction
 - Researcher uses parsed output as primary source material
-- Extracted tables and images are available in `assets/` directory
+- Extracted tables and images are available in `proposal/assets/` directory
 
 Issue a structured research directive to the Researcher. The directive must specify:
 
@@ -246,7 +246,7 @@ The Critic performs independent verification against the full checklist defined 
 2. **Data accuracy** — numbers, model names, specs match Researcher sources?
 3. **Gap analysis** — any sections lacking sufficient detail?
 4. **Cross-SSOT consistency** — values match dependency SSOTs?
-5. **Glossary compliance** — terms consistent with `meta/glossary.yaml`?
+5. **Glossary compliance** — terms consistent with `proposal/.bidkit/meta/glossary.yaml`?
 6. **Regulatory compliance** — applicable regulations addressed?
 
 **Output**: Structured verification report with:
@@ -374,7 +374,7 @@ Present clear action choices in user language:
 
 The Overseer performs a mandatory cross-review per `agents/overseer.md`:
 
-1. **Terminology consistency** — all terms match `meta/glossary.yaml`.
+1. **Terminology consistency** — all terms match `proposal/.bidkit/meta/glossary.yaml`.
 2. **Numeric consistency** — server counts, costs, throughput match across all related SSOTs.
 3. **Name consistency** — product names, server names identical everywhere.
 4. **Strategic alignment** — content supports agreed strategy.
@@ -477,15 +477,15 @@ history:
 ### Glossary Updates
 
 When the Writer introduces new technical terms:
-1. Check if the term exists in `meta/glossary.yaml`.
+1. Check if the term exists in `proposal/.bidkit/meta/glossary.yaml`.
 2. If new, propose the term to the Overseer for approval.
-3. Once approved, add to `meta/glossary.yaml` and update the SSOT's `glossary_terms` list.
+3. Once approved, add to `proposal/.bidkit/meta/glossary.yaml` and update the SSOT's `glossary_terms` list.
 4. Broadcast the new term to all Team Leads per `reference/cross-team-communication.md`.
 
 ### Outline Updates
 
 If the session results in a new section being added or an existing section being moved:
-1. Update `meta/outline.yaml` with the new structure.
+1. Update `proposal/.bidkit/meta/outline.yaml` with the new structure.
 2. Verify that section ordering and dependencies remain consistent.
 
 ---
@@ -506,7 +506,7 @@ When SSOT content meets either threshold, propose splitting to the user:
    - Inherit `dependencies` and `affects` relationships where applicable.
    - Each child starts at `ideation` or `draft` depending on content maturity.
 5. Update the parent SSOT to reference its children.
-6. Update `meta/outline.yaml` with the new structure.
+6. Update `proposal/.bidkit/meta/outline.yaml` with the new structure.
 
 ---
 

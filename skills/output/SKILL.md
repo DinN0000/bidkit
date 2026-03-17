@@ -26,11 +26,11 @@ When output is requested, execute the following steps in order:
 
 ### Step (1) — Load SSOT Ordering
 
-Read `meta/outline.yaml` to determine the canonical section order and hierarchy. This is the single source of truth for document structure — do not reorder sections based on file system order or SSOT creation date.
+Read `proposal/.bidkit/meta/outline.yaml` to determine the canonical section order and hierarchy. This is the single source of truth for document structure — do not reorder sections based on file system order or SSOT creation date.
 
 ### Step (2) — Collect Confirmed SSOTs
 
-Scan `ssot/<team>/` for all SSOT files. Classify each by status:
+Scan `proposal/ssot/<team>/` for all SSOT files. Classify each by status:
 
 | Status | Action |
 |--------|--------|
@@ -41,14 +41,14 @@ Scan `ssot/<team>/` for all SSOT files. Classify each by status:
 | `ideation` / empty | Exclude from output; log as missing |
 | `revision` | Exclude from output; log as blocked |
 
-If a section in `meta/outline.yaml` does not specify `required_for_output`, it defaults to `true`. This ensures older or manually created outlines remain safe — no section is silently excluded from output gating.
+If a section in `proposal/.bidkit/meta/outline.yaml` does not specify `required_for_output`, it defaults to `true`. This ensures older or manually created outlines remain safe — no section is silently excluded from output gating.
 
-If any sections with `required_for_output: true` (or defaulted to `true`) in `meta/outline.yaml` are missing or excluded, warn the user before proceeding:
+If any sections with `required_for_output: true` (or defaulted to `true`) in `proposal/.bidkit/meta/outline.yaml` are missing or excluded, warn the user before proceeding:
 *"[section-id] 섹션이 아직 확인되지 않았습니다. 제외하고 출력하시겠습니까?"*
 
 ### Step (3) — Generate Table of Contents
 
-Build a TOC from `meta/outline.yaml` structure:
+Build a TOC from `proposal/.bidkit/meta/outline.yaml` structure:
 - Include section numbers, titles, and page anchors.
 - Mark incomplete sections as `[미완성]` in the TOC.
 - Depth: up to 3 levels (e.g., 1. / 1.1 / 1.1.1).
@@ -62,24 +62,24 @@ Scan all collected SSOT content for cross-reference markers (e.g., `[REF: sa-hsm
 
 ### Step (5) — Insert Glossary
 
-Read `meta/glossary.yaml` and append a Glossary section at the end of the assembled document:
+Read `proposal/.bidkit/meta/glossary.yaml` and append a Glossary section at the end of the assembled document:
 - Include all terms referenced in the collected SSOTs (match against each SSOT's `glossary_terms` metadata).
 - Sort alphabetically.
 - Format: term, definition, first used in section.
 
 ### Step (6) — Generate Unified Markdown
 
-Always produce `output/proposal-vN.md` first, regardless of which formats the user requested:
-- N is determined by reading existing files in `output/` and incrementing (e.g., `proposal-v3.md` if `proposal-v2.md` already exists).
+Always produce `proposal/output/proposal-vN.md` first, regardless of which formats the user requested:
+- N is determined by reading existing files in `proposal/output/` and incrementing (e.g., `proposal-v3.md` if `proposal-v2.md` already exists).
 - Structure: Cover page → TOC → Sections (in outline order) → Glossary → Appendices.
 - Insert page-break markers (`---` or `<!-- page-break -->`) between major sections for downstream format renderers.
-- Log: *"Markdown 생성 완료: output/proposal-vN.md"*
+- Log: *"Markdown 생성 완료: proposal/output/proposal-vN.md"*
 
 ---
 
 ## Format Rendering
 
-After `output/proposal-vN.md` is generated, render the user-requested format(s):
+After `proposal/output/proposal-vN.md` is generated, render the user-requested format(s):
 
 | Format | Characteristics |
 |--------|----------------|
@@ -96,10 +96,10 @@ After `output/proposal-vN.md` is generated, render the user-requested format(s):
 ### Output Paths
 
 ```
-output/proposal-vN.md
-output/proposal-vN.pptx
-output/proposal-vN.pdf
-output/proposal-vN/index.html     ← static site
+proposal/output/proposal-vN.md
+proposal/output/proposal-vN.pptx
+proposal/output/proposal-vN.pdf
+proposal/output/proposal-vN/index.html     ← static site
 ```
 
 ### PPT Rendering
@@ -133,7 +133,7 @@ Features:
 - Search bar (client-side, no server required).
 - Status badges per section: `confirmed`, `tentative`, `pending`.
 - Sidebar navigation from TOC.
-- Output: static site at `output/proposal-vN/index.html`.
+- Output: static site at `proposal/output/proposal-vN/index.html`.
 
 ---
 
@@ -152,7 +152,7 @@ When the user requests a small change after output has been generated:
    - HTML: partial rebuild — only affected section pages regenerated.
    - Markdown: always full regeneration (fast).
 5. Output paths retain the same version number N — overwrite in place.
-6. Log: *"빠른 수정 완료. 영향 섹션: [list]. 재출력: output/proposal-vN.[ext]"*
+6. Log: *"빠른 수정 완료. 영향 섹션: [list]. 재출력: proposal/output/proposal-vN.[ext]"*
 
 ---
 
@@ -160,7 +160,7 @@ When the user requests a small change after output has been generated:
 
 When the user asks to compare versions (e.g., "이전 버전이랑 비교해줘"):
 
-1. **Identify versions** — list all `output/proposal-v*.md` files. Default: compare current (vN) vs. previous (vN-1). If the user specifies versions, use those.
+1. **Identify versions** — list all `proposal/output/proposal-v*.md` files. Default: compare current (vN) vs. previous (vN-1). If the user specifies versions, use those.
 2. **SSOT-level comparison** — for each SSOT present in either version, compare:
    - Content body (additions, deletions, modifications).
    - Status transitions (e.g., `draft` -> `confirmed`).
@@ -177,7 +177,7 @@ When the user asks to compare versions (e.g., "이전 버전이랑 비교해줘"
    - Total SSOTs changed / added / removed.
    - Sections promoted to `confirmed` since last version.
    - High-impact changes (sourced from history metadata).
-5. **Output** — display diff inline. Optionally save to `output/diff-vN-vs-vN-1.md`.
+5. **Output** — display diff inline. Optionally save to `proposal/output/diff-vN-vs-vN-1.md`.
 
 ---
 
@@ -187,12 +187,12 @@ When the user requests an executive summary (e.g., "요약본 만들어줘", "PM
 
 1. Read all `confirmed` SSOTs and extract the body content under each `## Summary` section.
 2. Compose a 1-page summary structured as:
-   - **프로젝트 개요** (2-3 sentences from `meta/proposal-meta.yaml`)
+   - **프로젝트 개요** (2-3 sentences from `proposal/.bidkit/meta/proposal-meta.yaml`)
    - **핵심 제안 내용** (1 bullet per confirmed section, drawn from each SSOT's `## Summary`)
    - **주요 수치** (key numbers: cost, timeline, headcount, performance targets)
    - **미결 사항** (sections not yet confirmed, with expected completion)
-3. Output: `output/executive-summary-vN.md`.
-4. If PPT was also requested, generate as a single slide (`output/executive-summary-vN.pptx`).
+3. Output: `proposal/output/executive-summary-vN.md`.
+4. If PPT was also requested, generate as a single slide (`proposal/output/executive-summary-vN.pptx`).
 
 ---
 

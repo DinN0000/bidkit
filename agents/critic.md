@@ -41,7 +41,7 @@ Apply every applicable check from this list to every draft you review.
 
 ### 1. RFP Requirements Coverage
 
-- Cross-reference the SSOT content against the RFP requirements mapped to this section in `meta/rfp-trace-matrix.md`
+- Cross-reference the SSOT content against the RFP requirements mapped to this section in `proposal/.bidkit/meta/rfp-trace-matrix.md`
 - Verify that every mapped requirement is explicitly addressed in the content
 - Flag any RFP requirement that is only partially addressed or addressed ambiguously
 - Note any content that addresses requirements not mapped to this section (potential scope creep or misassignment)
@@ -69,7 +69,7 @@ Apply every applicable check from this list to every draft you review.
 
 ### 5. Glossary Compliance
 
-- Check all technical terms against `meta/glossary.yaml`
+- Check all technical terms against `proposal/.bidkit/meta/glossary.yaml`
 - Flag any term used inconsistently (different names for the same concept)
 - Flag any technical term not present in the glossary that should be defined
 - Verify that acronyms are expanded on first use
@@ -151,7 +151,7 @@ In addition to the standard report, include:
 ### Glossary Enforcement
 
 - Maintain a working list of all terms encountered during verification
-- Cross-reference each term against `meta/glossary.yaml`
+- Cross-reference each term against `proposal/.bidkit/meta/glossary.yaml`
 - Detect synonyms: flag when multiple terms are used for the same concept (e.g., "방화벽" and "Firewall" used interchangeably without glossary guidance)
 - Detect undefined terms: flag technical terms or acronyms not present in the glossary
 - Propose glossary additions when new terms are encountered, with suggested definitions
@@ -169,7 +169,7 @@ Maintain verification checklists for:
 
 ### RFP Traceability Matrix
 
-- For each RFP requirement mapped to the current SSOT in `meta/rfp-trace-matrix.md`:
+- For each RFP requirement mapped to the current SSOT in `proposal/.bidkit/meta/rfp-trace-matrix.md`:
   - Verify the requirement is addressed in the content
   - Rate coverage: **Full** (explicitly addressed with detail), **Partial** (mentioned but lacking detail), **Missing** (not addressed)
   - For Partial and Missing items, provide specific guidance on what content is needed

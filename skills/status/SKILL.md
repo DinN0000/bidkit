@@ -8,8 +8,8 @@
 
 ## Prerequisites
 
-1. **Project exists** — `meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
-2. **Outline loaded** — `meta/outline.yaml` must exist. If not, redirect to `/design`.
+1. **Project exists** — `proposal/.bidkit/meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
+2. **Outline loaded** — `proposal/.bidkit/meta/outline.yaml` must exist. If not, redirect to `/design`.
 
 ---
 
@@ -19,14 +19,14 @@
 
 Load the following files in parallel:
 
-1. **`meta/outline.yaml`** — section ordering, team assignments, dependencies.
-2. **`meta/proposal-meta.yaml`** — project name, RFP reference, team composition.
-3. **`runtime/session-state.json`** (optional, fallback to SSOT-derived status) — current situation label, active section, last completed step, recommended next action. Runtime state is optional: if the file is missing, stale, or inconsistent with SSOT metadata, derive the current situation from SSOT front-matter instead.
-4. **All SSOT files under `ssot/`** — read front-matter (`status`, `version`, `verification`, `dependencies`, `ideation`) for each file. Do not read full body content — only front-matter metadata is needed for the dashboard.
+1. **`proposal/.bidkit/meta/outline.yaml`** — section ordering, team assignments, dependencies.
+2. **`proposal/.bidkit/meta/proposal-meta.yaml`** — project name, RFP reference, team composition.
+3. **`proposal/.bidkit/runtime/session-state.json`** (optional, fallback to SSOT-derived status) — current situation label, active section, last completed step, recommended next action. Runtime state is optional: if the file is missing, stale, or inconsistent with SSOT metadata, derive the current situation from SSOT front-matter instead.
+4. **All SSOT files under `proposal/ssot/`** — read front-matter (`status`, `version`, `verification`, `dependencies`, `ideation`) for each file. Do not read full body content — only front-matter metadata is needed for the dashboard.
 
 ### Step (2) — Compute Per-Section Status
 
-For each section in `meta/outline.yaml` order:
+For each section in `proposal/.bidkit/meta/outline.yaml` order:
 
 - Map to its SSOT file (if it exists) and read its `status` field.
 - If no SSOT file exists yet: `not_started`.
@@ -61,13 +61,13 @@ For each SSOT with `dependencies` listed in front-matter:
 
 ```
 confirmed_count = count of SSOTs with status: confirmed
-total_count     = total SSOT count defined in meta/outline.yaml
+total_count     = total SSOT count defined in proposal/.bidkit/meta/outline.yaml
 percentage      = round(confirmed_count / total_count * 100)
 ```
 
 ### Step (5) — Group by Team
 
-Group sections by their team assignment from `meta/outline.yaml`:
+Group sections by their team assignment from `proposal/.bidkit/meta/outline.yaml`:
 
 - **BA** — Business Analysis team
 - **DA** — Data Architecture team
@@ -145,8 +145,8 @@ Then the standard Proposal Guide footer per `reference/proposal-guide-format.md`
 - If no SSOTs are blocked, omit the **Blocked** section entirely.
 - If no SSOTs are active, omit the **Active Work** section entirely.
 - The **Summary** line always appears.
-- Runtime state is optional: if `runtime/session-state.json` exists and is consistent with SSOT metadata, prefer its `current_label` for the `Current` line. If the file is missing or its label conflicts with SSOT-derived status, fall back to the highest-priority in-progress label derived from SSOT front-matter.
-- Sections within each team are listed in `meta/outline.yaml` order.
+- Runtime state is optional: if `proposal/.bidkit/runtime/session-state.json` exists and is consistent with SSOT metadata, prefer its `current_label` for the `Current` line. If the file is missing or its label conflicts with SSOT-derived status, fall back to the highest-priority in-progress label derived from SSOT front-matter.
+- Sections within each team are listed in `proposal/.bidkit/meta/outline.yaml` order.
 - For `[!]` revision items, always include the Overseer directive text (truncated to ~80 chars if long).
 - For `[~]` in-progress items, include the current sub-status when available (e.g., "verifying", "tentative -- user approved, awaiting Overseer").
 
@@ -156,7 +156,7 @@ Then the standard Proposal Guide footer per `reference/proposal-guide-format.md`
 
 ### Project Not Found
 
-If `meta/proposal-meta.yaml` does not exist:
+If `proposal/.bidkit/meta/proposal-meta.yaml` does not exist:
 
 ```
 프로젝트가 아직 없습니다. `/design`으로 프로젝트를 먼저 만들어 주세요.
@@ -166,7 +166,7 @@ Then show the Proposal Guide with recommendation `/design`.
 
 ### Outline Not Found
 
-If `meta/outline.yaml` does not exist:
+If `proposal/.bidkit/meta/outline.yaml` does not exist:
 
 ```
 outline.yaml을 찾을 수 없습니다. `/design`으로 프로젝트 구조를 정의해 주세요.
@@ -192,9 +192,9 @@ Then Proposal Guide with `/write <first section>` recommendation.
 
 | File | Purpose |
 |------|---------|
-| `meta/outline.yaml` | Section ordering, team assignments, dependencies |
-| `meta/proposal-meta.yaml` | Project name and metadata |
-| `ssot/<team>/<id>.md` | Per-section SSOT front-matter (status, version, etc.) |
+| `proposal/.bidkit/meta/outline.yaml` | Section ordering, team assignments, dependencies |
+| `proposal/.bidkit/meta/proposal-meta.yaml` | Project name and metadata |
+| `proposal/ssot/<team>/<id>.md` | Per-section SSOT front-matter (status, version, etc.) |
 | `reference/proposal-guide-format.md` | Proposal Guide footer format |
 | `reference/state-machine.md` | Valid SSOT states |
 

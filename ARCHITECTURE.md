@@ -92,26 +92,44 @@ are sequential.
 
 ## Project Directory (Created Per Proposal)
 
-Created by `/design` at runtime. Lives alongside or inside the BidKit directory.
+Created by `/design` at runtime. All proposal data lives under a single
+`proposal/` root. User-facing content sits at the top level; internal data is
+hidden in `.bidkit/`.
+
+```
+proposal/                        # Created by /design — all proposal data lives here
+├── sections/                    # SSOT documents organized by team (user-facing)
+│   ├── ba/*.md
+│   ├── da/*.md
+│   ├── ta/*.md
+│   └── sa/*.md
+├── output/                      # Generated deliverables (user-facing)
+├── assets/                      # Diagrams, images, certificates (user-facing)
+│   └── rfp/                     # Raw parsed RFP
+└── .bidkit/                     # Internal data (hidden)
+    ├── meta/                    # proposal-meta.yaml, outline.yaml, glossary.yaml, rfp-trace-matrix.md
+    ├── runtime/                 # session-state.json (optional)
+    └── ideation/                # Pre-SSOT exploration notes
+```
 
 | Path | Purpose |
 |------|---------|
-| **`meta/`** | |
-| `meta/proposal-meta.yaml` | Project info -- customer, project name, timeline, RFP reference |
-| `meta/glossary.yaml` | Unified glossary -- terms, definitions, standard names |
-| `meta/outline.yaml` | TOC -- section ordering, SSOT assignments, priority |
-| `meta/rfp-trace-matrix.md` | RFP requirement ID -> mapped SSOT -> coverage status |
-| **`runtime/`** | |
-| `runtime/session-state.json` | Optional helper state: current situation label, active section, last completed step, recommended next action. This file is advisory — if missing or stale, BidKit falls back to SSOT-derived status. |
-| **`ssot/<team>/`** | |
-| `ssot/ba/*.md` | Business analysis SSOTs (overview, requirements, process) |
-| `ssot/da/*.md` | Data architecture SSOTs (model, migration, security) |
-| `ssot/ta/*.md` | Tech architecture SSOTs (architecture, implementation, cost) |
-| `ssot/sa/*.md` | Solution/product SSOTs (HSM, DID, blockchain, etc.) |
-| **`ideation/`** | Pre-SSOT exploration notes (direction, alternatives, decisions) |
-| **`assets/`** | Diagrams (Mermaid source + rendered), images, certificates |
-| **`templates/`** | Company PPT master, PDF style, HTML theme |
-| **`output/`** | Generated deliverables (proposal-vN.md, .pptx, .pdf, HTML site) |
+| **`proposal/ssot/<team>/`** | |
+| `proposal/ssot/ba/*.md` | Business analysis SSOTs (overview, requirements, process) |
+| `proposal/ssot/da/*.md` | Data architecture SSOTs (model, migration, security) |
+| `proposal/ssot/ta/*.md` | Tech architecture SSOTs (architecture, implementation, cost) |
+| `proposal/ssot/sa/*.md` | Solution/product SSOTs (HSM, DID, blockchain, etc.) |
+| **`proposal/output/`** | Generated deliverables (proposal-vN.md, .pptx, .pdf, HTML site) |
+| **`proposal/assets/`** | Diagrams (Mermaid source + rendered), images, certificates |
+| `proposal/assets/rfp/` | Raw parsed RFP content |
+| **`proposal/.bidkit/meta/`** | |
+| `proposal/.bidkit/meta/proposal-meta.yaml` | Project info -- customer, project name, timeline, RFP reference |
+| `proposal/.bidkit/meta/glossary.yaml` | Unified glossary -- terms, definitions, standard names |
+| `proposal/.bidkit/meta/outline.yaml` | TOC -- section ordering, SSOT assignments, priority |
+| `proposal/.bidkit/meta/rfp-trace-matrix.md` | RFP requirement ID -> mapped SSOT -> coverage status |
+| **`proposal/.bidkit/runtime/`** | |
+| `proposal/.bidkit/runtime/session-state.json` | Optional helper state: current situation label, active section, last completed step, recommended next action. This file is advisory — if missing or stale, BidKit falls back to SSOT-derived status. |
+| **`proposal/.bidkit/ideation/`** | Pre-SSOT exploration notes (direction, alternatives, decisions) |
 
 ---
 
@@ -146,8 +164,8 @@ User Input (RFP / conversation / existing proposal)
   |
   v
 (7) Output pipeline assembles confirmed SSOTs
-      outline.yaml -> ordering
-      glossary.yaml -> unified terms
+      .bidkit/meta/outline.yaml -> ordering
+      .bidkit/meta/glossary.yaml -> unified terms
       cross-references resolved
   |
   v

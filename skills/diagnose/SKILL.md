@@ -8,8 +8,8 @@
 
 ## Prerequisites
 
-1. **Project exists** — `meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
-2. **Outline loaded** — `meta/outline.yaml` must exist. If not, redirect to `/design`.
+1. **Project exists** — `proposal/.bidkit/meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
+2. **Outline loaded** — `proposal/.bidkit/meta/outline.yaml` must exist. If not, redirect to `/design`.
 
 ---
 
@@ -34,20 +34,20 @@ When the user uploads a document (PDF/DOCX/PPTX) alongside the `/diagnose` comma
 
 1. **Parse document** — Extract content from the uploaded file, splitting into logical sections that map to the proposal outline.
 2. **Create SSOT files** — For each identified section:
-   - Create an SSOT file in `ssot/<team>/` using the `templates/ssot.md` template.
+   - Create an SSOT file in `proposal/ssot/<team>/` using the `templates/ssot.md` template.
    - Set `status: existing` in front-matter.
    - Populate the body with the extracted content.
    - Map to the appropriate team (BA/DA/TA/SA) based on content analysis.
    - Set `dependencies` and `affects` based on cross-references found in the content.
-3. **Update outline** — Populate `meta/outline.yaml` with the discovered sections if not already present.
+3. **Update outline** — Populate `proposal/.bidkit/meta/outline.yaml` with the discovered sections if not already present.
 4. **Fall through to Diagnosis** — proceed to the Diagnosis phase below.
 
 ### Path B: Current Project
 
 When no document is uploaded and the project already has SSOTs:
 
-1. **Read all SSOTs** — Load all SSOT files under `ssot/` and read both front-matter and body content.
-2. **Read project metadata** — Load `meta/proposal-meta.yaml`, `meta/outline.yaml`, `meta/glossary.yaml`, and `meta/rfp-trace-matrix.md`.
+1. **Read all SSOTs** — Load all SSOT files under `proposal/ssot/` and read both front-matter and body content.
+2. **Read project metadata** — Load `proposal/.bidkit/meta/proposal-meta.yaml`, `proposal/.bidkit/meta/outline.yaml`, `proposal/.bidkit/meta/glossary.yaml`, and `proposal/.bidkit/meta/rfp-trace-matrix.md`.
 3. **Proceed to Diagnosis** — continue to the Diagnosis phase below.
 
 ---
@@ -86,7 +86,7 @@ Analyze ALL SSOTs together across five dimensions. This replaces the former `/ve
 
 #### 3a. Terminology Consistency
 
-Check all SSOTs for consistent use of terms against `meta/glossary.yaml`:
+Check all SSOTs for consistent use of terms against `proposal/.bidkit/meta/glossary.yaml`:
 
 - **Server names** — the same server must be referred to by the same name everywhere
 - **Product names** — exact product names, model numbers, and version strings must match
@@ -113,7 +113,7 @@ Check that numerical data is consistent across all SSOTs:
 
 #### 3d. RFP Coverage Gap Analysis
 
-- **Unmapped requirements** — requirements in `meta/rfp-trace-matrix.md` not assigned to any SSOT
+- **Unmapped requirements** — requirements in `proposal/.bidkit/meta/rfp-trace-matrix.md` not assigned to any SSOT
 - **Mapped but unaddressed** — assigned but not actually covered in content
 - **Partial coverage** — mentioned but not elaborated
 - **Orphan content** — content not mapping to any RFP requirement (scope creep)
@@ -211,7 +211,7 @@ After presenting the diagnosis report, offer the user four action paths:
 
 - Fix terminology inconsistencies across all SSOTs first.
 - Fix data mismatches across all SSOTs.
-- Update `meta/glossary.yaml` with resolved terms.
+- Update `proposal/.bidkit/meta/glossary.yaml` with resolved terms.
 - Do not rewrite section content — only fix cross-cutting issues.
 
 ### Option 4: Re-prioritize
@@ -332,11 +332,11 @@ If the uploaded document cannot be parsed:
 
 | File | Purpose |
 |------|---------|
-| `meta/outline.yaml` | Section ordering, team assignments, dependencies |
-| `meta/proposal-meta.yaml` | Project name and metadata |
-| `meta/glossary.yaml` | Term consistency reference |
-| `meta/rfp-trace-matrix.md` | RFP requirement coverage |
-| `ssot/<team>/<id>.md` | Per-section SSOT files |
+| `proposal/.bidkit/meta/outline.yaml` | Section ordering, team assignments, dependencies |
+| `proposal/.bidkit/meta/proposal-meta.yaml` | Project name and metadata |
+| `proposal/.bidkit/meta/glossary.yaml` | Term consistency reference |
+| `proposal/.bidkit/meta/rfp-trace-matrix.md` | RFP requirement coverage |
+| `proposal/ssot/<team>/<id>.md` | Per-section SSOT files |
 | `reference/quality-criteria.md` | Domain-specific quality standards |
 | `reference/proposal-guide-format.md` | Proposal Guide footer format |
 | `reference/state-machine.md` | Valid SSOT states |

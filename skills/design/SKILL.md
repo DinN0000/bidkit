@@ -56,12 +56,12 @@ When the user provides a document file (PPTX, DOCX, XLSX) as RFP input:
 4. **TOC co-design**: propose structure, assign teams, set priority order
 5. **Section direction**: establish 1-2 sentence direction per section
 6. **Project initialization**:
-   - Create project directory: `meta/`, `ssot/<team>/`, `ideation/`, `runtime/`, `assets/`
-   - Populate `meta/proposal-meta.yaml` from context
-   - Populate `meta/outline.yaml` with TOC + SSOT ordering + priorities + `required_for_output` (always set explicitly; older projects that omit the field are treated as `true` — see `skills/output/SKILL.md`)
-   - Populate `meta/glossary.yaml` with initial terms
-   - Populate `meta/rfp-trace-matrix.md` if RFP provided
-   - Populate `runtime/session-state.json` from `templates/init/runtime-state.json` — initialize `current_label` with the first user-facing situation label (e.g., "전략 정리 중"). Runtime state is optional helper state; if absent later, BidKit falls back to SSOT-derived status.
+   - Create project directory: `proposal/` with subdirs `proposal/ssot/<team>/`, `proposal/.bidkit/meta/`, `proposal/.bidkit/runtime/`, `proposal/.bidkit/ideation/`, `proposal/output/`, `proposal/assets/`
+   - Populate `proposal/.bidkit/meta/proposal-meta.yaml` from context
+   - Populate `proposal/.bidkit/meta/outline.yaml` with TOC + SSOT ordering + priorities + `required_for_output` (always set explicitly; older projects that omit the field are treated as `true` — see `skills/output/SKILL.md`)
+   - Populate `proposal/.bidkit/meta/glossary.yaml` with initial terms
+   - Populate `proposal/.bidkit/meta/rfp-trace-matrix.md` if RFP provided
+   - Populate `proposal/.bidkit/runtime/session-state.json` from `templates/init/runtime-state.json` — initialize `current_label` with the first user-facing situation label (e.g., "전략 정리 중"). Runtime state is optional helper state; if absent later, BidKit falls back to SSOT-derived status.
    - Create SSOT files (all in `ideation` state) with dependencies mapped
 7. **Transition**: Show Proposal Guide recommending the first `/write` target
 
@@ -71,7 +71,7 @@ When the user provides an RFP document (PDF, DOCX, PPTX, XLSX):
 - Parse the document using `parser/` module: `from parser import parse`
 - Extract text, tables, and images into structured markdown
 - Use extracted content to inform strategy and TOC generation
-- Store raw parsed output in `assets/rfp/` for Researcher reference
+- Store raw parsed output in `proposal/assets/rfp/` for Researcher reference
 
 ## Input Sources (can combine)
 

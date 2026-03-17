@@ -64,7 +64,7 @@ Show exactly ONE recommendation — the highest-priority match from top to botto
 - Only ONE recommended action (highest priority from the table above).
 - Use commas to separate listed items within a status line.
 - Prefer user-facing labels such as `초안 작성 중`, `최종 검토 중`, `수정 필요`.
-- Project name is taken from `meta/proposal-meta.yaml` when available.
+- Project name is taken from `proposal/.bidkit/meta/proposal-meta.yaml` when available.
 - Recommended line MUST include both the command and a human-readable explanation separated by ` — `.
 
 ## Platform Divergence
