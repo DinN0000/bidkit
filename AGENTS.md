@@ -30,19 +30,21 @@ run multiple agents in parallel for independent sections.
 |---------|---------|------------|
 | `design` | New proposal strategy + TOC generation | `skills/design/SKILL.md` |
 | `write <section>` | Work on a section (draft/revise auto-detected) | `skills/write/SKILL.md` |
-| `diagnose` | Quality diagnosis + cross-SSOT consistency check | `skills/diagnose/SKILL.md` |
 | `status` | Progress dashboard for all sections | `skills/status/SKILL.md` |
 | `setup` | Environment check and guided installation | `skills/setup/SKILL.md` |
+| `notion` | Upload proposal to Notion for team review | `skills/notion/SKILL.md` |
 
 When a skill requires an optional tool that is not installed, run
 `bash scripts/check-deps.sh` and guide the user through installation.
 See individual skill files for specific detection logic.
 
-Output generation is triggered via natural language (for example, "PDF로 출력해줘").
-See `skills/output/SKILL.md`.
+Quality diagnosis, output generation, and other actions are triggered via
+natural language. Commands are shortcuts, not requirements.
 
-Natural language input is always accepted and routed automatically to the
-appropriate command or agent.
+| Action | Natural Language | Skill File |
+|--------|-----------------|------------|
+| Quality diagnosis | "교차 검증해줘", "전체적으로 봐줘" | `skills/diagnose/SKILL.md` |
+| Output rendering | "PDF로 출력해줘", "최종본 출력" | `skills/output/SKILL.md` |
 
 ## How Users Work
 
@@ -75,7 +77,7 @@ Common Korean phrases are routed as follows:
 | "제안서 만들어야 해" | `design` | |
 | "이행계획 어떻게 할지 고민 중이야" | `write impl` | auto-enters explore |
 | "HSM 모델 변경해야 해" | `write hsm` | auto-enters re-edit |
-| "전체적으로 좀 약한 것 같아" | `diagnose` | |
+| "전체적으로 좀 약한 것 같아" | `diagnose` | quality diagnosis |
 | "교차 검증해줘" | `diagnose` | cross-cutting verification |
 | "진행 상황 알려줘" | `status` | |
 | "이전 버전이랑 비교해줘" | `output` | version diff |
@@ -138,9 +140,10 @@ agents/                    # Agent role definitions
 skills/                    # Command implementations (plugin skill format)
   design/SKILL.md
   write/SKILL.md
-  diagnose/SKILL.md
+  diagnose/SKILL.md          # natural language only
   status/SKILL.md
-  output/SKILL.md
+  output/SKILL.md            # natural language only
+  notion/SKILL.md
   setup/SKILL.md
 templates/                 # SSOT and output templates
   ssot.md
