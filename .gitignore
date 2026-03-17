@@ -5,3 +5,11 @@ uv.lock
 .pytest_cache/
 .DS_Store
 .bkit/
+.obsidian/
+.env
+.env.*
+.venv/
+*.log
+docs/.bkit-memory.json
+docs/.pdca-status.json
+proposal/
