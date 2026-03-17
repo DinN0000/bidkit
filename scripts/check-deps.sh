@@ -12,6 +12,15 @@ SCRIPT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 PARSER=$(check test -f "$SCRIPT_DIR/parser/__init__.py")
 PANDOC=$(check command -v pandoc)
 NODE=$(check command -v node)
+MMDC=$(check command -v mmdc)
+NOTION_CLI=$(check command -v notion-cli)
+
+# Notion MCP: check if registered in claude mcp list
+if command -v claude >/dev/null 2>&1 && claude mcp list 2>/dev/null | grep -q "notion"; then
+  NOTION_MCP="true"
+else
+  NOTION_MCP="false"
+fi
 
 cat <<EOF
 {
@@ -21,10 +30,17 @@ cat <<EOF
   "tools": {
     "uv": $UV
   },
-  "optional": {
-    "bidkit-parser": $PARSER,
+  "output": {
     "pandoc": $PANDOC,
+    "mermaid-cli": $MMDC
+  },
+  "parsing": {
+    "bidkit-parser": $PARSER,
     "node": $NODE
+  },
+  "notion": {
+    "notion-mcp": $NOTION_MCP,
+    "notion-cli": $NOTION_CLI
   }
 }
 EOF
