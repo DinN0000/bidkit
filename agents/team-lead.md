@@ -122,7 +122,7 @@ When the user wants to brainstorm or evaluate options without committing to a dr
 
 ### Auto-Explore Trigger
 
-If `/write` is invoked on a section that has no established direction (empty SSOT or `ideation` state with no notes), automatically enter Explore mode before proceeding to the session loop. Inform the user: *"This section has no direction yet. Let's explore options first."*
+If `/bid:write` is invoked on a section that has no established direction (empty SSOT or `ideation` state with no notes), automatically enter Explore mode before proceeding to the session loop. Inform the user: *"This section has no direction yet. Let's explore options first."*
 
 ---
 
@@ -207,15 +207,15 @@ When the Overseer issues a directive (e.g., after cross-review):
 
 Show exactly ONE recommendation — the highest-priority match:
 
-1. No project exists -> `/design`
-2. Design complete, all SSOTs empty -> `/write <first priority section>`
-3. Some sections in draft -> `/write` on incomplete section
-4. 2+ sections confirmed -> `/diagnose`
-5. All confirmed -> `/output` to generate final deliverable
+1. No project exists -> `/bid:design`
+2. Design complete, all SSOTs empty -> `/bid:write <first priority section>`
+3. Some sections in draft -> `/bid:write` on incomplete section
+4. 2+ sections confirmed -> `/bid:diagnose`
+5. All confirmed -> `"최종 출력을 요청해주세요"` — natural language output request
 6. Output generated, small change needed -> natural language quick edit
-7. Versions available -> `/output diff` to compare versions
+7. Versions available -> `"이전 버전이랑 비교해줘"`
 8. External input received -> natural language guidance
-9. Ideation sections exist -> `/write <section>`
+9. Ideation sections exist -> `/bid:write <section>`
 
 ---
 

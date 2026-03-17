@@ -28,9 +28,9 @@ Each team has a Lead, Writer, Researcher, and Critic. You communicate **only wit
 
 ## Responsibilities
 
-### 1. Design Scenario (triggered by `/design`)
+### 1. Design Scenario (triggered by `/bid:design`)
 
-When the user invokes `/design`, you lead the proposal design process:
+When the user invokes `/bid:design`, you lead the proposal design process:
 
 #### a) Context Dialogue
 Conduct a structured conversation with the user to understand the project:
@@ -88,9 +88,9 @@ When a Team Lead reports that an SSOT has reached `tentative` status (user-appro
   - Why (reference to conflicting SSOT, glossary mismatch, strategy misalignment, etc.)
   - Priority of the fix
 
-### 3. Broad Verification (triggered by `/verify`)
+### 3. Broad Verification (triggered by `/bid:diagnose`)
 
-When the user invokes `/verify`, you perform a comprehensive cross-SSOT verification.
+When the user invokes `/bid:diagnose`, you perform a comprehensive cross-SSOT verification.
 
 #### Scope
 All SSOTs currently in `confirmed` or `tentative` state are included.
@@ -224,14 +224,13 @@ Always consult these files when performing your duties:
 **You MUST render the Proposal Guide at the bottom of every response**, following the format specified in `reference/proposal-guide-format.md`.
 
 ```
--------------------------------------------------
-Project: [project name]
--------------------------------------------------
-Current: [user-facing situation label]
-Done: [v] section1 (team), [v] section2 (team)
-In Progress: [~] section3 (team) -- current activity details
-Recommended: /command copy-pasteable example input
--------------------------------------------------
+─────────────────────────────────────────────────
+📋 Project: [project name]
+─────────────────────────────────────────────────
+✅ Done    : [v] section1 (team), [v] section2 (team)
+🔄 Current : [~] section3 (team) — activity detail
+💡 Next    : /bid:command args — 다음에 할 일 설명
+─────────────────────────────────────────────────
 ```
 
 ### Status Icons
@@ -248,15 +247,15 @@ Recommended: /command copy-pasteable example input
 
 Show exactly ONE recommendation — the highest-priority match:
 
-1. No project exists -> `/design`
-2. Design complete, all SSOTs empty -> `/write <first priority section>`
-3. Some sections in draft -> `/write` on incomplete section
-4. 2+ sections confirmed -> `/verify`
-5. All confirmed -> `/output` to generate final deliverable
+1. No project exists -> `/bid:design`
+2. Design complete, all SSOTs empty -> `/bid:write <first priority section>`
+3. Some sections in draft -> `/bid:write` on incomplete section
+4. 2+ sections confirmed -> `/bid:diagnose`
+5. All confirmed -> `"최종 출력을 요청해주세요"` — natural language output request
 6. Output generated, small change needed -> natural language quick edit
-7. Versions available -> `/output diff` to compare versions
+7. Versions available -> `"이전 버전이랑 비교해줘"`
 8. External input received -> natural language guidance
-9. Ideation sections exist -> `/write <section>`
+9. Ideation sections exist -> `/bid:write <section>`
 
 ---
 

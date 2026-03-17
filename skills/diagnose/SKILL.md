@@ -8,8 +8,8 @@
 
 ## Prerequisites
 
-1. **Project exists** — `proposal/.bidkit/meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/design`으로 먼저 시작할까요?"*
-2. **Outline loaded** — `proposal/.bidkit/meta/outline.yaml` must exist. If not, redirect to `/design`.
+1. **Project exists** — `proposal/.bidkit/meta/proposal-meta.yaml` must exist. If not, redirect: *"프로젝트가 아직 없습니다. `/bid:design`으로 먼저 시작할까요?"*
+2. **Outline loaded** — `proposal/.bidkit/meta/outline.yaml` must exist. If not, redirect to `/bid:design`.
 
 ---
 
@@ -82,7 +82,7 @@ For each SSOT graded C or D, identify specific issues:
 
 ### Step (3) — Cross-Cutting Verification
 
-Analyze ALL SSOTs together across five dimensions. This replaces the former `/verify` command.
+Analyze ALL SSOTs together across five dimensions. This replaces the former `/verify` command (now integrated into `/bid:diagnose`).
 
 #### 3a. Terminology Consistency
 
@@ -227,15 +227,15 @@ After presenting the diagnosis report, offer the user four action paths:
 
 For each selected SSOT (in priority order):
 
-1. **Enter session loop** — invoke the `/write` skill targeting the SSOT.
-   - Mode is determined by the SSOT's current status per `/write` state detection logic.
+1. **Enter session loop** — invoke the `/bid:write` skill targeting the SSOT.
+   - Mode is determined by the SSOT's current status per `/bid:write` state detection logic.
    - For `existing` status SSOTs: enters **Enhance** mode.
    - For `draft` or later status SSOTs: enters **Edit** or **Revise** mode as appropriate.
-2. **Pass diagnosis context** — the `/write` session receives:
+2. **Pass diagnosis context** — the `/bid:write` session receives:
    - The grade and rationale from the diagnosis.
    - The specific issues identified for this section.
    - Relevant cross-cutting problems that affect this section.
-3. **Complete session loop** — each SSOT goes through the full `/write` cycle (draft/revise, Critic verify, user approve, Overseer review).
+3. **Complete session loop** — each SSOT goes through the full `/bid:write` cycle (draft/revise, Critic verify, user approve, Overseer review).
 4. **Progress tracking** — after each SSOT completes, show updated progress:
    ```
    Improvement Progress: 3/7 sections completed
@@ -294,7 +294,7 @@ After:  A: 3, B: 3, C: 1, D: 0
 
 ### Step (F4) — Cross-Cutting Re-Check
 
-Run a final cross-cutting consistency check (equivalent to `/verify`) to ensure improvements did not introduce new inconsistencies.
+Run a final cross-cutting consistency check (equivalent to the cross-cutting verification in `/bid:diagnose`) to ensure improvements did not introduce new inconsistencies.
 
 ---
 
@@ -305,7 +305,7 @@ Run a final cross-cutting consistency check (equivalent to `/verify`) to ensure 
 If no SSOT files exist and no document is uploaded:
 
 ```
-진단할 내용이 없습니다. `/design`으로 프로젝트를 먼저 만들거나, 기존 제안서를 업로드해 주세요.
+진단할 내용이 없습니다. `/bid:design`으로 프로젝트를 먼저 만들거나, 기존 제안서를 업로드해 주세요.
 ```
 
 ### All SSOTs Grade A
