@@ -31,7 +31,7 @@ claude
 Claude Code 안에서 아래 두 줄을 순서대로 입력하세요:
 
 ```
-/plugin marketplace add Lambda256/bid-kit
+/plugin marketplace add https://github.com/Lambda256/bid-kit.git
 /plugin install bid
 ```
 
@@ -41,8 +41,8 @@ Claude Code 안에서 아래 두 줄을 순서대로 입력하세요:
 문제가 생기면 마켓플레이스를 삭제 후 재추가하세요:
 
 ```
-/plugin marketplace remove Lambda256/bid-kit
-/plugin marketplace add Lambda256/bid-kit
+/plugin marketplace remove https://github.com/Lambda256/bid-kit.git
+/plugin marketplace add https://github.com/Lambda256/bid-kit.git
 /plugin install bid
 ```
 
