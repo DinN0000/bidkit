@@ -28,10 +28,13 @@ claude
 
 ### 3. BidKit 플러그인 설치
 
-Claude Code 안에서 아래 두 줄을 순서대로 입력하세요:
+Claude Code 안에서 순서대로 하나씩 입력하세요:
 
 ```
 /plugin marketplace add https://github.com/Lambda256/bid-kit.git
+```
+
+```
 /plugin install bid
 ```
 
@@ -42,7 +45,13 @@ Claude Code 안에서 아래 두 줄을 순서대로 입력하세요:
 
 ```
 /plugin marketplace remove https://github.com/Lambda256/bid-kit.git
+```
+
+```
 /plugin marketplace add https://github.com/Lambda256/bid-kit.git
+```
+
+```
 /plugin install bid
 ```
 
