@@ -35,8 +35,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/DinN0000/bidkit"
-Repository = "https://github.com/DinN0000/bidkit"
+Homepage = "https://github.com/Lambda256/bid-kit"
+Repository = "https://github.com/Lambda256/bid-kit"
 
 [project.optional-dependencies]
 test = ["pytest>=8.0"]
