@@ -7,3 +7,4 @@ sections:
     required_for_output: true | false   # Always set explicitly. Defaults to true if omitted.
     dependencies: []
     estimated_pages: 0
+    # style: prose                      # Optional — exempts this section from 개조식 (style-guide §6)

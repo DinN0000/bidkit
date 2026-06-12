@@ -56,16 +56,21 @@ are sequential.
 | `templates/init/proposal-meta.yaml` | Project metadata (customer, timeline, teams) |
 | `templates/init/glossary.yaml` | Unified glossary template |
 | `templates/init/outline.yaml` | TOC + SSOT ordering template |
-| `templates/init/rfp-trace-matrix.md` | RFP requirements traceability template |
+| `templates/init/rfp-trace-matrix.md` | RFP requirements traceability template (proposal doctype) |
+| `templates/init/criteria-trace-matrix.md` | Audience criteria traceability template (portfolio / business-report) |
 | `templates/init/runtime-state.json` | Runtime state template for current focus / next action |
 | **`reference/`** | |
 | `reference/state-machine.md` | SSOT lifecycle states and transition rules |
 | `reference/quality-criteria.md` | Verification checklist per domain |
+| `reference/style-guide.md` | 개조식 tone/style rules + single-home redundancy principle (Writer drafts, Critic verifies) |
 | `reference/proposal-guide-format.md` | Proposal Guide rendering spec (bottom of every response) |
 | `reference/impact-rules.md` | Impact propagation severity rules (High/Medium/Low) |
 | `reference/skills-catalog.md` | All agent skills mapped to roles |
 | `reference/cross-team-communication.md` | Inter-team communication protocol |
 | `reference/error-handling.md` | Error scenarios + graceful degradation |
+| `reference/doctypes/proposal.md` | Doctype profile — B2B 제안서 (회사 → 발주사, RFP 기준) |
+| `reference/doctypes/portfolio.md` | Doctype profile — 포트폴리오 (개인 → 회사, JD·공고 기준) |
+| `reference/doctypes/business-report.md` | Doctype profile — 사업/경영 보고 (팀 → 의사결정자, 의사결정 기준) |
 | `reference/domain/ba.md` | BA domain structural patterns and Critic verification points |
 | `reference/domain/da.md` | DA domain structural patterns and Critic verification points |
 | `reference/domain/ta.md` | TA domain structural patterns and Critic verification points |
@@ -100,7 +105,7 @@ hidden in `.bidkit/`.
 
 ```
 proposal/                        # Created by /design — all proposal data lives here
-├── sections/                    # SSOT documents organized by team (user-facing)
+├── ssot/                        # SSOT documents organized by team (user-facing)
 │   ├── ba/*.md
 │   ├── da/*.md
 │   ├── ta/*.md
@@ -144,7 +149,7 @@ User Input (RFP / conversation / existing proposal)
 (1) Skill router ---- /design | /write | /status | /notion | /setup | diagnose | output
   |
   v
-(2) Overseer assigns teams, sets strategy
+(2) Overseer loads doctype profile (reference/doctypes/), assigns teams, sets strategy
   |
   v
 (3) Team Lead orchestrates per-section session loop:
@@ -171,7 +176,12 @@ User Input (RFP / conversation / existing proposal)
       cross-references resolved
   |
   v
-(8) Render to selected formats (MD always + PPT/PDF/HTML on request)
+(8) Full-document review gate (Overseer reads assembled proposal-vN.md end-to-end)
+      global redundancy (MECE) + style uniformity (reference/style-guide.md) + flow
+      issues found -> fix via owning SSOT and re-assemble, or render with logged issues
+  |
+  v
+(9) Render to selected formats (MD always + PPT/PDF/HTML on request)
 ```
 
 ---

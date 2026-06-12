@@ -109,14 +109,20 @@ Check that numerical data is consistent across all SSOTs:
 
 - **Exact duplicates** — identical paragraphs or tables in multiple SSOTs
 - **Near duplicates** — substantially similar content with minor variations (more dangerous as they may diverge)
-- For each: determine if appropriate (e.g., executive summary) or should be consolidated
+- **Repeated claims** — the same argument or selling point re-stated across sections in different words
+- Default severity: **Warning** (not Info) — duplicated content WILL diverge during future edits, and repetition weakens the report (MECE violation)
+- For each duplicate: designate the canonical owner SSOT (per the Overseer authority table), keep the content there, and replace every other occurrence with a one-line summary + `[REF: <ssot-id>]`
+- Only intentional duplication is exempt (e.g., executive summary) — see `reference/style-guide.md` §5
 
-#### 3d. RFP Coverage Gap Analysis
+#### 3d. Audience Criteria Coverage Gap Analysis
 
-- **Unmapped requirements** — requirements in `proposal/.bidkit/meta/rfp-trace-matrix.md` not assigned to any SSOT
+Use the doctype's trace matrix (proposal: `proposal/.bidkit/meta/rfp-trace-matrix.md`;
+portfolio / business-report: `proposal/.bidkit/meta/criteria-trace-matrix.md`):
+
+- **Unmapped criteria** — criteria in the matrix not assigned to any SSOT
 - **Mapped but unaddressed** — assigned but not actually covered in content
 - **Partial coverage** — mentioned but not elaborated
-- **Orphan content** — content not mapping to any RFP requirement (scope creep)
+- **Orphan content** — content not mapping to any audience criterion (scope creep)
 
 #### 3e. Narrative Flow
 
@@ -125,6 +131,18 @@ Check that numerical data is consistent across all SSOTs:
 - **Consistency of tone** — writing style consistent across sections
 - **Story arc** — clear beginning (problem), middle (solution), end (implementation + value)
 - **Strategic coherence** — all sections support the same win strategy
+
+#### 3f. Style Compliance (개조식)
+
+Check all SSOTs against `reference/style-guide.md`. Violations are **Warning**:
+
+- **종결 규칙** — 합쇼체 (~합니다/~입니다) or prose endings in body content
+- **Forced emphasis** — "핵심은", "가장 중요한 것은", "무엇보다", "특히 주목할 점은"
+- **Bullet-leading connectives** — "또한", "그리고", "이를 통해"
+- **Prose paragraphs** — 3+ consecutive sentences not structured as bullets/tables
+- **Style drift** — sections alternating between 개조식 and prose (typically sections
+  written at different times)
+- Exceptions per style guide §6 (direct quotes; `style: prose` sections in outline) are not violations
 
 #### Contract Validation (Optional)
 
@@ -173,8 +191,9 @@ Overall quality: [summary statement]
 
 1. [Critical] Terminology: "보안 서버" vs "Security Server" — sa-hsm-001, ta-infra-001
 2. [Critical] Data mismatch: server count 12 in sa-hsm-001 vs 14 in ba-cost-001
-3. [Warning] Narrative gap: no transition between architecture and implementation plan
-4. [Info] Redundancy: HSM specification duplicated in sa-hsm-001 and ta-infra-001
+3. [Warning] Redundancy: HSM specification duplicated in sa-hsm-001 and ta-infra-001 — consolidate to sa-hsm-001, replace ta-infra-001 copy with [REF: sa-hsm-001]
+4. [Warning] Style: 합쇼체 endings in ba-overview-001; "가장 중요한 것은" in sa-hsm-001 — see reference/style-guide.md
+5. [Info] Narrative gap: no transition between architecture and implementation plan
 
 ### Priority Improvement Order
 1. section-id (D) — [reason this is highest priority]
@@ -338,6 +357,7 @@ If the uploaded document cannot be parsed:
 | `proposal/.bidkit/meta/rfp-trace-matrix.md` | RFP requirement coverage |
 | `proposal/ssot/<team>/<id>.md` | Per-section SSOT files |
 | `reference/quality-criteria.md` | Domain-specific quality standards |
+| `reference/style-guide.md` | 개조식 style rules and single-home redundancy principle |
 | `reference/proposal-guide-format.md` | Proposal Guide footer format |
 | `reference/state-machine.md` | Valid SSOT states |
 | `agents/overseer.md` | Overseer grading and cross-review protocol |

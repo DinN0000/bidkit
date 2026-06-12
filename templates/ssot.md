@@ -7,6 +7,8 @@ version: 1
 parent: null                    # parent SSOT id if split
 dependencies: []                # SSOTs this one references
 affects: []                     # SSOTs impacted when this changes
+scope: ""                       # one-line statement of what this section covers (MECE boundary, set at design time)
+not_in_scope: []                # adjacent topics deliberately excluded — list of {topic: "...", owner: <ssot-id>}
 verification:
   checklist_passed: 0/0
   critic_issues: []
@@ -26,7 +28,7 @@ diagrams: []
 # [Section Title]
 
 ## Summary
-> 1-2 sentence summary.
+> 3-5 bullets (개조식) — conclusions and key numbers only, no Content reuse.
 
 ## Content
 (Actual proposal content)

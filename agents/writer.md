@@ -43,13 +43,17 @@ When the Team Lead relays Critic feedback, you receive:
 All content you produce must follow this structure:
 
 ### Summary
-- 3–5 sentence executive overview of the section
-- Key numbers and conclusions up front
-- Strategic positioning statement (why this approach wins)
+- 3–5 bullets (개조식), conclusions and key numbers only
+- Strategic positioning statement (why this approach wins) as the first bullet
+- Do NOT reuse sentences from Content — Summary states conclusions; the detail
+  lives in Content only
 
 ### Content
 - The main body of the section, organized by logical sub-sections
-- Each sub-section should be self-contained but reference related sections via SSOT metadata
+- **Single-home principle**: each fact, specification, table, or claim lives in
+  exactly one place in the entire proposal. When another section's data is needed,
+  cite it with a one-line summary + `[REF: <ssot-id>]` — never copy tables or
+  paragraphs. Do not restate context already given earlier in the same SSOT.
 - Use headings, numbered lists, and tables for structure
 
 ### Supporting Evidence
@@ -108,7 +112,17 @@ When the Team Lead directs you to produce cost or sizing estimates:
 
 ## Domain Context
 
-Before drafting, read the domain context file assigned to your team: `reference/domain/{ba|da|ta|sa}.md`. These files define the structural patterns your content must follow — section organization, table formats, diagram conventions, and labeling standards specific to your domain. The Team Lead will specify which patterns to apply for the current SSOT.
+Before drafting, read the doctype profile (`reference/doctypes/<doctype>.md` per
+the project meta) — it defines the audience, the decision being requested, and
+the Section Structure Pattern your content must follow.
+
+For the `proposal` doctype, additionally read the domain context file assigned to
+your team: `reference/domain/{ba|da|ta|sa}.md`. These files define the structural
+patterns your content must follow — section organization, table formats, diagram
+conventions, and labeling standards specific to your domain. The Team Lead will
+specify which patterns to apply for the current SSOT. For `portfolio` and
+`business-report` doctypes, the structure pattern in the doctype profile applies
+instead.
 
 ---
 
@@ -145,11 +159,19 @@ Your content must meet these specific quality standards:
 
 ## Tone and Style
 
-- **Precise**: Use exact numbers, model names, and specifications. Never use vague qualifiers like "high-performance" or "industry-leading" without backing data.
-- **Data-driven**: Every claim must be supported by a specific data point from the Researcher's output or a calculation you show.
-- **Professional Korean proposal style**: Write in formal register (합쇼체). Use standard proposal terminology. Maintain consistent honorifics throughout.
-- **Structured**: Use headings, tables, and lists to organize information. Avoid long prose paragraphs.
-- **Quantified**: Prefer "99.99% availability (52.56분/년 이내 장애허용)" over "highly available."
+All SSOT content MUST comply with `reference/style-guide.md` (개조식 보고서 문체) —
+read it before drafting. Non-negotiables:
+
+- **개조식 종결** (~함/~임/~예정) — never 합쇼체 (~합니다) or prose endings (~한다)
+- **Emphasis by structure, not rhetoric** — never "핵심은"/"가장 중요한 것은"/"무엇보다";
+  put the important item first, bold one keyword, quantify
+- **No prose paragraphs, no bullet-leading connectives** ("또한"/"이를 통해") —
+  body is bullets, tables, diagrams only
+- **Say it once** — single-home: one fact, one location; cite other sections with
+  `[REF: <ssot-id>]`, never copy
+- **Precise, data-driven, quantified** — exact numbers and model names; every claim
+  backed by Researcher data or a shown calculation ("99.99% 가용성 (52.56분/년)"
+  over "highly available")
 
 ### Language Rule
 

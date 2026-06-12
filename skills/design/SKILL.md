@@ -2,12 +2,37 @@
 
 ## Trigger
 
-`/design` command or natural language like "RFP 받았는데 어디서부터?", "제안서 만들어야 해"
+`/design` command or natural language like "RFP 받았는데 어디서부터?", "제안서 만들어야 해",
+"포트폴리오 만들어야 해", "사업 보고 써야 해", "경영 보고 준비해야 해"
 
 ## User-Facing Goal
 
-`/design` is the guided kickoff for a proposal project. The user should feel like
-they are in a short strategy interview, not operating a multi-agent system.
+`/design` is the guided kickoff for a persuasion-document project — every BidKit
+document is a proposal: a proposer persuading an audience to make a decision.
+The user should feel like they are in a short strategy interview, not operating
+a multi-agent system.
+
+## Step 0 — Doctype Determination (before everything else)
+
+Determine the doctype FIRST — it governs inputs, team composition, checks, and
+strategy frame for the rest of the flow (Key Rule 10).
+
+1. Infer from the user's words: "제안서/RFP" → `proposal`, "포트폴리오/이력/지원" →
+   `portfolio`, "보고/품의/검토/결재" → `business-report`.
+2. If clear, confirm in one line and proceed: *"B2B 제안서로 진행합니다."*
+3. If ambiguous, ask with ASCII previews (Key Rule 9):
+
+```
+어떤 제안을 준비하시나요?
+
+[A] 제안서 (B2B)        [B] 포트폴리오          [C] 사업/경영 보고
+ 회사 ──→ 발주사         개인 ──→ 회사/클라이언트  팀 ──→ 의사결정자
+ "우리를 선택하라"        "나를 선택하라"          "이 안을 승인하라"
+ 기준: RFP 요구사항       기준: JD·공고 역량       기준: 비용·효과·리스크
+```
+
+4. Load `reference/doctypes/<doctype>.md` and apply its profile to every
+   subsequent step. Record `doctype` in `proposal/.bidkit/meta/proposal-meta.yaml`.
 
 Use situation-first wording such as:
 
@@ -32,7 +57,12 @@ If any of these are still unsettled, remain in `/bid:design`.
 1. Ask **one focused question per turn**.
 2. State **why the question matters** in one sentence.
 3. Prefer **2-3 concrete options** with one recommended option first.
-4. Summarize the current state at the top of each turn:
+4. **Show each option as a compact ASCII example** in a fenced code block whenever
+   the choice has a visible shape — TOC options as outline trees, section structure
+   options as heading/bullet skeletons, architecture directions as box diagrams.
+   The user picks by comparing what the result looks like, not by reading prose
+   descriptions (Key Rule 9).
+5. Summarize the current state at the top of each turn:
    - `현재: 전략 정리 중`
    - `이번 단계: 경쟁 우위 방향 확정`
    - `질문: ...`
@@ -48,21 +78,35 @@ When the user provides a document file (PPTX, DOCX, XLSX) as RFP input:
     PDF 형식의 RFP라면 바로 진행 가능합니다."
 3. If `true`, parse the document using `from parser import parse` and proceed.
 
-## Flow (Overseer-led)
+## Flow (Overseer-led, doctype profile applied)
 
-1. **Accept input**: RFP upload, conversational context, existing proposal, or combination
-2. **Context dialogue**: collect scope, competitors, strengths, constraints, timeline, stakeholders
-3. **Strategy exploration**: present 2-3 strategic options with recommendation
+1. **Accept input** (per doctype profile): proposal → RFP upload; portfolio →
+   실적 자료 + 타깃 JD·공고; business-report → 보고 목적·결정 요청·근거 데이터.
+   Existing documents and conversational context accepted for all doctypes.
+2. **Context dialogue**: collect the persuasion frame — audience, decision
+   requested, audience criteria, competitors/alternatives, strengths, constraints,
+   timeline (questions adapt per doctype profile)
+3. **Strategy exploration**: present 2-3 strategic options with recommendation,
+   framed per doctype (win strategy / positioning / 권고안 채택 전략)
 4. **TOC co-design**: propose structure, assign teams, set priority order
 5. **Section direction**: establish 1-2 sentence direction per section
+   - **MECE boundary**: for each section, also record `scope` (what it covers) and
+     `not_in_scope` (adjacent topics with their owning section id). No two sections
+     may claim the same content — shared data gets ONE owner; others reference it
+     via `[REF: <ssot-id>]`. This is what prevents duplication downstream; resolve
+     overlaps here, not after drafting.
 6. **Project initialization**:
    - Create project directory: `proposal/` with subdirs `proposal/ssot/<team>/`, `proposal/.bidkit/meta/`, `proposal/.bidkit/runtime/`, `proposal/.bidkit/ideation/`, `proposal/output/`, `proposal/assets/`
-   - Populate `proposal/.bidkit/meta/proposal-meta.yaml` from context
+   - Populate `proposal/.bidkit/meta/proposal-meta.yaml` from context — including
+     `doctype`, `audience`, `decision_requested` (from Step 0 and context dialogue)
    - Populate `proposal/.bidkit/meta/outline.yaml` with TOC + SSOT ordering + priorities + `required_for_output` (always set explicitly; older projects that omit the field are treated as `true` — see `playbooks/output/SKILL.md`)
    - Populate `proposal/.bidkit/meta/glossary.yaml` with initial terms
-   - Populate `proposal/.bidkit/meta/rfp-trace-matrix.md` if RFP provided
+   - Populate the criteria trace matrix per doctype profile: proposal →
+     `rfp-trace-matrix.md` (if RFP provided); portfolio / business-report →
+     `criteria-trace-matrix.md` (`templates/init/criteria-trace-matrix.md`)
    - Populate `proposal/.bidkit/runtime/session-state.json` from `templates/init/runtime-state.json` — initialize `current_label` with the first user-facing situation label (e.g., "전략 정리 중"). Runtime state is optional helper state; if absent later, BidKit falls back to SSOT-derived status.
-   - Create SSOT files (all in `ideation` state) with dependencies mapped
+   - Create SSOT files (all in `ideation` state) with dependencies and
+     `scope` / `not_in_scope` boundaries mapped (from step 5)
 7. **Transition**: Show Proposal Guide recommending the first `/bid:write` target
 
 ## Document Parsing

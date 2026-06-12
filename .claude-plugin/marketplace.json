@@ -4,15 +4,15 @@
     "name": "hwai",
     "url": "https://github.com/Lambda256"
   },
-  "description": "BidKit — 금융 IT 제안서 멀티에이전트 작성 시스템 (Internal Use)",
-  "version": "1.0.1",
+  "description": "BidKit — 제안·설득 문서 멀티에이전트 작성 시스템 (Internal Use)",
+  "version": "1.1.0",
   "homepage": "https://github.com/Lambda256/bid-kit",
   "repository": "https://github.com/Lambda256/bid-kit",
   "plugins": [
     {
       "name": "bid",
-      "version": "1.0.1",
-      "description": "BidKit — AI 에이전트 팀이 함께 쓰는 금융 IT 제안서 시스템",
+      "version": "1.1.0",
+      "description": "BidKit — AI 에이전트 팀이 함께 쓰는 제안·설득 문서 시스템 (제안서·포트폴리오·사업보고)",
       "source": "./",
       "category": "productivity",
       "author": {
@@ -21,8 +21,22 @@
       },
       "homepage": "https://github.com/Lambda256/bid-kit",
       "repository": "https://github.com/Lambda256/bid-kit",
-      "tags": ["proposal", "rfp", "multi-agent", "korean", "financial-it"],
-      "keywords": ["proposal", "writing", "agents", "rfp"]
+      "tags": [
+        "proposal",
+        "rfp",
+        "portfolio",
+        "business-report",
+        "multi-agent",
+        "korean"
+      ],
+      "keywords": [
+        "proposal",
+        "portfolio",
+        "report",
+        "writing",
+        "agents",
+        "rfp"
+      ]
     }
   ]
 }

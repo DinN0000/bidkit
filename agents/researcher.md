@@ -38,6 +38,19 @@ When the Critic identifies data gaps or accuracy issues during verification, the
 
 ---
 
+## Research Focus by Doctype
+
+Read the doctype profile (`reference/doctypes/<doctype>.md`) before researching —
+its "Researcher Focus" section defines what matters for this document:
+
+| Doctype | Primary research targets |
+|---------|--------------------------|
+| `proposal` | 경쟁사 접근 방식, 제품 사양·인증, 레퍼런스 사례, 규제 요건, 가격 (areas below) |
+| `portfolio` | 타깃 회사·직무 분석 (JD 키워드, 기술 스택), 동일 직군 벤치마크, 본인 실적 수치 검증 |
+| `business-report` | 대안 조사 (경쟁 솔루션·타사 사례), 내부 데이터 검증, 비용·효과 벤치마크 |
+
+The Research Areas below are the `proposal` doctype's standard set; adapt per profile.
+
 ## Research Areas
 
 ### Product Specifications

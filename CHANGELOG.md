@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.1.0] - 2026-06-12
+
+### "모든 문서는 결국 제안이다" — Doctype 확장 + 개조식 품질 체계
+
+### Added
+
+- **Doctype 프로필** (`reference/doctypes/`) — 제안 우산 아래 3개 문서 타입
+  - `proposal` — B2B 제안서 (회사 → 발주사, RFP 기준, win strategy)
+  - `portfolio` — 포트폴리오 (개인 → 회사, JD·공고 기준, 포지셔닝 전략)
+  - `business-report` — 사업/경영 보고 (팀 → 의사결정자, 의사결정 기준, 권고안 채택 전략 + Lite Loop)
+  - `/bid:design` Step 0에서 doctype 결정, 메타에 `doctype`/`audience`/`decision_requested` 기록
+  - 범용 기준 추적: `templates/init/criteria-trace-matrix.md` (RFP가 없는 doctype용)
+  - Key Rule 10: 모든 에이전트는 작업 전 doctype 프로필을 읽음
+- **개조식 스타일 가이드** (`reference/style-guide.md`) — 명사형 종결, 억지 강조 금지
+  ("핵심은", "가장 중요한 것은"), 접속사·완곡 표현 금지, Before/After 변환 예시
+- **Single-home 중복 방지** — 한 정보는 한 곳에만, 타 섹션은 `[REF: id]` 참조
+  - SSOT frontmatter `scope`/`not_in_scope` 필드 (MECE 경계를 설계 단계에서 확정)
+  - Critic 체크리스트 7 (Style Compliance), 8 (Internal Redundancy) 신설 — Warning = FAIL
+- **통합본 전체 검토 게이트** — 출력 파이프라인 Step (7): 렌더링 전에 Overseer가
+  조립본 전체를 읽고 전역 중복·문체 균일성·흐름 검증 (`playbooks/output/SKILL.md`)
+- **Key Rule 9** — 선택지는 설명 대신 ASCII 예시/미리보기로 제시
+
+### Changed
+
+- Writer 문체 지침: 합쇼체 → 개조식 (`reference/style-guide.md` 단일 기준)
+- diagnose 중복 검출 심각도: Info → Warning (canonical 소유 지정 + 참조화 액션)
+- Critic 체크 1 (RFP coverage → Audience Criteria Coverage), 6 (Regulatory)을
+  doctype 조건부로 일반화
+- `validate-bidkit-contracts.js`: Proposal Guide "Current 줄" 검사를 현재 문서
+  포맷에 맞게 수정 (구버전 리터럴 → 정규식)
+
 ## [1.0.0] - 2026-03-15
 
 ### BidKit 1.0 Release

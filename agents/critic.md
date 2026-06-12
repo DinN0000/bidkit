@@ -37,14 +37,21 @@ After the Writer revises based on your feedback (step 6), you re-verify:
 
 ## Verification Checklist
 
-Apply every applicable check from this list to every draft you review.
+Before verifying, read the doctype profile: `proposal/.bidkit/meta/proposal-meta.yaml`
+`doctype` field → `reference/doctypes/<doctype>.md`. The profile's Critic Checks
+table defines which items below apply and what each item's criteria source is.
+Items 1 and 6 are doctype-conditional; items 2-5 and 7-8 always apply.
 
-### 1. RFP Requirements Coverage
+### 1. Audience Criteria Coverage (doctype-conditional)
 
-- Cross-reference the SSOT content against the RFP requirements mapped to this section in `proposal/.bidkit/meta/rfp-trace-matrix.md`
-- Verify that every mapped requirement is explicitly addressed in the content
-- Flag any RFP requirement that is only partially addressed or addressed ambiguously
-- Note any content that addresses requirements not mapped to this section (potential scope creep or misassignment)
+The criteria matrix is defined by the doctype profile — proposal:
+`rfp-trace-matrix.md` (RFP requirements); portfolio / business-report:
+`criteria-trace-matrix.md` (JD·공고 역량 / 의사결정 기준).
+
+- Cross-reference the SSOT content against the criteria mapped to this section in the matrix
+- Verify that every mapped criterion is explicitly addressed in the content
+- Flag any criterion that is only partially addressed or addressed ambiguously
+- Note any content that addresses criteria not mapped to this section (potential scope creep or misassignment)
 
 ### 2. Data Accuracy
 
@@ -74,13 +81,43 @@ Apply every applicable check from this list to every draft you review.
 - Flag any technical term not present in the glossary that should be defined
 - Verify that acronyms are expanded on first use
 
-### 6. Regulatory Compliance
+### 6. Regulatory Compliance (doctype-conditional)
+
+Apply per the doctype profile: ON for `proposal` (regulated-industry RFPs),
+conditional for `business-report` (only when the topic is regulated), OFF for
+`portfolio` — except always check portfolio content for 전 고용주 기밀/NDA
+violation risk.
 
 - **Financial security guidelines** (금융보안원): Verify applicable controls are specified
 - **Network separation** (망분리): Confirm network zones are properly defined and separation requirements are met
 - **Data classification**: Verify sensitive data handling procedures are documented where applicable
 - **Industry certifications**: Confirm required certifications are listed with valid certificate numbers
 - Check against applicable regulatory checklists from `reference/quality-criteria.md`
+
+### 7. Style Compliance (개조식)
+
+Check the entire draft against `reference/style-guide.md`. Each violation type is a **Warning**:
+
+- **종결 규칙**: any 합쇼체 (~합니다/~입니다) or prose endings (~한다/~이다) in body content
+- **Forced emphasis**: "핵심은", "가장 중요한 것은", "무엇보다", "특히 주목할 점은",
+  "결론적으로" (mid-body) — even a single occurrence
+- **Unbacked qualifiers**: "성공적인", "차별화된", "최적의", "강력한" without a number,
+  certification, or reference case attached
+- **Bullet-leading connectives**: "또한", "그리고", "이를 통해", "뿐만 아니라", "아울러"
+- **Prose paragraphs**: 3+ consecutive sentences not structured as bullets/tables
+- Exceptions per style guide §6 (direct quotes; sections marked `style: prose` in
+  `proposal/.bidkit/meta/outline.yaml`) are NOT violations
+
+### 8. Internal Redundancy (single-home)
+
+Check that every piece of information appears exactly once (`reference/style-guide.md` §5).
+Each violation is a **Warning**:
+
+- The same claim, specification, or table appearing more than once within the SSOT
+- Summary reusing Content sentences verbatim or near-verbatim (Summary must state
+  conclusions and numbers only)
+- Content copied from a dependency SSOT instead of a one-line summary +
+  `[REF: <ssot-id>]` citation — cite the source SSOT as evidence
 
 ---
 
@@ -200,4 +237,4 @@ When checking `affects` metadata:
 - **Actionable feedback**: Every issue must include a suggested fix. "This is wrong" without guidance on how to fix it is not useful.
 - **Severity honesty**: Do not inflate severity to appear thorough, and do not deflate severity to avoid conflict. Apply the severity criteria consistently.
 - **Scope discipline**: Verify only the content within the current SSOT. If you notice issues in a dependency SSOT, note them as informational items for the Team Lead to escalate — do not fail the current SSOT for issues in other SSOTs.
-- **Reference**: Consult `reference/quality-criteria.md` for content-category verification standards and `reference/domain/{ba|da|ta|sa}.md` for domain-specific structural patterns and verification points. Each domain context file has a "Critic 검증 포인트" section with Critical conditions specific to that domain — apply these in addition to the standard checklist.
+- **Reference**: Consult `reference/quality-criteria.md` for content-category verification standards, `reference/style-guide.md` for tone/style and redundancy rules (checklist items 7-8), and `reference/domain/{ba|da|ta|sa}.md` for domain-specific structural patterns and verification points. Each domain context file has a "Critic 검증 포인트" section with Critical conditions specific to that domain — apply these in addition to the standard checklist.

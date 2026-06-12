@@ -75,11 +75,45 @@ Always produce `proposal/output/proposal-vN.md` first, regardless of which forma
 - Insert page-break markers (`---` or `<!-- page-break -->`) between major sections for downstream format renderers.
 - Log: *"Markdown 생성 완료: proposal/output/proposal-vN.md"*
 
+### Step (7) — Full-Document Review (mandatory gate)
+
+After `proposal/output/proposal-vN.md` is generated and BEFORE any format rendering,
+the Overseer reads the assembled document **end-to-end**. Per-SSOT verification cannot
+catch problems that only appear in the assembled document — this gate exists for those.
+
+Check, in this order:
+
+1. **Global redundancy (MECE)** — the same claim, specification, table, or
+   near-identical paragraph appearing in 2+ places across the assembled document.
+   Section-level review misses duplication that emerges across section boundaries.
+   Apply the single-home principle (`reference/style-guide.md` §5): designate the
+   canonical location, replace other occurrences with `[REF: <ssot-id>]`.
+2. **Style uniformity** — the entire document complies with `reference/style-guide.md`:
+   개조식 종결 throughout, no forced-emphasis patterns ("핵심은", "가장 중요한 것은"),
+   no style drift between sections written at different times.
+3. **Repeated openings and boilerplate** — sections opening with the same phrases,
+   or re-stating project context already established in earlier sections.
+4. **Flow in TOC order** — each section adds new information; no section re-argues
+   a previous section's conclusion; transitions make sense when read linearly.
+
+#### Gate Outcome
+
+- **No issues** → proceed to Format Rendering.
+- **Issues found** → present a Full-Document Review report (Critical/Warning/Info
+  format, same as diagnose) and ask the user:
+  *"통합본 검토에서 N건의 이슈가 발견되었습니다. 수정 후 출력할까요, 그대로 출력할까요?"*
+  - **Fix first** → route each issue to its owning SSOT via the Quick Edit Workflow
+    (or `/bid:write` for content rewrites), regenerate `proposal-vN.md`, and re-run
+    this step.
+  - **Render anyway** → proceed to Format Rendering, and save the unresolved issue
+    list to `proposal/output/review-vN.md` so the findings are not silently lost.
+
 ---
 
 ## Format Rendering
 
-After `proposal/output/proposal-vN.md` is generated, render the user-requested format(s):
+After Step (7) passes (or the user explicitly chooses to render with known issues),
+render the user-requested format(s):
 
 | Format | Characteristics |
 |--------|----------------|

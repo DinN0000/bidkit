@@ -96,7 +96,7 @@ for (const [file, content] of Object.entries(runtimeStateDocs)) {
 }
 
 const guide = read('reference/proposal-guide-format.md');
-if (!guide.includes('Current: [user-facing situation label]')) {
+if (!/Current\s*:/.test(guide)) {
   errors.push('Proposal Guide must include a Current line');
 }
 if (!guide.includes('User-Facing Status Labels')) {

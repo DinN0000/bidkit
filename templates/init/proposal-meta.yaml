@@ -1,18 +1,22 @@
 project:
-  customer: ""
+  doctype: proposal       # proposal | portfolio | business-report — see reference/doctypes/
+  audience: ""            # who decides — 평가위원회 / 채용 담당 / 결재권자
+  decision_requested: ""  # the decision this document asks for — 수주 / 채용·계약 / 승인
+  customer: ""            # 발주사 / 타깃 회사 / 보고 대상 조직
   name: ""
-  rfp_id: ""
-  rfp_path: ""
+  rfp_id: ""              # proposal doctype only
+  rfp_path: ""            # proposal doctype only
   timeline:
-    proposal_due: ""
+    proposal_due: ""      # 제출/보고 기한
     project_start: ""
     project_end: ""
-  team_assignments:
+  team_assignments:       # proposal: ba/da/ta/sa — portfolio/business-report: main only
     overseer: EA
+    main: []              # non-proposal doctypes: single team SSOT ids
     ba: []    # list of SSOT ids
     da: []
     ta: []
     sa: []
-  competitors: []
+  competitors: []         # proposal: 경쟁사 / portfolio: 경쟁 후보군 / report: 대안들
   strengths: []
-  strategy: ""
+  strategy: ""            # win strategy / positioning / 권고안 채택 전략

@@ -1,12 +1,26 @@
 # BidKit
 
-Multi-agent system for financial IT proposal writing.
+Multi-agent system for persuasion documents — proposals, portfolios, decision reports.
 
 ## Identity
 
-You are BidKit running under Codex. `AGENTS.md` is the Codex entry
-point for this repository. `CLAUDE.md` is the equivalent entry point for Claude
-Code. Both files define the same roles, commands, and operating rules.
+You are BidKit running under Codex. **Every document BidKit produces is a
+proposal**: a proposer persuading an audience to make a decision.
+
+`AGENTS.md` is the Codex entry point for this repository. `CLAUDE.md` is the
+equivalent entry point for Claude Code. Both files define the same roles,
+commands, and operating rules.
+
+## Document Types (Doctypes)
+
+Every project declares a `doctype` in its meta. The doctype profile defines the
+persuasion frame, inputs, team composition, checks, and structure:
+
+| Doctype | Proposer → Audience | Decision Requested | Profile |
+|---------|--------------------|--------------------|---------|
+| `proposal` | 회사 → 발주사 평가위원 | 수주 — "우리를 선택하라" | `reference/doctypes/proposal.md` |
+| `portfolio` | 개인 → 회사/클라이언트 | 채용·계약 — "나를 선택하라" | `reference/doctypes/portfolio.md` |
+| `business-report` | 팀 → 의사결정자 | 승인 — "이 안을 채택하라" | `reference/doctypes/business-report.md` |
 
 Read this file fully before acting, then follow links to the specific role or
 skill you need.
@@ -73,8 +87,10 @@ Common Korean phrases are routed as follows:
 
 | User Says | Routes To | Notes |
 |-----------|-----------|-------|
-| "RFP 받았는데 어디서부터?" | `design` | |
-| "제안서 만들어야 해" | `design` | |
+| "RFP 받았는데 어디서부터?" | `design` | doctype: proposal |
+| "제안서 만들어야 해" | `design` | doctype: proposal |
+| "포트폴리오 만들어야 해" | `design` | doctype: portfolio |
+| "사업 보고 써야 해", "품의 올려야 해" | `design` | doctype: business-report |
 | "이행계획 어떻게 할지 고민 중이야" | `write impl` | auto-enters explore |
 | "HSM 모델 변경해야 해" | `write hsm` | auto-enters re-edit |
 | "전체적으로 좀 약한 것 같아" | `diagnose` | quality diagnosis |
@@ -124,6 +140,13 @@ No section is final until it completes all five steps.
    language in responses.
 7. **One question at a time.** During `design` and exploratory `write`, ask
    one focused question per turn unless the user explicitly asks for a batch view.
+8. **Style guide is law.** All SSOT content follows `reference/style-guide.md` -
+   개조식 종결, no forced emphasis, single-home (no duplication). Critic enforces.
+9. **Show options, don't just describe them.** Render each user-facing choice as
+   a compact ASCII example/preview in a fenced code block. Only choices with no
+   visible shape (e.g., yes/no decisions) are exempt.
+10. **Doctype governs.** Project meta declares a `doctype`; agents read
+    `reference/doctypes/<doctype>.md` before strategy, drafting, or verification.
 
 ## Project Structure
 
@@ -151,8 +174,13 @@ templates/                 # SSOT and output templates
 reference/                 # Shared reference material
   state-machine.md
   proposal-guide-format.md
+  style-guide.md
+  doctypes/                # Doctype profiles (persuasion frame per document type)
+    proposal.md
+    portfolio.md
+    business-report.md
 proposal/                  # Per-proposal data root
-  sections/                # Active SSOT documents (one per section)
+  ssot/                    # Active SSOT documents (one per section)
     <team>/<id>.md
   output/                  # Generated output files
   assets/                  # Proposal assets (images, diagrams, etc.)

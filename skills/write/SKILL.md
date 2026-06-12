@@ -116,6 +116,22 @@ For each viable direction, present:
 
 Include a clear recommendation with rationale.
 
+Below the trade-off table, show **a compact ASCII example per option** in a fenced
+code block whenever the choice has a visible shape (Key Rule 9) — e.g., the section
+skeleton each direction would produce, an architecture box diagram, or a table
+layout sample. The user should be able to pick by seeing what each option looks
+like, not just by reading the trade-offs:
+
+```
+[Option A — Active-Standby]          [Option B — Active-Active]
+
+  ┌─────────┐   ┌─────────┐            ┌─────────┐   ┌─────────┐
+  │ HSM #1  │──→│ HSM #2  │            │ HSM #1  │←─→│ HSM #2  │
+  │ (Active)│   │(Standby)│            │ (Active)│   │ (Active)│
+  └─────────┘   └─────────┘            └─────────┘   └─────────┘
+  장애 시 수동/자동 전환                 부하 분산 + 무중단
+```
+
 #### (E4) Iterate Until Direction Confirmed
 
 - If the user picks an option -> proceed.
@@ -160,6 +176,9 @@ Ask: *"방향이 정해졌습니다. 바로 작성을 시작할까요?"*
    - Ask one question first. Ask a second only if the first answer creates a new blocker.
    - Questions must be specific to this section, not generic.
    - Always offer concrete choices and why they matter: *"서버 이중화 방식은 비용과 가용성을 결정합니다. (A) Active-Standby (추천 — 비용 효율), (B) Active-Active (고가용성 우선). 어떤 방식으로 할까요?"*
+   - When the choice has a visible shape (structure, layout, diagram, table format),
+     accompany each option with a compact ASCII example in a fenced code block
+     (Key Rule 9) so the user compares results, not descriptions.
    - If the ideation notes contain enough direction, skip questions and summarize the plan instead: *"탐색 단계에서 [방향]으로 결정되었습니다. 이 방향으로 진행하겠습니다."*
 
 #### Step (2) — Direct Researcher
